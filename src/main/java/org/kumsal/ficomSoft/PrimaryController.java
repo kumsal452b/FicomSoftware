@@ -26,7 +26,7 @@ public class PrimaryController {
 
     @FXML
     void initialize() {
-    prim_imageView.setImage(new Image("image/image1.jpg"));
-    
+    prim_imageView.setImage(new Image(new URL()));
+
     }
 }
