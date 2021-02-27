@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
 <AnchorPane fx:id="main_anchor_pane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.PrimaryController">
    <children>
-      <ScrollPane fx:id="scrolpane1" layoutX="2.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="1000.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="140.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
