@@ -1,7 +1,12 @@
 package org.kumsal.ficomSoft;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -25,8 +30,9 @@ public class PrimaryController {
 
 
     @FXML
-    void initialize() {
-    prim_imageView.setImage(new Image(new URL()));
-
+    void initialize() throws MalformedURLException, URISyntaxException {
+        File file = new File("src/main/resources/org/kumsal/ficomsoft/image/image1.jpg");
+        Image image = new Image(file.toURI().toString());
+        prim_imageView.setImage(image);
     }
 }
