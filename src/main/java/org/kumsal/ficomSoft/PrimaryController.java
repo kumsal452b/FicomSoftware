@@ -20,7 +20,6 @@ public class PrimaryController {
 
     @FXML
     void initialize() {
-    scrolpane1.prefWidthProperty().bind(main_anchor_pane.widthProperty());
-        scrolpane1.prefWidthProperty().bind(main_anchor_pane.widthProperty());
+        
     }
 }
