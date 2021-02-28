@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,12 +51,29 @@ public class PrimaryController {
                     setFadeFromAnim();
                 }
         );
-        prim_imageView.scaleXProperty().
+        double newMeasure = (prim_imageView.getImage().getWidth() < prim_imageView.getImage().getHeight()) ? prim_imageView.getImage().getWidth() : prim_imageView.getImage().getHeight();
+        double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
+        double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
+
+        Rectangle2D rect = new Rectangle2D(x, y, newMeasure, newMeasure);
+        prim_imageView.setViewport(rect);
+        prim_imageView.setFitWidth(600);
+        prim_imageView.setFitHeight(500);
+        prim_imageView.setSmooth(true);
+        double a=main_anchor_pane.widthProperty().get();
+        prim_imageView.xProperty().bind(main_anchor_pane.widthProperty().divide(3));
     }
     public void changeImage(String path){
         File file = new File(path);
         Image image = new Image(file.toURI().toString());
         prim_imageView.setImage(image);
+        double newMeasure = Math.min(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
+        double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
+        double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
+        Rectangle2D rect = new Rectangle2D(x, y, newMeasure, newMeasure);
+        prim_imageView.setViewport(rect);
+        prim_imageView.setFitWidth(600);
+        prim_imageView.setFitHeight(500);
     }
     public void setFadeFromAnim() {
         fadeTransition2.setFromValue(1);
@@ -76,12 +94,6 @@ public class PrimaryController {
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
         fadeTransition.setOnFinished(actionEvent -> {
-//            count++;
-//            if (count>3){
-//                count=1;
-//            }
-//            currentPath="src/main/resources/org/kumsal/ficomsoft/image/image"+count+".jpg";
-//            changeImage(currentPath);
             setFadeFromAnim();
         });
         fadeTransition.play();

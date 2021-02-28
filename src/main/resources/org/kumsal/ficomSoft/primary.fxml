@@ -5,6 +5,6 @@
 
 <AnchorPane fx:id="main_anchor_pane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.PrimaryController">
    <children>
-      <ImageView fx:id="prim_imageView" fitHeight="333.0" fitWidth="1193.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="267.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="prim_imageView" fitHeight="600.0" fitWidth="600.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
