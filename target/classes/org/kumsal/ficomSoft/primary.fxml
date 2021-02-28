@@ -23,6 +23,6 @@
             </Text>
          </children>
       </Pane>
-      <ImageView fx:id="prim_imageView" fitHeight="500.0" fitWidth="600.0" layoutX="-15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-15.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="prim_imageView" fitHeight="500.0" fitWidth="600.0" layoutX="-15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

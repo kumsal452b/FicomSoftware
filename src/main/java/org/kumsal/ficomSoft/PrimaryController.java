@@ -47,9 +47,9 @@ public class PrimaryController {
         fadeTransition2.setNode(prim_imageView);
         currentPath="src/main/resources/org/kumsal/ficomsoft/image/image"+count+".jpg";
         changeImage(currentPath);
-        
+
         setFadeFromAnim();
-        double newMeasure = (prim_imageView.getImage().getWidth() < prim_imageView.getImage().getHeight()) ? prim_imageView.getImage().getWidth() : prim_imageView.getImage().getHeight();
+        double newMeasure = Math.max(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
         double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
 
