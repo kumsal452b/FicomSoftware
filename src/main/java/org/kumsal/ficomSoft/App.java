@@ -18,7 +18,7 @@ public class App extends Application {
         AnchorPane root=FXMLLoader.load(getClass().getResource("primary.fxml"));
         scene = new Scene(root);
         stage.setScene(scene);
-        
+
         stage.setMinHeight(500);
         stage.setMinWidth(700);
         stage.show();
