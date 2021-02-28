@@ -51,6 +51,7 @@ public class PrimaryController {
                     setFadeFromAnim();
                 }
         );
+        
         double newMeasure = (prim_imageView.getImage().getWidth() < prim_imageView.getImage().getHeight()) ? prim_imageView.getImage().getWidth() : prim_imageView.getImage().getHeight();
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
         double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
@@ -60,8 +61,9 @@ public class PrimaryController {
         prim_imageView.setFitWidth(600);
         prim_imageView.setFitHeight(500);
         prim_imageView.setSmooth(true);
-        double a=main_anchor_pane.widthProperty().get();
-        prim_imageView.xProperty().bind(main_anchor_pane.widthProperty().divide(3));
+        double a=main_anchor_pane.prefWidthProperty().divide(2).subtract(prim_imageView.fitWidthProperty().divide(2).get()).get();
+        prim_imageView.xProperty().bind(main_anchor_pane.prefWidthProperty().divide(2).subtract(prim_imageView.fitWidthProperty().divide(2)));
+//        prim_imageView.setX(500);
     }
     public void changeImage(String path){
         File file = new File(path);
