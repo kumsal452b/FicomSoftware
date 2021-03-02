@@ -1,6 +1,10 @@
-.button{
-    -fx-background-color: #7e99ff;
+.button12{
+    -fx-border-color: aquamarine;
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+
 }
 .pane{
     -fx-arrows-visible: true;
+    -fx-background-color:linear-gradient(#7e99ff,aqua, #28d4bf)
 }
