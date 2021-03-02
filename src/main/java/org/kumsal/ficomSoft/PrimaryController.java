@@ -7,8 +7,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ScrollPane;
@@ -38,6 +40,16 @@ public class PrimaryController {
     private String currentPath="";
     private FadeTransition fadeTransition;
     private FadeTransition fadeTransition2;
+
+
+    @FXML
+    private JFXButton login_screen_button;
+
+    @FXML
+    void login(ActionEvent event) {
+
+    }
+
 
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {

@@ -16,7 +16,7 @@
          <children>
             <JFXPasswordField layoutX="113.0" layoutY="270.0" prefHeight="25.0" prefWidth="183.0" />
             <JFXTextField labelFloat="true" layoutX="113.0" layoutY="203.0" prefHeight="25.0" prefWidth="183.0" promptText="Username" />
-            <JFXButton contentDisplay="RIGHT" layoutX="196.0" layoutY="360.0" prefHeight="30.0" prefWidth="100.0" styleClass="button12" text="Login">
+            <JFXButton fx:id="login_screen_button" contentDisplay="RIGHT" layoutX="196.0" layoutY="360.0" prefHeight="30.0" prefWidth="100.0" styleClass="button12" text="Login">
                <graphic>
                   <FontAwesomeIconView glyphName="ARROW_RIGHT" size="17" wrappingWidth="17.14285659790039" />
                </graphic></JFXButton>
