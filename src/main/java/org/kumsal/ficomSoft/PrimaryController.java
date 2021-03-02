@@ -43,7 +43,6 @@ public class PrimaryController {
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
         fadeTransition = new FadeTransition(Duration.millis(4000));
         fadeTransition.setNode(prim_imageView);
-
         fadeTransition2 = new FadeTransition(Duration.millis(4000));
         fadeTransition2.setNode(prim_imageView);
         currentPath="src/main/resources/org/kumsal/ficomsoft/image/image"+count+".jpg";
@@ -53,6 +52,7 @@ public class PrimaryController {
         double newMeasure = Math.max(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
         double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
+
 
         Rectangle2D rect = new Rectangle2D(x, y, newMeasure, newMeasure);
         prim_imageView.setViewport(rect);
