@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -14,9 +15,9 @@
    <children>
       <Pane layoutX="593.0" layoutY="-3.0" prefHeight="500.0" prefWidth="409.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXPasswordField layoutX="113.0" layoutY="270.0" prefHeight="25.0" prefWidth="183.0" />
+            <JFXPasswordField layoutX="113.0" layoutY="270.0" prefHeight="25.0" prefWidth="183.0" promptText="Password" />
             <JFXTextField labelFloat="true" layoutX="113.0" layoutY="203.0" prefHeight="25.0" prefWidth="183.0" promptText="Username" />
-            <JFXButton contentDisplay="RIGHT" layoutX="196.0" layoutY="360.0" prefHeight="30.0" prefWidth="100.0" styleClass="button12" text="Login">
+            <JFXButton fx:id="login_screen_button" contentDisplay="RIGHT" layoutX="196.0" layoutY="360.0" onAction="#login" prefHeight="30.0" prefWidth="100.0" styleClass="button12" text="Login">
                <graphic>
                   <FontAwesomeIconView glyphName="ARROW_RIGHT" size="17" wrappingWidth="17.14285659790039" />
                </graphic></JFXButton>
@@ -28,5 +29,10 @@
          </children>
       </Pane>
       <ImageView fx:id="prim_imageView" fitHeight="500.0" fitWidth="600.0" layoutX="-15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <JFXButton layoutX="537.0" layoutY="14.0" prefHeight="58.0" prefWidth="56.0" styleClass="button13">
+         <graphic>
+            <MaterialDesignIconView fill="#e7fffa" glyphName="LOGIN_VARIANT" size="25" />
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>
