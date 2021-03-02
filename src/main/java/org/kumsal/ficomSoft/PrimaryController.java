@@ -23,6 +23,7 @@ public class PrimaryController {
     @FXML
     public ImageView prim_imageView;
 
+
     @FXML
     private ResourceBundle resources;
 
@@ -39,7 +40,7 @@ public class PrimaryController {
     private FadeTransition fadeTransition2;
 
     @FXML
-    void initialize() throws MalformedURLException, URISyntaxException {
+    void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
         fadeTransition = new FadeTransition(Duration.millis(4000));
         fadeTransition.setNode(prim_imageView);
 
