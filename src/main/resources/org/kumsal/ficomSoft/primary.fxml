@@ -15,7 +15,7 @@
          <children>
             <JFXPasswordField layoutX="113.0" layoutY="270.0" prefHeight="25.0" prefWidth="183.0" />
             <JFXTextField layoutX="113.0" layoutY="203.0" prefHeight="25.0" prefWidth="183.0" />
-            <JFXButton layoutX="244.0" layoutY="374.0" />
+            <JFXButton layoutX="244.0" layoutY="374.0" styleClass="button" />
             <Text layoutX="113.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
                <font>
                   <Font size="28.0" />
