@@ -2,6 +2,11 @@
     -fx-border-color: aquamarine;
     -fx-background-color: white;
     -fx-background-radius: 20;
+}
+.button13{
+    -fx-border-color: aquamarine;
+    -fx-background-color: #d70909;
+    -fx-background-radius: 20;
 
 }
 .pane{
