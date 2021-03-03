@@ -7,12 +7,21 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.animation.alert.JFXAlertAnimation;
+import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.mysql.cj.MysqlConnection;
+import com.mysql.cj.MysqlxSession;
+import com.mysql.cj.jdbc.ConnectionGroupManager;
+import com.mysql.cj.xdevapi.Statement;
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -21,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
+import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class PrimaryController {
 
@@ -63,10 +73,10 @@ public class PrimaryController {
         changeImage(currentPath);
 
         setFadeFromAnim();
-        double newMeasure = Math.max(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
+        double newMeasure = Math.min(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
         double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
-        
+
 
         Rectangle2D rect = new Rectangle2D(x, y, newMeasure, newMeasure);
         prim_imageView.setViewport(rect);
