@@ -66,7 +66,7 @@ public class PrimaryController {
         double newMeasure = Math.max(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
         double y = (prim_imageView.getImage().getHeight() - newMeasure) / 2;
-
+        
 
         Rectangle2D rect = new Rectangle2D(x, y, newMeasure, newMeasure);
         prim_imageView.setViewport(rect);
