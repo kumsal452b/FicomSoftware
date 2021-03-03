@@ -61,7 +61,7 @@ public class PrimaryController {
 
     @FXML
     void login(ActionEvent event) {
-        RecyclerView deneme;
+
 
     }
 
