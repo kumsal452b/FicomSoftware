@@ -4,6 +4,7 @@ module org.kumsal.ficomSoft {
     requires com.jfoenix;
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.commons;
+    requires mysql.connector.java;
 
     opens org.kumsal.ficomSoft to javafx.fxml;
     exports org.kumsal.ficomSoft;
