@@ -10,7 +10,6 @@
 .button14{
     -fx-background-color: #a1b4d9;
     -fx-background-radius: 20;
-
 }
 .pane{
     -fx-arrows-visible: true;
@@ -18,4 +17,5 @@
 }
 .mainPane{
     -fx-background-color:linear-gradient(darkblue,rgba(59,101,126,1),rgba(29,126,87,1));
+
 }
