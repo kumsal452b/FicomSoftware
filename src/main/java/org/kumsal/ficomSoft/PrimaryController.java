@@ -30,9 +30,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
+import org.kairos.layouts.RecyclerView;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class PrimaryController {
+
 
     @FXML
     public ImageView prim_imageView;
@@ -59,6 +61,7 @@ public class PrimaryController {
 
     @FXML
     void login(ActionEvent event) {
+        RecyclerView deneme;
 
     }
 
