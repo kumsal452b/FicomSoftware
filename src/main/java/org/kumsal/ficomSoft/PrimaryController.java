@@ -2,34 +2,18 @@ package org.kumsal.ficomSoft;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputFilter;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.stream.Collector;
 
-import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.*;
-import com.mysql.cj.MysqlConnection;
-import com.mysql.cj.MysqlxSession;
-import com.mysql.cj.Query;
-import com.mysql.cj.Session;
-import com.mysql.cj.conf.ConnectionUrl;
-import com.mysql.cj.jdbc.ConnectionGroupManager;
-import com.mysql.cj.jdbc.JdbcPreparedStatement;
 import com.mysql.cj.jdbc.MysqlDataSource;
-import com.mysql.cj.protocol.x.XProtocol;
-import com.mysql.jdbc.Driver;
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,20 +21,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import oracle.jdbc.OracleDriver;
-import org.kairos.layouts.RecyclerView;
 import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
-import org.w3c.dom.Text;
 
 public class PrimaryController {
 
@@ -123,27 +101,14 @@ public class PrimaryController {
         String theUsername=login_username.getText();
         String thePassword=login_password.getText();
         String loginBy="";
-        for (int i=0; i<theLoggedAdmin.size();i++){
-            if (theLoggedAdmin.get(i).getPassword().equals(thePassword) && theLoggedAdmin.get(i).getUsername().equals(theUsername)){
-                Node node = (Node) event.getSource();
-                // Step 3
-                Stage stage = (Stage) node.getScene().getWindow();
-                stage.close();
-                try {
-                    // Step 4
-                    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/SceneA.fxml"));
-                    // Step 5
-                    stage.setUserData();
-                    // Step 6
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    // Step 7
-                    stage.show();
-                } catch (IOException e) {
-                    System.err.println(String.format("Error: %s", e.getMessage()));
-                }
-            }
-        }
+
+        loggedSetings(event, theLoggedAdmin, theLoggedAdmin, theUsername, thePassword);
+        loggedSetings(event, theLoggedAdmin, theLoggedUsers, theUsername, thePassword);
+
+
+    }
+
+    private void loggedSetings(ActionEvent event, ArrayList<LoginModel> theLoggedAdmin, ArrayList<LoginModel> theLoggedUsers, String theUsername, String thePassword) {
         for (int i=0; i<theLoggedUsers.size();i++){
             if (theLoggedUsers.get(i).getPassword().equals(thePassword) && theLoggedUsers.get(i).getUsername().equals(theUsername)){
                 Node node = (Node) event.getSource();
@@ -151,10 +116,11 @@ public class PrimaryController {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 try {
+                    Object path=FXMLLoader.load(getClass().getResource("main_page.fxml"));
                     // Step 4
-                    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/SceneA.fxml"));
+                    Parent root = FXMLLoader.load((URL) path);
                     // Step 5
-                    stage.setUserData();
+                    stage.setUserData(theLoggedAdmin.get(i));
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
@@ -165,8 +131,6 @@ public class PrimaryController {
                 }
             }
         }
-
-
     }
 
 
