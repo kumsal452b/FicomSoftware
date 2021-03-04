@@ -5,6 +5,9 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import com.jfoenix.animation.alert.JFXAlertAnimation;
@@ -13,8 +16,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.mysql.cj.MysqlConnection;
 import com.mysql.cj.MysqlxSession;
+import com.mysql.cj.Query;
+import com.mysql.cj.Session;
+import com.mysql.cj.conf.ConnectionUrl;
 import com.mysql.cj.jdbc.ConnectionGroupManager;
-import com.mysql.cj.xdevapi.Statement;
+import com.mysql.cj.jdbc.JdbcPreparedStatement;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import com.mysql.cj.protocol.x.XProtocol;
+import com.mysql.jdbc.Driver;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -30,6 +39,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
+import oracle.jdbc.OracleDriver;
 import org.kairos.layouts.RecyclerView;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
@@ -60,8 +70,19 @@ public class PrimaryController {
     private JFXButton login_screen_button;
 
     @FXML
-    void login(ActionEvent event) {
+    void login(ActionEvent event) throws SQLException {
 
+        MysqlDataSource nese = new MysqlDataSource();
+        nese.getConnection("hbstudent","hbstudent");
+        ResultSet resultSet;
+        try (Statement denem = nese.getConnection().prepareStatement("SELECT * from ADMIN ")) {
+            resultSet = denem.getResultSet();
+        }
+        resultSet.first();
+        while (resultSet.next()){
+            String name=resultSet.getString("ad");
+            String surname=resultSet.getString("soyad");
+        }
 
     }
 
