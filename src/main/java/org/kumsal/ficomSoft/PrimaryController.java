@@ -116,9 +116,9 @@ public class PrimaryController {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 try {
-                    Object path=FXMLLoader.load(getClass().getResource("main_page.fxml"));
+
                     // Step 4
-                    Parent root = FXMLLoader.load((URL) path);
+                    Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
                     // Step 5
                     stage.setUserData(theLoggedAdmin.get(i));
                     // Step 6

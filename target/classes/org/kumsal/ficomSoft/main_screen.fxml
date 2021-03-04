@@ -3,31 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import org.kairos.components.MaterialButton?>
-<?import org.kairos.components.MaterialRadioButton?>
 
-
-<AnchorPane opacity="0.78" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.screens.MainPageController">
+<AnchorPane opacity="0.78" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.screens.MainPageConroller">
     <children>
         <Pane layoutX="-1.0" layoutY="2.0" prefHeight="600.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Button layoutY="2.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" text="Button" />
                 <Button layoutY="75.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" text="Button" />
                 <Button layoutY="112.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" text="Button" />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-                <MaterialButton />
-
-                <MaterialRadioButton />
-
-                <MaterialButton />
             </children>
         </Pane>
     </children>
