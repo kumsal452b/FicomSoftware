@@ -1,6 +1,7 @@
 package org.kumsal.ficomSoft;
 
 import java.io.File;
+import java.io.ObjectInputFilter;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -8,6 +9,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.jfoenix.animation.alert.JFXAlertAnimation;
@@ -73,15 +75,22 @@ public class PrimaryController {
     void login(ActionEvent event) throws SQLException {
 
         MysqlDataSource nese = new MysqlDataSource();
-        nese.getConnection("hbstudent","hbstudent");
+        String jdbcConnection="jdbc:mysql://localhost:3306/ficomdb?useSSL=false&serverTimezone=GMT";
+        String user="hbstudent";
+        String password="hbstudent";
+        nese.setUrl(jdbcConnection);
+        nese.setPassword(password);
+        nese.setUser(user);
         ResultSet resultSet;
-        try (Statement denem = nese.getConnection().prepareStatement("SELECT * from ADMIN ")) {
-            resultSet = denem.getResultSet();
-        }
-        resultSet.first();
+        String query="select * from admin";
+        Statement denem = nese.getConnection().createStatement();
+        denem.execute(query);
+        resultSet=denem.getResultSet();
+        HashMap<String,Object> map=new HashMap<>();
+        int count=1;
         while (resultSet.next()){
-            String name=resultSet.getString("ad");
-            String surname=resultSet.getString("soyad");
+            Object a=resultSet.getObject(count);
+            count++;
         }
 
     }
