@@ -47,6 +47,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oracle.jdbc.OracleDriver;
 import org.kairos.layouts.RecyclerView;
+import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 import org.w3c.dom.Text;
 
@@ -90,11 +91,8 @@ public class PrimaryController {
         String query="select * from admin";
         String query2="select * from users";
 
-        ArrayList<String> adminUsName=new ArrayList<>();
-        ArrayList<String> userUsName=new ArrayList<>();
-
-        ArrayList<String> adminPasse=new ArrayList<>();
-        ArrayList<String> userPasse=new ArrayList<>();
+        ArrayList<LoginModel> theLoggedAdmin=new ArrayList<>();
+        ArrayList<LoginModel> theLoggedUsers=new ArrayList<>();
 
         Statement forAdmin = dbSource.getConnection().createStatement();
         Statement forusers = dbSource.getConnection().createStatement();
@@ -104,19 +102,27 @@ public class PrimaryController {
 
         resultSet=forAdmin.getResultSet();
         while (resultSet.next()){
-            adminUsName.add(resultSet.getString("username"));
-            adminPasse.add(resultSet.getString("password"));
+            LoginModel theModel=new LoginModel("Admin",
+                    resultSet.getString("ad"),
+                    resultSet.getString("soyad"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"));
+            theLoggedAdmin.add(theModel);
         }
 
         resultSet=forusers.getResultSet();
         while (resultSet.next()){
-            userUsName.add(resultSet.getString("username"));
-            userPasse.add(resultSet.getString("password"));
+            LoginModel theModel=new LoginModel("User",
+                    resultSet.getString("ad"),
+                    resultSet.getString("soyad"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"));
+            theLoggedUsers.add(theModel);
         }
         String theUsername=login_username.getText();
         String thePassword=login_password.getText();
         String loginBy="";
-        if ((userUsName.contains(theUsername) && userPasse.contains(thePassword))) {
+        if (theLoggedAdmin) {
             loginBy="User";
 
         }else if ((adminUsName.contains(theUsername) && adminPasse.contains(thePassword)){
