@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import org.kairos.layouts.ViewPager?>
 
-<AnchorPane opacity="0.78" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane layoutX="-1.0" layoutY="2.0" prefHeight="600.0" prefWidth="225.0" styleClass="painMainScreen" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button layoutY="45.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Ana Sayfa" />
-                <Button layoutY="105.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Dosya Yükle" />
-                <Button layoutY="163.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Yüklenen Dosyalar" />
-            <Button layoutY="222.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Klasörller" />
-            <Button layoutY="289.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Sırtlık Çıkartma" />
-            <Button layoutY="353.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="İmha Listesi" textFill="#392828" />
+                <Button graphicTextGap="50.0" layoutY="45.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Ana Sayfa" textFill="#1e1313" />
+                <Button graphicTextGap="50.0" layoutY="105.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Dosya Yükle" />
+                <Button layoutY="163.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Yüklenen Dosyalar" />
+            <Button graphicTextGap="50.0" layoutY="222.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Klasörller" />
+            <Button layoutY="289.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Sırtlık Çıkartma" />
+            <Button layoutY="353.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="İmha Listesi" textFill="#392828" />
+            <ImageView fitHeight="30.0" fitWidth="55.0" layoutX="14.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/home.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/upload.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/storage.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/folder.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/print.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/destroy.png" />
+               </image>
+            </ImageView>
             </children>
         </Pane>
-      <ViewPager layoutX="229.0" layoutY="1.0" prefHeight="600.0" prefWidth="766.0" styleClass="mainScreenPainRigth" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ViewPager layoutX="229.0" layoutY="1.0" prefHeight="600.0" prefWidth="766.0" styleClass="mainScreenPainRigth2" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     </children>
 </AnchorPane>
