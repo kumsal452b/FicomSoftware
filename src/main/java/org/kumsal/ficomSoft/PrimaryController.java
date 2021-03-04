@@ -73,15 +73,14 @@ public class PrimaryController {
 
     @FXML
     void login(ActionEvent event) throws SQLException {
-
-
+        MysqlDataSource dbSource=ConnectorMysql.connect();
         ResultSet resultSet;
         String query="select * from admin";
-        Statement denem = nese.getConnection().createStatement();
+        Statement denem = dbSource.getConnection().createStatement();
         denem.execute(query);
         resultSet=denem.getResultSet();
         Object map=new HashMap<>();
-        int count=1;
+
         while (resultSet.next()){
             map= resultSet.getObject(count);
             count++;
