@@ -9,13 +9,12 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.jfoenix.animation.alert.JFXAlertAnimation;
-import com.jfoenix.controls.JFXAlert;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
 import com.mysql.cj.MysqlConnection;
 import com.mysql.cj.MysqlxSession;
 import com.mysql.cj.Query;
@@ -68,6 +67,13 @@ public class PrimaryController {
     private FadeTransition fadeTransition2;
 
 
+
+    @FXML
+    private JFXPasswordField login_password;
+
+    @FXML
+    private JFXTextField login_username;
+
     @FXML
     private JFXButton login_screen_button;
 
@@ -76,15 +82,26 @@ public class PrimaryController {
         MysqlDataSource dbSource=ConnectorMysql.connect();
         ResultSet resultSet;
         String query="select * from admin";
-        Statement denem = dbSource.getConnection().createStatement();
-        denem.execute(query);
-        resultSet=denem.getResultSet();
-        Object map=new HashMap<>();
+        String query2="select * from users";
 
+        ArrayList<String> adminUsName=new ArrayList<>();
+        ArrayList<String> userUsName=new ArrayList<>();
+
+        Statement forAdmin = dbSource.getConnection().createStatement();
+        Statement forusers = dbSource.getConnection().createStatement();
+        forusers.execute(query2);
+        forAdmin.execute(query);
+
+        resultSet=forAdmin.getResultSet();
         while (resultSet.next()){
-            map= resultSet.getObject(count);
-            count++;
+            adminUsName.add(resultSet.getString("username"));
         }
+
+        resultSet=forusers.getResultSet();
+        while (resultSet.next()){
+            userUsName.add(resultSet.getString("username"));
+        }
+
 
     }
 
