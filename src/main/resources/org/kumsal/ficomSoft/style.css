@@ -19,6 +19,9 @@
     -fx-background-color:linear-gradient(darkblue,rgba(59,101,126,1),rgba(29,126,87,1));
 
 }
-.painMaınScreen{
-    
+.painMainScreen{
+    -fx-background-color:rgba(14,58,83,255);
+}
+.mainScreenPainRigth{
+    -fx-background-color: rgba(26,196,201,255);
 }
