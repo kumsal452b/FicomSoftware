@@ -74,22 +74,16 @@ public class PrimaryController {
     @FXML
     void login(ActionEvent event) throws SQLException {
 
-        MysqlDataSource nese = new MysqlDataSource();
-        String jdbcConnection="jdbc:mysql://localhost:3306/ficomdb?useSSL=false&serverTimezone=GMT";
-        String user="hbstudent";
-        String password="hbstudent";
-        nese.setUrl(jdbcConnection);
-        nese.setPassword(password);
-        nese.setUser(user);
+
         ResultSet resultSet;
         String query="select * from admin";
         Statement denem = nese.getConnection().createStatement();
         denem.execute(query);
         resultSet=denem.getResultSet();
-        HashMap<String,Object> map=new HashMap<>();
+        Object map=new HashMap<>();
         int count=1;
         while (resultSet.next()){
-            Object a=resultSet.getObject(count);
+            map= resultSet.getObject(count);
             count++;
         }
 
