@@ -9,7 +9,7 @@ public class LoginModel {
 
     public LoginModel(){};
 
-    public LoginModel(String loginby, String name, String surname, String password, String username) {
+    public LoginModel(String loginby, String name, String surname, String username, String password) {
         this.loginby = loginby;
         this.name = name;
         this.surname = surname;
