@@ -122,7 +122,7 @@ public class PrimaryController {
         String theUsername=login_username.getText();
         String thePassword=login_password.getText();
         String loginBy="";
-        if (theLoggedAdmin) {
+        if (theLoggedAdmin.get()) {
             loginBy="User";
 
         }else if ((adminUsName.contains(theUsername) && adminPasse.contains(thePassword)){
