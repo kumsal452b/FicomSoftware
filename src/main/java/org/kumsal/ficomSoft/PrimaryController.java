@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -136,6 +137,11 @@ public class PrimaryController {
 
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
+        RequiredFieldValidator validator=new RequiredFieldValidator();
+        validator.setMessage("Have a problem");
+        login_username.getValidators().add(validator);
+        login_username.validate();
+
         fadeTransition = new FadeTransition(Duration.millis(4000));
         fadeTransition.setNode(prim_imageView);
         fadeTransition2 = new FadeTransition(Duration.millis(4000));
