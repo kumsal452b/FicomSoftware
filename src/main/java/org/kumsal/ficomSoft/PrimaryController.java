@@ -134,13 +134,14 @@ public class PrimaryController {
         }
     }
 
+    
 
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
         RequiredFieldValidator validator=new RequiredFieldValidator();
-        validator.setMessage("Have a problem");
+        validator.setMessage("Password or  ");
         login_username.getValidators().add(validator);
-        login_username.validate();
+        login_password.getValidators().add(validator);
 
         fadeTransition = new FadeTransition(Duration.millis(4000));
         fadeTransition.setNode(prim_imageView);
