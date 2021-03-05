@@ -11,11 +11,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.jfoenix.concurrency.JFXUtilities;
 import com.jfoenix.controls.*;
 import com.jfoenix.validation.RequiredFieldValidator;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.animation.FadeTransition;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -25,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -63,6 +70,9 @@ public class PrimaryController {
 
     @FXML
     private JFXButton login_screen_button;
+
+    RequiredFieldValidator validator=new RequiredFieldValidator();
+
 
     @FXML
     void login(ActionEvent event) throws SQLException {
@@ -133,20 +143,45 @@ public class PrimaryController {
                 }
             }
 
+            if (isEnd) {
+                if (i == sendLogedData.size()-1){
+                    showError("");
+                }
+            }
         }
-        if (isEnd){
-            if (i==sendLogedData.size())
-        }
+    }
+
+    private void showError(String s) {
+        validator.setMessage("Password or  ");
+        login_password.validate();
+        login_username.validate();
     }
 
 
 
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
-        RequiredFieldValidator validator=new RequiredFieldValidator();
-        validator.setMessage("Password or  ");
+
         login_username.getValidators().add(validator);
         login_password.getValidators().add(validator);
+
+        login_username.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (s.length()>0){
+                    login_username.getValidators().clear();
+                }
+            }
+        });
+
+        login_password.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (s.length()>0){
+                    login_password.getValidators().clear();
+                }
+            }
+        });
 
         fadeTransition = new FadeTransition(Duration.millis(4000));
         fadeTransition.setNode(prim_imageView);
