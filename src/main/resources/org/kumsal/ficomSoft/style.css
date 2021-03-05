@@ -33,7 +33,6 @@
     -fx-background-color: rgba(26,196,201,255);
     -fx-text-fill: white;
     -fx-border-color: rgba(26,196,201,255);
-    -fx-border-style: double;
 }
 .mainScreenPainRigth:hover{
     -fx-background-color: rgba(26,196,201,255);
