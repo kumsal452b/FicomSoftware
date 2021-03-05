@@ -103,15 +103,15 @@ public class PrimaryController {
         String thePassword=login_password.getText();
         String loginBy="";
 
-        loggedSetings(event, theLoggedAdmin, theLoggedAdmin, theUsername, thePassword);
-        loggedSetings(event, theLoggedAdmin, theLoggedUsers, theUsername, thePassword);
+        loggedSetings(event, theLoggedAdmin, theUsername, thePassword,false);
+        loggedSetings(event,theLoggedUsers, theUsername, thePassword,true);
 
 
     }
 
-    private void loggedSetings(ActionEvent event, ArrayList<LoginModel> theLoggedAdmin, ArrayList<LoginModel> theLoggedUsers, String theUsername, String thePassword) {
-        for (int i=0; i<theLoggedUsers.size();i++){
-            if (theLoggedUsers.get(i).getPassword().equals(thePassword) && theLoggedUsers.get(i).getUsername().equals(theUsername)){
+    private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword,boolean isEnd) {
+        for (int i=0; i<sendLogedData.size();i++){
+            if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)){
                 Node node = (Node) event.getSource();
                 // Step 3
                 Stage stage = (Stage) node.getScene().getWindow();
@@ -121,20 +121,25 @@ public class PrimaryController {
                     // Step 4
                     Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
                     // Step 5
-                    stage.setUserData(theLoggedAdmin.get(i));
+                    stage.setUserData(sendLogedData.get(i));
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     // Step 7
                     stage.show();
+                    return;
                 } catch (IOException e) {
                     System.err.println(String.format("Error: %s", e.getMessage()));
                 }
             }
+
+        }
+        if (isEnd){
+            if (i==sendLogedData.size())
         }
     }
 
-    
+
 
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
