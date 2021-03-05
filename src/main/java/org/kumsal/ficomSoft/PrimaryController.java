@@ -121,6 +121,7 @@ public class PrimaryController {
 
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword,boolean isEnd) {
         for (int i=0; i<sendLogedData.size();i++){
+
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)){
                 Node node = (Node) event.getSource();
                 // Step 3
@@ -145,9 +146,12 @@ public class PrimaryController {
 
             if (isEnd) {
                 if (i == sendLogedData.size()-1){
-                    showError("");
+                    showError("Password or Username was wrong");
                 }
             }
+        }
+        if (sendLogedData.size()==0){
+            showError("Password or Username");
         }
     }
 
@@ -169,7 +173,8 @@ public class PrimaryController {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (s.length()>0){
-                    login_username.getValidators().clear();
+                    login_username.resetValidation();
+                    System.out.println("selam");
                 }
             }
         });
@@ -178,7 +183,7 @@ public class PrimaryController {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (s.length()>0){
-                    login_password.getValidators().clear();
+                    login_username.resetValidation();
                 }
             }
         });
