@@ -4,8 +4,10 @@ import javafx.scene.layout.Pane;
 import org.kairos.core.Fragment;
 import org.kairos.core.FragmentManager;
 import org.kairos.core.FragmentTransaction;
+import org.kairos.layouts.ViewPager;
 
 public abstract class PagerAdapter extends org.kairos.layouts.PagerAdapter {
+
     private FragmentManager fragmentManager;
     private int currentItem;
     public abstract Fragment getItem(int position);
@@ -13,7 +15,6 @@ public abstract class PagerAdapter extends org.kairos.layouts.PagerAdapter {
     {
         this.fragmentManager=fragmentManager;
     }
-
 
     @Override
     public String getPageTitle(int i) {
@@ -24,9 +25,6 @@ public abstract class PagerAdapter extends org.kairos.layouts.PagerAdapter {
     public int getCount() {
         return 6;
     }
-
-
-
     @Override
     public Object instantiateItem(Pane pane, int i) {
         if(i<getCount()){
