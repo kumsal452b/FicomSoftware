@@ -77,7 +77,7 @@ public class MainPageController {
 
         @FXML
         void initialize() {
-
+        FragmentP
         }
     }
 
