@@ -41,6 +41,10 @@
     -fx-text-fill: white;
     -fx-border-color: rgba(26,196,201,255);
 }
+@font-face {
+    font-family: 'sky';
+    src: url('fonts/skyline1.tff');
+}
 .mainScreenPainRigth:hover{
     -fx-background-color: rgba(26,196,201,255);
     -fx-focus-traversable: true;
@@ -50,7 +54,8 @@
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
     -fx-border-style: none;
 }
-.TextBackGround{
+.label{
+    -fx-font-family: sky;
     -fx-background-color: rgb(34, 66, 93);
     -fx-text-fill: rgba(32,25,126,1);
 }

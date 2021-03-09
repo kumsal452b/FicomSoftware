@@ -16,32 +16,32 @@
             <Button fx:id="main_page_folders" graphicTextGap="50.0" layoutY="222.0" mnemonicParsing="false" onAction="#showFolder" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Klasörller" translateX="1.0" />
             <Button fx:id="main_page_print" layoutY="289.0" mnemonicParsing="false" onAction="#onPrint" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Sırtlık Çıkartma" translateX="1.0" />
             <Button fx:id="main_page_destroy" layoutY="353.0" mnemonicParsing="false" onAction="#onDestroy" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="İmha Listesi" textFill="#392828" translateX="1.0" />
-            <ImageView fitHeight="30.0" fitWidth="55.0" layoutX="14.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="55.0" layoutX="14.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth2">
                <image>
                   <Image url="@image/home.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/upload.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/storage.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/folder.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/print.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/destroy.png" />
                </image>
