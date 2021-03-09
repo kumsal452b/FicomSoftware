@@ -68,7 +68,7 @@ public class MainPageController extends Activity {
 
     @FXML
     void initialize() throws IOException {
-        
+
     }
 
 }
