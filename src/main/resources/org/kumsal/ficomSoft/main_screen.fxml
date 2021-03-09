@@ -48,6 +48,6 @@
             </ImageView>
             </children>
         </Pane>
-      <AnchorPane layoutX="224.0" layoutY="-1.0" prefHeight="600.0" prefWidth="773.0" styleClass="mainScreenFragment" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="mainFragment" layoutX="224.0" layoutY="-1.0" prefHeight="600.0" prefWidth="773.0" styleClass="mainScreenFragment" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     </children>
 </AnchorPane>

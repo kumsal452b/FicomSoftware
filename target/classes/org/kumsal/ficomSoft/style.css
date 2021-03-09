@@ -49,3 +49,7 @@
     -fx-background-color: rgb(34, 66, 93);
     -fx-text-fill: rgba(32,25,126,1);
 }
+.homeFragmentPane{
+    -fx-background-color: linear-gradient(rgb(53, 69, 69), rgb(21, 91, 103));
+    -fx-text-fill: rgba(32,25,126,1);
+}
