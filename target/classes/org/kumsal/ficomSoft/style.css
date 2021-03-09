@@ -29,6 +29,13 @@
     -fx-border-style: dashed;
     -fx-focus-traversable: true;
 }
+.mainScreenFragment{
+    -fx-background-color: rgb(7, 1, 1);
+    -fx-text-fill: white;
+    -fx-border-color: rgba(26,196,201,255);
+    -fx-border-style: dashed;
+    -fx-focus-traversable: true;
+}
 .mainScreenPainRigth2{
     -fx-background-color: rgba(26,196,201,255);
     -fx-text-fill: white;

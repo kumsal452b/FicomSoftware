@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.kairos.core.Activity;
 
@@ -39,7 +40,7 @@ public class MainPageController extends Activity {
 
 
     @FXML
-    private Pane page_viewer;
+    private AnchorPane mainFragment;
 
     @FXML
     void main_page_currentFiles(ActionEvent event) {
@@ -68,7 +69,8 @@ public class MainPageController extends Activity {
 
     @FXML
     void initialize() throws IOException {
-
+        AnchorPane pane=FXMLLoader.load(getClass().getResource("home.fxml"));
+        mainFragment.getChildren().add(pane);
     }
 
 }
