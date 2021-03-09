@@ -71,6 +71,6 @@ public class MainPageController extends Activity {
     void initialize() throws IOException {
         AnchorPane pane=FXMLLoader.load(getClass().getResource("home.fxml"));
         mainFragment.getChildren().add(pane);
-        main_page_home.setId(".mainScreenPainRigth:hover");
+        main_page_home.getStyleClass().add("currentButton");
     }
 }

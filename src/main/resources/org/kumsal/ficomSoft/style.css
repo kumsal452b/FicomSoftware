@@ -45,6 +45,10 @@
     -fx-background-color: rgba(26,196,201,255);
     -fx-focus-traversable: true;
 }
+.currentButton{
+    -fx-background-color: rgba(26,196,201,255);
+    -fx-focus-traversable: true;
+}
 .TextBackGround{
     -fx-background-color: rgb(34, 66, 93);
     -fx-text-fill: rgba(32,25,126,1);
