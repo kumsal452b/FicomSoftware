@@ -44,27 +44,56 @@ public class MainPageController extends Activity {
 
     @FXML
     void main_page_currentFiles(ActionEvent event) {
+        main_page_home.getStyleClass().remove("currentButton");
+        main_page_current.getStyleClass().add("currentButton");
+        main_page_print.getStyleClass().remove("currentButton");
+        main_page_destroy.getStyleClass().remove("currentButton");
+        main_page_load.getStyleClass().remove("currentButton");
+        main_page_folders.getStyleClass().remove("currentButton");
 
     }
 
     @FXML
     void onDestroy(ActionEvent event) {
+        main_page_home.getStyleClass().remove("currentButton");
+        main_page_destroy.getStyleClass().add("currentButton");
+        main_page_print.getStyleClass().remove("currentButton");
+        main_page_load.getStyleClass().remove("currentButton");
+        main_page_current.getStyleClass().remove("currentButton");
+        main_page_folders.getStyleClass().remove("currentButton");
 
     }
 
     @FXML
     void onLoad(ActionEvent event) {
+        main_page_home.getStyleClass().remove("currentButton");
+        main_page_load.getStyleClass().add("currentButton");
+        main_page_print.getStyleClass().remove("currentButton");
+        main_page_destroy.getStyleClass().remove("currentButton");
+        main_page_current.getStyleClass().remove("currentButton");
+        main_page_folders.getStyleClass().remove("currentButton");
 
     }
 
     @FXML
     void onPrint(ActionEvent event) {
+        main_page_home.getStyleClass().remove("currentButton");
+        main_page_print.getStyleClass().add("currentButton");
+        main_page_load.getStyleClass().remove("currentButton");
+        main_page_destroy.getStyleClass().remove("currentButton");
+        main_page_current.getStyleClass().remove("currentButton");
+        main_page_folders.getStyleClass().remove("currentButton");
 
     }
 
     @FXML
     void showFolder(ActionEvent event) {
-
+        main_page_home.getStyleClass().remove("currentButton");
+        main_page_folders.getStyleClass().add("currentButton");
+        main_page_load.getStyleClass().remove("currentButton");
+        main_page_destroy.getStyleClass().remove("currentButton");
+        main_page_current.getStyleClass().remove("currentButton");
+        main_page_print.getStyleClass().remove("currentButton");
     }
 
     @FXML
@@ -72,5 +101,13 @@ public class MainPageController extends Activity {
         AnchorPane pane=FXMLLoader.load(getClass().getResource("home.fxml"));
         mainFragment.getChildren().add(pane);
         main_page_home.getStyleClass().add("currentButton");
+        main_page_home.setOnMouseClicked(mouseEvent -> {
+            main_page_load.getStyleClass().remove("currentButton");
+            main_page_home.getStyleClass().add("currentButton");
+            main_page_print.getStyleClass().remove("currentButton");
+            main_page_destroy.getStyleClass().remove("currentButton");
+            main_page_current.getStyleClass().remove("currentButton");
+            main_page_folders.getStyleClass().remove("currentButton");
+        });
     }
 }

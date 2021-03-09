@@ -46,8 +46,9 @@
     -fx-focus-traversable: true;
 }
 .currentButton{
-    -fx-background-color: rgba(26,196,201,255);
-    -fx-focus-traversable: true;
+    -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
+    -fx-background-radius:0.0 20.0 0.0 20.0;
+    -fx-border-style: none;
 }
 .TextBackGround{
     -fx-background-color: rgb(34, 66, 93);
