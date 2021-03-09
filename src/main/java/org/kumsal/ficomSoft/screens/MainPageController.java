@@ -3,11 +3,11 @@ package org.kumsal.ficomSoft.screens;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.kairos.core.Activity;
 import org.kairos.core.Fragment;
 import org.kairos.core.FragmentManager;
 import org.kairos.core.FragmentTransaction;
 import org.kairos.layouts.ViewPager;
-import org.kumsal.ficomSoft.AdapterModelClass.PagerAdapter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,8 +16,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.kumsal.ficomSoft.AdapterModelClass.PagerAdapter;
+import org.kumsal.ficomSoft.fragments.fragmentHome;
 
-public class MainPageController {
+public class MainPageController extends Activity {
 
 
     public class PleaseProvideControllerClassName{
@@ -77,7 +79,14 @@ public class MainPageController {
 
         @FXML
         void initialize() {
-        FragmentP
+            PagerAdapter denem=new PagerAdapter(getFragmentManager()) {
+                @Override
+                public Fragment getItem(int position) {
+                    return null;
+                }
+            };
+            
+            page_viewer.setAdapter(denem);
         }
     }
 
