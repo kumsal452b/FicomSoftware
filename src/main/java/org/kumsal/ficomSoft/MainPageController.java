@@ -2,15 +2,13 @@ package org.kumsal.ficomSoft;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import org.kairos.core.Activity;
-import org.kairos.core.Fragment;
-import org.kairos.core.FragmentManager;
-import org.kairos.core.FragmentTransaction;
-import org.kairos.layouts.PagerAdapter;
-import org.kairos.layouts.ViewPager;
-import org.kumsal.ficomSoft.fragments.fragmentHome;
 
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 public class MainPageController extends Activity {
@@ -41,7 +39,7 @@ public class MainPageController extends Activity {
 
 
     @FXML
-    private ViewPager page_viewer;
+    private Pane page_viewer;
 
     @FXML
     void main_page_currentFiles(ActionEvent event) {
@@ -69,27 +67,8 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void initialize() {
-
-        FragmentManager fragmentManager=new FragmentManager() {
-            @Override
-            public FragmentTransaction beginTransaction() {
-                return null;
-            }
-
-            @Override
-            public Fragment findFragmentByTag(String s) {
-                return new fragmentHome();
-            }
-        };
-        PagerAdapter adp=new org.kumsal.ficomSoft.AdapterModelClass.PagerAdapter(fragmentManager) {
-            @Override
-            public Fragment getItem(int position) {
-                return null;
-            }
-        };
-        page_viewer.setAdapter(adp);
-
+    void initialize() throws IOException {
+        
     }
 
 }

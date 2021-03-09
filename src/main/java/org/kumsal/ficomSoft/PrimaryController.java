@@ -76,54 +76,47 @@ public class PrimaryController {
 
     @FXML
     void login(ActionEvent event) throws SQLException {
-//                                    MysqlDataSource dbSource=ConnectorMysql.connect();
-//        ResultSet resultSet;
-//        String query="select * from admin";
-//        String query2="select * from users";
-//
-//        ArrayList<LoginModel> theLoggedAdmin=new ArrayList<>();
-//        ArrayList<LoginModel> theLoggedUsers=new ArrayList<>();
-//
-//        Statement forAdmin = dbSource.getConnection().createStatement();
-//        Statement forusers = dbSource.getConnection().createStatement();
-//
-//        forusers.execute(query2);
-//        forAdmin.execute(query);
-//
-//        resultSet=forAdmin.getResultSet();
-//        while (resultSet.next()){
-//            LoginModel theModel=new LoginModel("Admin",
-//                    resultSet.getString("ad"),
-//                    resultSet.getString("soyad"),
-//                    resultSet.getString("username"),
-//                    resultSet.getString("password"));
-//            theLoggedAdmin.add(theModel);
-//        }
-//
-//        resultSet=forusers.getResultSet();
-//        while (resultSet.next()){
-//            LoginModel theModel=new LoginModel("User",
-//                    resultSet.getString("ad"),
-//                    resultSet.getString("soyad"),
-//                    resultSet.getString("username"),
-//                    resultSet.getString("password"));
-//            theLoggedUsers.add(theModel);
-//        }
-//        String theUsername=login_username.getText();
-//        String thePassword=login_password.getText();
-//        String loginBy="";
-//
-//        loggedSetings(event, theLoggedAdmin, theUsername, thePassword,false);
-//        loggedSetings(event,theLoggedUsers, theUsername, thePassword,true);
-//
-        Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
-        // Step 5
-        stage.setUserData(sendLogedData.get(i));
-        // Step 6
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        // Step 7
-        stage.show();
+                                    MysqlDataSource dbSource=ConnectorMysql.connect();
+        ResultSet resultSet;
+        String query="select * from admin";
+        String query2="select * from users";
+
+        ArrayList<LoginModel> theLoggedAdmin=new ArrayList<>();
+        ArrayList<LoginModel> theLoggedUsers=new ArrayList<>();
+
+        Statement forAdmin = dbSource.getConnection().createStatement();
+        Statement forusers = dbSource.getConnection().createStatement();
+
+        forusers.execute(query2);
+        forAdmin.execute(query);
+
+        resultSet=forAdmin.getResultSet();
+        while (resultSet.next()){
+            LoginModel theModel=new LoginModel("Admin",
+                    resultSet.getString("ad"),
+                    resultSet.getString("soyad"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"));
+            theLoggedAdmin.add(theModel);
+        }
+
+        resultSet=forusers.getResultSet();
+        while (resultSet.next()){
+            LoginModel theModel=new LoginModel("User",
+                    resultSet.getString("ad"),
+                    resultSet.getString("soyad"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"));
+            theLoggedUsers.add(theModel);
+        }
+        String theUsername=login_username.getText();
+        String thePassword=login_password.getText();
+        String loginBy="";
+
+        loggedSetings(event, theLoggedAdmin, theUsername, thePassword,false);
+        loggedSetings(event,theLoggedUsers, theUsername, thePassword,true);
+
+
     }
 
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword,boolean isEnd) {
