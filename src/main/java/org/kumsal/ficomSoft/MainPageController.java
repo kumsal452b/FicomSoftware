@@ -1,11 +1,16 @@
 package org.kumsal.ficomSoft;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import org.kairos.core.Activity;
 
 
@@ -61,6 +66,9 @@ public class MainPageController extends Activity {
         main_page_load.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+
+        Transition transition=new FadeTransition(Duration.millis(1000));
+        transition.
 
     }
 
