@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="767.0" styleClass="mainScreenFragment" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.Home">
+<AnchorPane prefHeight="600.0" prefWidth="773.0" styleClass="mainScreenFragment" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.Home">
    <children>
       <Pane layoutX="14.0" layoutY="37.0" prefHeight="534.0" prefWidth="364.0" styleClass="homeFragmentPane">
          <children>
-            <Text fill="#b4c5c9" layoutX="38.0" layoutY="47.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Ficom Arşiv Yönetim Sistemine Hoş Geldiniz" textAlignment="CENTER" wrappingWidth="266.13671875">
+            <Text fill="#cff1f8" layoutX="38.0" layoutY="47.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Ficom Arşiv Yönetim Sistemine Hoş Geldiniz" textAlignment="CENTER" wrappingWidth="266.13671875">
                <font>
-                  <Font size="43.0" />
+                  <Font size="35.0" />
+               </font>
+            </Text>
+            <JFXButton layoutX="93.0" layoutY="336.0" prefHeight="38.0" prefWidth="157.0" styleClass="buttonHomeFragment" text="Hadi başlayalım" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane layoutX="389.0" layoutY="37.0" prefHeight="534.0" prefWidth="364.0" styleClass="homeFragmentPane2">
+         <children>
+            <Text fill="#ebebeb" layoutX="26.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Giriş Türü: ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="#ebebeb" layoutX="66.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yetki:">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Text>
          </children>
       </Pane>
-      <Pane layoutX="389.0" layoutY="37.0" prefHeight="534.0" prefWidth="364.0" styleClass="homeFragmentPane" />
    </children>
 </AnchorPane>

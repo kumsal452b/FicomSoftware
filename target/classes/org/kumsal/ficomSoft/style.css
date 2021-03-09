@@ -52,4 +52,14 @@
 .homeFragmentPane{
     -fx-background-color: linear-gradient(rgb(53, 69, 69), rgb(21, 91, 103));
     -fx-text-fill: rgba(32,25,126,1);
+    -fx-background-radius:0.0 30.0 0.0 30.0;
+}
+.homeFragmentPane2{
+    -fx-background-color: linear-gradient(rgb(53, 69, 69), rgb(21, 91, 103));
+    -fx-text-fill: rgba(32,25,126,1);
+    -fx-background-radius:30.0 0.0 30.0 0.0;
+}
+.buttonHomeFragment{
+    -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
+    -fx-background-radius:0.0 20.0 0.0 20.0;
 }
