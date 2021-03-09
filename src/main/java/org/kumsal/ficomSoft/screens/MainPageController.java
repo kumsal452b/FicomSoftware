@@ -21,9 +21,6 @@ import org.kumsal.ficomSoft.fragments.fragmentHome;
 
 public class MainPageController extends Activity {
 
-
-    public class PleaseProvideControllerClassName{
-
         @FXML
         private ResourceBundle resources;
 
@@ -79,17 +76,14 @@ public class MainPageController extends Activity {
 
         @FXML
         void initialize() {
-            PagerAdapter denem=new PagerAdapter(getFragmentManager()) {
-                @Override
-                public Fragment getItem(int position) {
-                    return null;
-                }
-            };
-            
-            page_viewer.setAdapter(denem);
+//            PagerAdapter denem=new PagerAdapter(getFragmentManager()) {
+//                @Override
+//                public Fragment getItem(int position) {
+//                    return null;
+//                }
+//            };
+//
+//            page_viewer.setAdapter(denem);
         }
-    }
-
-
 
 }
