@@ -58,7 +58,6 @@ public class Load {
 
     @FXML
     void initialize() {
-    recycler_vıew.setAdapter();
-    recycler_vıew.se
+
     }
 }

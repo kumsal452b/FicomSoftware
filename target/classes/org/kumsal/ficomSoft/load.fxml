@@ -20,7 +20,7 @@
       <JFXTextField fx:id="upload_ozelkod" layoutX="39.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kodu giriniz." />
       <JFXTextField fx:id="upload_ozelkodkarssiligi" layoutX="201.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kod karşılığı" />
       <JFXTextField fx:id="upload_klasorno" layoutX="367.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Klasör No giriniz." />
-      <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="196.0" overLay="true" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz." />
+      <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="196.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz." />
       <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="196.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz." />
       <JFXTextField fx:id="upload_aciklama" layoutX="540.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz." />
       <RecyclerView fx:id="recycler_vıew" layoutX="39.0" layoutY="237.0" prefHeight="355.0" prefWidth="668.0" styleClass="buttonHomeFragment" />
