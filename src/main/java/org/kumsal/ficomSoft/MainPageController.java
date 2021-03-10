@@ -79,9 +79,9 @@ public class MainPageController extends Activity {
 
     }
 
-//    public Button getMain_page_current() {
-//        return main_page_current;
-//    }
+    public Button getMain_page_current() {
+        return main_page_current;
+    }
 
     @FXML
     void onLoad(ActionEvent event) throws IOException {
@@ -156,7 +156,7 @@ public class MainPageController extends Activity {
 //        AnchorPane pane= FXMLLoader.load(getClass().getResource("load.fxml"));
 //        JFXTextField pane2= (JFXTextField) pane.getChildren().get(1);
 //        pane2.setText("selam yavrum");
-//        pane=FXMLLoader.load(getClass().getResource("home.fxml"));
+        pane=FXMLLoader.load(getClass().getResource("home.fxml"));
         currentFragment="home.fxml";
         mainFragment.getChildren().add(pane);
         main_page_home.getStyleClass().add("currentButton");

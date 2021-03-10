@@ -10,6 +10,9 @@ import org.kairos.layouts.RecyclerView;
 import java.io.IOException;
 
 public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> {
+    load_adapter(){
+
+    }
     class testHolder extends RecyclerView.ViewHolder{
 
         public Label count;
@@ -51,6 +54,6 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
     @Override
     public void onBindViewHolder(testHolder testHolder, Object o) {
-
+        
     }
 }

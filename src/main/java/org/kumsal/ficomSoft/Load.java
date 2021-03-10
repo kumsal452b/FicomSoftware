@@ -6,8 +6,10 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import org.kairos.layouts.RecyclerView;
+import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
 public class Load {
 
@@ -48,7 +50,7 @@ public class Load {
     private JFXTextField upload_aciklama;
 
     @FXML
-    private RecyclerView<String> recycler_vıew;
+    private RecyclerView<load_model> recycler_vıew;
 
     @FXML
     private Button upload_arsivekaydet;
@@ -58,6 +60,7 @@ public class Load {
 
     @FXML
     void initialize() {
+
 
     }
 }

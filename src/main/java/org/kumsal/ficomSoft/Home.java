@@ -31,13 +31,6 @@ public class Home {
 
     @FXML
     void initialize() throws IOException {
-    letsgo_button.setOnMouseClicked(mouseEvent -> {
-
-//            MainPageController nesne=new MainPageController();
-//            nesne.getMain_page_current().setText("Selam  evlat");
-//                System.out.println("tamamdir");
-            }
-            );
 
     }
 }
