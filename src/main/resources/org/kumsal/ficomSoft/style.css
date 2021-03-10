@@ -49,7 +49,7 @@
 .mainScreenPainRigth:hover{
     -fx-background-color: rgba(26,196,201,255);
     -fx-focus-traversable: true;
-    -fx-translate-x: 7;
+    -fx-translate-x: 5;
 }
 .currentButton{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
@@ -78,6 +78,9 @@
 }
 .tabPain{
     -fx-border-width: 0.0 0.0 4.0 0.0;
-    -fx-border-color: #28d4bf;
+    -fx-border-color: #1c3734;
     -fx-border-radius: 0.0 0.0 20.0 20.0;
+}
+.paneForHome{
+    -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
 }
