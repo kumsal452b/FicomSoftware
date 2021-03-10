@@ -64,11 +64,12 @@ public class Load {
 
     @FXML
     void initialize() {
-
-        load_model theModel = new load_model("1", LocalDate.now(), "12", "test", "1", LocalDate.now(), LocalDate.now());
         load_adapter adapter = new load_adapter();
         recycler_vıew.setAdapter(adapter);
-        recycler_vıew.getItems().add(theModel);
+        for (int i=0; i<30; i++) {
+            load_model theModel = new load_model("1", LocalDate.now(), "12", "test", "1", LocalDate.now(), LocalDate.now());
+            recycler_vıew.getItems().add(theModel);
+        }
 
     }
 }

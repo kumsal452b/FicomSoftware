@@ -14,7 +14,6 @@ module org.kumsal.ficomSoft {
     opens org.kumsal.ficomSoft to com.jfoenix, javafx.fxml,javafx.controls;
     opens org.kumsal.ficomSoft.AdapterModelClass to javafx.fxml;
 
-    exports org.kumsal.ficomSoft.AdapterModelClass;
     exports org.kumsal.ficomSoft;
 
 }
