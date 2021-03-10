@@ -11,7 +11,7 @@ import org.kairos.layouts.RecyclerView;
 import java.io.IOException;
 
 public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> {
-    load_adapter(){
+    public load_adapter(){
 
     }
     class testHolder extends RecyclerView.ViewHolder{
@@ -40,7 +40,7 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
         public testHolder(FXMLLoader loader) {
             super(loader);
-            
+
 
         }
     }
@@ -48,7 +48,7 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
     @Override
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
 
-            fxmlLoader.setLocation(getClass().getResource("upload_single.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("org/kumsal/ficomSoft/upload_single.fxml"));
         return new testHolder(fxmlLoader);
     }
 
