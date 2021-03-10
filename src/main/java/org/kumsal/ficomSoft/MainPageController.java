@@ -1,15 +1,17 @@
 package org.kumsal.ficomSoft;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -76,6 +78,10 @@ public class MainPageController extends Activity {
 //        transition.
 
     }
+
+//    public Button getMain_page_current() {
+//        return main_page_current;
+//    }
 
     @FXML
     void onLoad(ActionEvent event) throws IOException {
@@ -147,7 +153,10 @@ public class MainPageController extends Activity {
     void initialize() throws IOException {
 
 
-        pane=FXMLLoader.load(getClass().getResource("home.fxml"));
+//        AnchorPane pane= FXMLLoader.load(getClass().getResource("load.fxml"));
+//        JFXTextField pane2= (JFXTextField) pane.getChildren().get(1);
+//        pane2.setText("selam yavrum");
+//        pane=FXMLLoader.load(getClass().getResource("home.fxml"));
         currentFragment="home.fxml";
         mainFragment.getChildren().add(pane);
         main_page_home.getStyleClass().add("currentButton");

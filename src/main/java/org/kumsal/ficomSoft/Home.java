@@ -2,10 +2,13 @@ package org.kumsal.ficomSoft;
 
 import com.jfoenix.controls.JFXButton;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -27,8 +30,14 @@ public class Home {
     private Text auth;
 
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
+    letsgo_button.setOnMouseClicked(mouseEvent -> {
 
+//            MainPageController nesne=new MainPageController();
+//            nesne.getMain_page_current().setText("Selam  evlat");
+//                System.out.println("tamamdir");
+            }
+            );
 
     }
 }
