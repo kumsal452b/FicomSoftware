@@ -8,7 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import org.kairos.layouts.RecyclerView;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> {
@@ -49,8 +51,13 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
     @Override
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
-//        URL url=new URL("src/main/resources/org/kumsal/ficomsoft/upload_single.fxml");
-        fxmlLoader.setLocation(getClass().getClassLoader().getResource("upload_single.fxml"));
+        URL url=null;
+        try {
+            url = new File("src/main/resources/org/kumsal/ficomSoft/upoad_single.fxml").toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        fxmlLoader.setLocation(url);
         return new testHolder(fxmlLoader);
     }
 
