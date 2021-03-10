@@ -18,7 +18,7 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
     }
 
-    class testHolder extends RecyclerView.ViewHolder {
+    public class testHolder extends RecyclerView.ViewHolder {
 
         @FXML
         private Label single_count;
@@ -44,8 +44,6 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
         public testHolder(FXMLLoader loader) {
             super(loader);
-
-
         }
     }
 
