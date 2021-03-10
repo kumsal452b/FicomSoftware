@@ -67,9 +67,8 @@ public class Load {
         load_adapter adapter = new load_adapter();
         recycler_vıew.setAdapter(adapter);
         for (int i=0; i<30; i++) {
-            load_model theModel = new load_model("1", LocalDate.now(), "12", "test", "1", LocalDate.now(), LocalDate.now());
+            load_model theModel = new load_model(String.valueOf(i), null, "", "", "1", null, null);
             recycler_vıew.getItems().add(theModel);
         }
-
     }
 }

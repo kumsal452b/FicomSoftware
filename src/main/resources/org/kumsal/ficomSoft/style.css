@@ -60,7 +60,7 @@
 .label{
     -fx-font-family: sky;
     -fx-background-color: rgb(34, 66, 93);
-    -fx-text-fill: rgba(32,25,126,1);
+    -fx-text-fill: rgb(255, 255, 255);
 }
 .homeFragmentPane{
     -fx-background-color: linear-gradient(rgb(53, 69, 69), rgb(21, 91, 103));
@@ -83,4 +83,11 @@
 }
 .paneForHome{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
+}
+.single{
+    -fx-background-color: rgb(115, 123, 141);
+}
+.text-field{
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
 }
