@@ -25,8 +25,9 @@
 .mainScreenPainRigth{
     -fx-background-color: rgb(7, 1, 1);
     -fx-text-fill: white;
-    -fx-border-color: rgba(26,196,201,255);
-    -fx-border-style: dashed;
+    -fx-border-color: rgb(117, 174, 176);
+    -fx-border-style: groove;
+    -fx-border-width: 1.0 1.0 1.0 7.0;
     -fx-focus-traversable: true;
 }
 .mainScreenFragment{
@@ -48,11 +49,13 @@
 .mainScreenPainRigth:hover{
     -fx-background-color: rgba(26,196,201,255);
     -fx-focus-traversable: true;
-    -fx-translate-x: 12;
+    -fx-translate-x: 7;
 }
 .currentButton{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
     -fx-border-style: none;
+    -fx-border-color: rgb(22, 53, 53);
+    -fx-border-width: 1.0 1.0 1.0 7.0;
 }
 .label{
     -fx-font-family: sky;
@@ -72,4 +75,9 @@
 .buttonHomeFragment{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
     -fx-background-radius:0.0 20.0 0.0 20.0;
+}
+.tabPain{
+    -fx-border-width: 0.0 0.0 4.0 0.0;
+    -fx-border-color: #28d4bf;
+    -fx-border-radius: 0.0 0.0 20.0 20.0;
 }

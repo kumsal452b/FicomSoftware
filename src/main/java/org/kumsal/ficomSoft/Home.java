@@ -28,10 +28,7 @@ public class Home {
 
     @FXML
     void initialize() {
-        InputStream fontStream = Home.class.getResourceAsStream("skyline1.tff");
-        Font font=Font.loadFont(fontStream,50);
-        auth.setFont(font);
-        login_type.setFont(font);
+
 
     }
 }

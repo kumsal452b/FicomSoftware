@@ -16,20 +16,22 @@
                </font>
             </Text>
             <JFXButton fx:id="letsgo_button" layoutX="93.0" layoutY="336.0" prefHeight="38.0" prefWidth="157.0" styleClass="buttonHomeFragment" text="Hadi başlayalım" textFill="WHITE" />
+            <Pane layoutX="7.0" layoutY="91.0" prefHeight="200.0" prefWidth="350.0" styleClass="tabPain" />
          </children>
       </Pane>
       <Pane layoutX="389.0" layoutY="37.0" prefHeight="534.0" prefWidth="364.0" styleClass="homeFragmentPane2">
          <children>
-            <Text fx:id="login_type" fill="#ebebeb" layoutX="26.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="TextBackGround" text="Giriş Türü: ">
+            <Text fx:id="login_type" fill="#ebebeb" layoutX="26.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Giriş Türü: ">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Text fx:id="auth" fill="#ebebeb" layoutX="66.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yetki:">
+            <Text fx:id="auth" fill="#ebebeb" layoutX="66.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Yetki:">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
+            <Pane layoutX="14.0" layoutY="85.0" prefHeight="200.0" prefWidth="350.0" styleClass="tabPain" />
          </children>
       </Pane>
    </children>
