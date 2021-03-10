@@ -2,6 +2,7 @@ package org.kumsal.ficomSoft.AdapterModelClass;
 
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -15,45 +16,51 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
     }
     class testHolder extends RecyclerView.ViewHolder{
 
-        public Label count;
-        public JFXDatePicker time;
-        public JFXTextField sayi;
-        public JFXTextField konu;
-        public JFXTextField adet;
-        public JFXDatePicker evrakTarihi;
-        public JFXDatePicker imhaTarihi;
+        @FXML
+        private Label single_count;
+
+        @FXML
+        private JFXTextField single_sayi;
+
+        @FXML
+        private JFXDatePicker single_date;
+
+        @FXML
+        private JFXTextField single_konu;
+
+        @FXML
+        private JFXTextField single_adet;
+
+        @FXML
+        private JFXDatePicker single_evraktarihi;
+
+        @FXML
+        private JFXDatePicker single_imhaTarihi;
+
 
         public testHolder(FXMLLoader loader) {
-
             super(loader);
-            AnchorPane pane= null;
-            try {
-                pane = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            count= (Label) pane.getChildren().get(0);
-             time= (JFXDatePicker) pane.getChildren().get(1);
-             sayi= (JFXTextField) pane.getChildren().get(2);
-             konu= (JFXTextField) pane.getChildren().get(3);
-             adet= (JFXTextField) pane.getChildren().get(4);
-             evrakTarihi= (JFXDatePicker) pane.getChildren().get(5);
-             imhaTarihi= (JFXDatePicker) pane.getChildren().get(6);
+            
+
         }
     }
 
     @Override
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
-        try {
-            fxmlLoader.load(getClass().getResource("upload_single.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+            fxmlLoader.setLocation(getClass().getResource("upload_single.fxml"));
         return new testHolder(fxmlLoader);
     }
 
     @Override
     public void onBindViewHolder(testHolder testHolder, Object o) {
-        
+    load_model theModel=(load_model) o;
+    testHolder.single_adet.setText(theModel.getAdet());
+    testHolder.single_count.setText(theModel.getCount());
+    testHolder.single_date.setValue(theModel.getTime());
+    testHolder.single_evraktarihi.setValue(theModel.getEvrakTarihi());
+    testHolder.single_imhaTarihi.setValue(theModel.getImhaTarihi());
+    testHolder.single_konu.setText(theModel.getKonu());
+
     }
 }
