@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import org.kairos.layouts.RecyclerView?>
 
 <AnchorPane prefHeight="600.0" prefWidth="773.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.Load">
    <children>
-      <Button layoutX="40.0" layoutY="30.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="161.0" styleClass="buttonHomeFragment" text="Dosya seç..." textFill="WHITE" />
-      <JFXTextField layoutX="230.0" layoutY="35.0" prefHeight="27.0" prefWidth="175.0" />
-      <Pane layoutX="4.0" layoutY="67.0" prefHeight="15.0" prefWidth="788.0" styleClass="tabPain" />
+      <Button layoutX="47.0" layoutY="18.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="161.0" styleClass="buttonHomeFragment" text="Dosya seç..." textFill="WHITE" />
+      <JFXTextField editable="false" focusColor="WHITE" layoutX="236.0" layoutY="25.0" prefHeight="27.0" prefWidth="175.0" promptText="Yükleneccek dosyayı seçiniz." />
+      <Pane layoutX="4.0" layoutY="55.0" prefHeight="13.0" prefWidth="788.0" styleClass="tabPain" />
+      <JFXComboBox fx:id="upload_destıs_no" layoutX="39.0" layoutY="82.0" prefHeight="25.0" prefWidth="139.0" promptText="Destis No Seçiniz" />
+      <JFXTextField fx:id="upload_birim" layoutX="201.0" layoutY="82.0" prefHeight="25.0" prefWidth="139.0" promptText="Birim giriniz." />
+      <JFXTextField fx:id="upload_spdno" layoutX="367.0" layoutY="82.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Kodu giriniz." />
+      <JFXTextField fx:id="upload_spdkarsilik" layoutX="540.0" layoutY="82.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Karşılığı giriniz." />
+      <JFXTextField fx:id="upload_ozelkod" layoutX="39.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kodu giriniz." />
+      <JFXTextField fx:id="upload_ozelkodkarssiligi" layoutX="201.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kod karşılığı" />
+      <JFXTextField fx:id="upload_klasorno" layoutX="367.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Klasör No giriniz." />
+      <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="196.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz." />
+      <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="196.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz." />
+      <JFXTextField fx:id="upload_aciklama" layoutX="540.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz." />
+      <RecyclerView fx:id="recycler_vıew" layoutX="39.0" layoutY="237.0" prefHeight="355.0" prefWidth="668.0" styleClass="buttonHomeFragment" />
+      <Button fx:id="upload_arsivekaydet" layoutX="367.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" text="Arşive Kaydet" />
+      <Button fx:id="upload_yazdır" layoutX="540.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" text="Yazdır" />
    </children>
 </AnchorPane>
