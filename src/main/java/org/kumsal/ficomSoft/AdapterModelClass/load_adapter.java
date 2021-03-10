@@ -9,12 +9,14 @@ import javafx.scene.layout.AnchorPane;
 import org.kairos.layouts.RecyclerView;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> {
-    public load_adapter(){
+    public load_adapter() {
 
     }
-    class testHolder extends RecyclerView.ViewHolder{
+
+    class testHolder extends RecyclerView.ViewHolder {
 
         @FXML
         private Label single_count;
@@ -47,20 +49,20 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
     @Override
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
-
-            fxmlLoader.setLocation(getClass().getResource("org/kumsal/ficomSoft/upload_single.fxml"));
+//        URL url=new URL("src/main/resources/org/kumsal/ficomsoft/upload_single.fxml");
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource("upload_single.fxml"));
         return new testHolder(fxmlLoader);
     }
 
     @Override
     public void onBindViewHolder(testHolder testHolder, Object o) {
-    load_model theModel=(load_model) o;
-    testHolder.single_adet.setText(theModel.getAdet());
-    testHolder.single_count.setText(theModel.getCount());
-    testHolder.single_date.setValue(theModel.getTime());
-    testHolder.single_evraktarihi.setValue(theModel.getEvrakTarihi());
-    testHolder.single_imhaTarihi.setValue(theModel.getImhaTarihi());
-    testHolder.single_konu.setText(theModel.getKonu());
+        load_model theModel = (load_model) o;
+        testHolder.single_adet.setText(theModel.getAdet());
+        testHolder.single_count.setText(theModel.getCount());
+        testHolder.single_date.setValue(theModel.getTime());
+        testHolder.single_evraktarihi.setValue(theModel.getEvrakTarihi());
+        testHolder.single_imhaTarihi.setValue(theModel.getImhaTarihi());
+        testHolder.single_konu.setText(theModel.getKonu());
 
     }
 }
