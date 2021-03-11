@@ -22,13 +22,16 @@ import javafx.print.PageLayout;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import org.kairos.layouts.RecyclerView;
 import org.kairos.layouts.ViewPager;
 import org.kumsal.ficomSoft.AdapterModelClass.load_adapter;
@@ -113,6 +116,7 @@ public class Load {
     void initialize() {
         PrinterJob printerJob = Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
 
+
         load_adapter adapter = new load_adapter();
         recycler_vıew.setAdapter(adapter);
         for (int i = 0; i < 30; i++) {
@@ -122,36 +126,49 @@ public class Load {
         ListView<String> deneme = new ListView<>();
 
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
-            SnapshotParameters snapshotParameters=new SnapshotParameters();
-//            snapshotParameters.setFill(C)
-            URL url=null;
+//            SnapshotParameters snapshotParameters=new SnapshotParameters();
+////            snapshotParameters.setFill(C)
+//            URL url=null;
+//            try {
+//                url = new File("src/main/resources/org/kumsal/ficomSoft/image/image1.jpg").toURI().toURL();
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+////            Image image1 = new Image(url.toString());
+////            ImageView imageView = new ImageView(image1);
+////            printImage(imageView);
+//            Book book=new Book();
+//
+//            WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
+//            WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
+//            File file = new File("nodeImage.png");
+//
+//            try {
+//                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+//
+//                Image imageToPrint = new Image(file.toURI().toString());
+//                ImageView imageView = new ImageView(imageToPrint);
+//                printImage(imageView);
+//                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
+//
+//
+//                printImage(bufferedImage);
+//            } catch (IOException ex) {
+//                System.out.println(ex.toString());
+//            }
+            FXMLLoader loader=new FXMLLoader();
+            loader.setLocation(getClass().getResource("printScreen.fxml"));
+            AnchorPane root= null;
             try {
-                url = new File("src/main/resources/org/kumsal/ficomSoft/image/image1.jpg").toURI().toURL();
-            } catch (MalformedURLException e) {
+                root = loader.load();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-//            Image image1 = new Image(url.toString());
-//            ImageView imageView = new ImageView(image1);
-//            printImage(imageView);
-            Book book=new Book();
-
-            WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
-            WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
-            File file = new File("nodeImage.png");
-
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-
-                Image imageToPrint = new Image(file.toURI().toString());
-                ImageView imageView = new ImageView(imageToPrint);
-                printImage(imageView);
-                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
-
-
-                printImage(bufferedImage);
-            } catch (IOException ex) {
-                System.out.println(ex.toString());
-            }
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         });
     }
     public void printImage(Node node) {
