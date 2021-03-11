@@ -8,11 +8,11 @@
 
 <AnchorPane prefHeight="842.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
    <children>
-      <Pane fx:id="pane" layoutX="9.0" layoutY="25.0" prefHeight="813.0" prefWidth="573.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Pane fx:id="pane" layoutX="9.0" layoutY="30.0" prefHeight="808.0" prefWidth="563.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <RecyclerView fx:id="recycler" layoutX="1.0" layoutY="36.0" prefHeight="760.0" prefWidth="573.0" />
-            <Button fx:id="yazdir" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="Yazdır" />
+            <RecyclerView fx:id="recycler" layoutX="1.0" layoutY="31.0" prefHeight="765.0" prefWidth="573.0" />
          </children>
       </Pane>
+      <Button fx:id="yazdir" layoutX="48.0" layoutY="2.0" mnemonicParsing="false" text="Yazdır" />
    </children>
 </AnchorPane>

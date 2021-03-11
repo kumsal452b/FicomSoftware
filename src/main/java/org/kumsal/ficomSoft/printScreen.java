@@ -11,6 +11,9 @@ import java.util.ResourceBundle;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
@@ -43,22 +46,31 @@ public class printScreen {
     private Button yazdir;
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
-        java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
-        printerJob.setPrintable(new Printable() {
-            @Override
-            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-                if (pageIndex != 0) {
-                    return NO_SUCH_PAGE;
-                }
-                graphics.drawImage(image, 0, 0, 500, image.getHeight(), null);
-                return PAGE_EXISTS;
-            }
-        });
-        try {
-            printerJob.print();
-        } catch (PrinterException e1) {
-            e1.printStackTrace();
+        PageLayout layout=printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
+        for (int i=0; i<2;i++){
+            printJob.printPage(layout,pane);
         }
+        if (printJob.printPage(layout,pane)){
+            printJob.endJob();
+        }
+
+
+                                     java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
+//        printerJob.setPrintable(new Printable() {
+//            @Override
+//            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+//                if (pageIndex != 0) {
+//                    return NO_SUCH_PAGE;
+//                }
+//                graphics.drawImage(image, 0, 0, 500, image.getHeight(), null);
+//                return PAGE_EXISTS;
+//            }
+//        });
+//        try {
+//            printerJob.print();
+//        } catch (PrinterException e1) {
+//            e1.printStackTrace();
+//        }
     }
 
     @FXML

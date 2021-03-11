@@ -6,18 +6,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="46.0" prefWidth="595.0" styleClass="single" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="46.0" prefWidth="573.0" styleClass="single" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="single_count" layoutX="15.0" layoutY="14.0" text="1" textFill="WHITE" AnchorPane.topAnchor="10.0">
+      <Label fx:id="single_count" layoutX="15.0" layoutY="10.0" text="1" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="single_sayi" labelFloat="true" layoutX="152.0" layoutY="14.0" prefHeight="25.0" prefWidth="51.0" promptText="Sayı" AnchorPane.topAnchor="10.0" />
-      <JFXDatePicker fx:id="single_date" defaultColor="#f4fffe" layoutX="37.0" layoutY="14.0" prefHeight="28.0" prefWidth="100.0" promptText="Tarih" styleClass="text-field" AnchorPane.topAnchor="10.0" />
-      <JFXTextField fx:id="single_konu" labelFloat="true" layoutX="211.0" layoutY="11.0" prefHeight="25.0" prefWidth="86.0" promptText="Konu" AnchorPane.topAnchor="10.0" />
-      <JFXTextField fx:id="single_adet" labelFloat="true" layoutX="309.0" layoutY="11.0" prefHeight="25.0" prefWidth="51.0" promptText="Adet" AnchorPane.topAnchor="10.0" />
-      <JFXDatePicker fx:id="single_evraktarihi" defaultColor="#f2fffe" layoutX="372.0" layoutY="10.0" prefHeight="28.0" prefWidth="100.0" promptText="Evrak Tarihi" AnchorPane.topAnchor="10.0" />
+      <JFXTextField fx:id="single_sayi" labelFloat="true" layoutX="152.0" layoutY="10.0" prefHeight="25.0" prefWidth="51.0" promptText="Sayı" AnchorPane.topAnchor="10.0" />
+      <JFXDatePicker fx:id="single_date" defaultColor="#f4fffe" layoutX="37.0" layoutY="10.0" prefHeight="28.0" prefWidth="100.0" promptText="Tarih" styleClass="text-field" AnchorPane.topAnchor="10.0" />
+      <JFXTextField fx:id="single_konu" labelFloat="true" layoutX="211.0" layoutY="10.0" prefHeight="25.0" prefWidth="86.0" promptText="Konu" AnchorPane.topAnchor="10.0" />
+      <JFXTextField fx:id="single_adet" labelFloat="true" layoutX="309.0" layoutY="10.0" prefHeight="25.0" prefWidth="51.0" promptText="Adet" AnchorPane.topAnchor="10.0" />
+      <JFXDatePicker fx:id="single_evraktarihi" defaultColor="#f2fffe" layoutX="372.0" layoutY="10.0" prefHeight="28.0" prefWidth="100.0" promptText="Evrak Tarihi" />
       <JFXDatePicker fx:id="single_imhaTarihi" defaultColor="WHITE" layoutX="478.0" layoutY="10.0" prefHeight="28.0" prefWidth="100.0" promptText="İmha Tarihi" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>
