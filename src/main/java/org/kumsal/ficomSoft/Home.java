@@ -31,6 +31,8 @@ public class Home {
 
     @FXML
     void initialize() throws IOException {
+        PrimaryController controller=new PrimaryController();
+        login_type.setText(PrimaryController.type);
 
     }
 }

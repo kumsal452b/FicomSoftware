@@ -8,14 +8,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.kairos.core.Activity;
+import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
 
 
 import java.io.IOException;
@@ -151,6 +154,7 @@ public class MainPageController extends Activity {
 
     @FXML
     void initialize() throws IOException {
+
 
 
 //        AnchorPane pane= FXMLLoader.load(getClass().getResource("load.fxml"));

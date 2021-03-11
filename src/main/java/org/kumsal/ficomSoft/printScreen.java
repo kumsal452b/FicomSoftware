@@ -47,7 +47,7 @@ public class printScreen {
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         PageLayout layout=printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
-        for (int i=0; i<2;i++){
+        for (int i=0; i<1;i++){
             printJob.printPage(layout,pane);
         }
         if (printJob.printPage(layout,pane)){
@@ -78,7 +78,7 @@ public class printScreen {
 
         load_adapter adapter = new load_adapter();
         recycler.setAdapter(adapter);
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 12; i++) {
             load_model theModel = new load_model(String.valueOf(i), null, "", "", "1", null, null);
             recycler.getItems().add(theModel);
         }

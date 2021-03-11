@@ -118,6 +118,8 @@ public class PrimaryController {
 
 
     }
+    static public String type="";
+    static  public String name="";
 
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword,boolean isEnd) {
         for (int i=0; i<sendLogedData.size();i++){
@@ -132,6 +134,8 @@ public class PrimaryController {
                     // Step 4
                     Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
                     // Step 5
+                    type=sendLogedData.get(i).getUsername();
+                    name=sendLogedData.get(i).getName()+" "+sendLogedData.get(i).getSurname();
                     stage.setUserData(sendLogedData.get(i));
                     // Step 6
                     Scene scene = new Scene(root);
