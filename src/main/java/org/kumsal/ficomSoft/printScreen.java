@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javafx.scene.transform.Transform;
 import org.kairos.layouts.RecyclerView;
 import org.kumsal.ficomSoft.AdapterModelClass.load_adapter;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
@@ -49,10 +50,7 @@ public class printScreen {
                 if (pageIndex != 0) {
                     return NO_SUCH_PAGE;
                 }
-                Paper paper=new Paper();
-                paper.setSize(400,600);
-                pageFormat.setPaper(paper);
-                graphics.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+                graphics.drawImage(image, 0, 0, 550, image.getHeight(), null);
                 return PAGE_EXISTS;
             }
         });
@@ -85,6 +83,8 @@ public class printScreen {
 //            ImageView imageView = new ImageView(image1);
 //            printImage(imageView);
             Book book=new Book();
+
+            SnapshotParameters parameters=new SnapshotParameters();
 
             WritableImage writableImage = recycler.snapshot(new SnapshotParameters(), null);
             WritableImage image = recycler.snapshot(new SnapshotParameters(), null);
