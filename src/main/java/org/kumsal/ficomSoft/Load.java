@@ -6,9 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
+import java.awt.print.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -94,6 +92,9 @@ public class Load {
                 if (pageIndex != 0) {
                     return NO_SUCH_PAGE;
                 }
+                Paper paper=new Paper();
+                paper.setSize(400,600);
+                pageFormat.setPaper(paper);
                 graphics.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
                 return PAGE_EXISTS;
             }
@@ -118,24 +119,24 @@ public class Load {
         ListView<String> deneme = new ListView<>();
 
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
-            printerJob.showPrintDialog(recycler_vıew.getScene().getWindow());
-            if (printerJob != null && printerJob.showPrintDialog(recycler_vıew.getScene().getWindow())) {
+            SnapshotParameters snapshotParameters=new SnapshotParameters();
+//            snapshotParameters.setFill(C)
 
-                WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
-                WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
-                File file = new File("nodeImage.png");
+            Book book=new Book();
 
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
+            WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
+            File file = new File("nodeImage.png");
 
-                    Image imageToPrint = new Image(file.toURI().toString());
-                    BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
-                    printImage(bufferedImage);
-                } catch (IOException ex) {
-                    System.out.println(ex.toString());
-                }
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+
+                Image imageToPrint = new Image(file.toURI().toString());
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
+                printImage(bufferedImage);
+            } catch (IOException ex) {
+                System.out.println(ex.toString());
             }
-
         });
     }
 }
