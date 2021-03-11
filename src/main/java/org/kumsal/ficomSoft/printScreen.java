@@ -50,7 +50,7 @@ public class printScreen {
                 if (pageIndex != 0) {
                     return NO_SUCH_PAGE;
                 }
-                graphics.drawImage(image, 0, 0, 550, image.getHeight(), null);
+                graphics.drawImage(image, 0, 0, 500, image.getHeight(), null);
                 return PAGE_EXISTS;
             }
         });
