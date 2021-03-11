@@ -15,6 +15,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -83,10 +84,9 @@ public class Load {
     @FXML
     private Button upload_yazdır;
 
-    private void printImage(BufferedImage image)
-    {
+    private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
-        java.awt.print.PrinterJob printerJob= java.awt.print.PrinterJob.getPrinterJob();
+        java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
 
         printerJob.setPrintable(new Printable() {
             @Override
@@ -98,52 +98,44 @@ public class Load {
                 return PAGE_EXISTS;
             }
         });
-        try
-        {
+        try {
             printerJob.print();
-        }
-        catch (PrinterException e1)
-        {
+        } catch (PrinterException e1) {
             e1.printStackTrace();
         }
     }
 
     @FXML
     void initialize() {
-        PrinterJob printerJob= Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
+        PrinterJob printerJob = Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
 
         load_adapter adapter = new load_adapter();
         recycler_vıew.setAdapter(adapter);
-        for (int i=0; i<30; i++) {
+        for (int i = 0; i < 30; i++) {
             load_model theModel = new load_model(String.valueOf(i), null, "", "", "1", null, null);
             recycler_vıew.getItems().add(theModel);
         }
-        ListView<String> deneme=new ListView<>();
+        ListView<String> deneme = new ListView<>();
 
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
             printerJob.showPrintDialog(recycler_vıew.getScene().getWindow());
-            if (printerJob != null && printerJob.showPrintDialog(recycler_vıew.getScene().getWindow())){
-                boolean success = printerJob.printPage(recycler_vıew);
-                if (success) {
-                    printerJob.endJob();
-                    WritableImage writableImage=recycler_vıew.snapshot(new SnapshotParameters(),null);
-                    WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
-                    File file = new File("nodeImage.png");
+            if (printerJob != null && printerJob.showPrintDialog(recycler_vıew.getScene().getWindow())) {
 
-                    try
-                    {
-                        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
+                WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
+                File file = new File("nodeImage.png");
 
-                        Image imageToPrint = new Image(file.toURI().toString());
-                        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
-                        printImage(bufferedImage);
-                    }
-                    catch (IOException ex)
-                    {
-                        System.out.println(ex.toString());
-                    }
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+
+                    Image imageToPrint = new Image(file.toURI().toString());
+                    BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
+                    printImage(bufferedImage);
+                } catch (IOException ex) {
+                    System.out.println(ex.toString());
                 }
             }
+
         });
     }
 }
