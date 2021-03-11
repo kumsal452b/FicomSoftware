@@ -9,7 +9,8 @@ module org.kumsal.ficomSoft {
     requires ojdbc10;
     requires java.sql;
     requires java.naming;
-    requires javafx.graphicsEmpty;
+    requires  javafx.graphics;
+    requires javafx.swing;
 
     opens org.kumsal.ficomSoft to com.jfoenix, javafx.fxml,javafx.controls;
     opens org.kumsal.ficomSoft.AdapterModelClass to javafx.fxml;

@@ -46,6 +46,12 @@
             <artifactId>tornadofx</artifactId>
             <version>1.7.20</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>16</version>
+        </dependency>
+
 
     </dependencies>
     <build>
