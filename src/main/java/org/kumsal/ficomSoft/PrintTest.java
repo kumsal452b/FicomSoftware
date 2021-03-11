@@ -51,7 +51,7 @@ public class PrintTest extends Application {
     }
 
     private void print(final ActionEvent actionEvent) {
-        printer.setScale(3);
+        printer.setScale(2);
         printer.setPrintRectangle(getPrintRectangle());
         boolean success = printer.print(job, true, getNodeToPrint());
         if (success) {
@@ -74,10 +74,8 @@ public class PrintTest extends Application {
             Group group = new Group();
             group.getChildren().addAll(
                     new Rectangle(200, 100, Color.RED),
-                    new Rectangle(200, 100, 200, 100),
-                    new Rectangle(400, 200, 200, 100),
-                    new Rectangle(600, 300, 200, 100),
-                    new Rectangle(800, 400, 200, 100)
+                    new Rectangle(200, 100, 200, 100)
+
             );
 
             nodeToPrint = group;

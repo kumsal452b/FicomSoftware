@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -20,11 +21,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.print.PageLayout;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.transform.Scale;
 import org.kairos.layouts.RecyclerView;
 import org.kairos.layouts.ViewPager;
 import org.kumsal.ficomSoft.AdapterModelClass.load_adapter;
@@ -85,7 +89,6 @@ public class Load {
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
-
         printerJob.setPrintable(new Printable() {
             @Override
             public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
@@ -121,7 +124,15 @@ public class Load {
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
             SnapshotParameters snapshotParameters=new SnapshotParameters();
 //            snapshotParameters.setFill(C)
-
+            URL url=null;
+            try {
+                url = new File("src/main/resources/org/kumsal/ficomSoft/image/image1.jpg").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+//            Image image1 = new Image(url.toString());
+//            ImageView imageView = new ImageView(image1);
+//            printImage(imageView);
             Book book=new Book();
 
             WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
@@ -132,12 +143,66 @@ public class Load {
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
 
                 Image imageToPrint = new Image(file.toURI().toString());
+                ImageView imageView = new ImageView(imageToPrint);
+                printImage(imageView);
                 BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
+
+
                 printImage(bufferedImage);
             } catch (IOException ex) {
                 System.out.println(ex.toString());
             }
         });
+    }
+    public void printImage(Node node) {
+
+        Printer printer = Printer.getDefaultPrinter();
+        PageLayout pageLayout = printer.getDefaultPageLayout();
+        System.out.println("PageLayout: " + pageLayout);
+
+        // Printable area
+        double pWidth = pageLayout.getPrintableWidth();
+        double pHeight = pageLayout.getPrintableHeight();
+        System.out.println("Printable area is " + pWidth + " width and "
+                + pHeight + " height.");
+
+        // Node's (Image) dimensions
+        double nWidth = node.getBoundsInParent().getWidth();
+        double nHeight = node.getBoundsInParent().getHeight();
+        System.out.println("Node's dimensions are " + nWidth + " width and "
+                + nHeight + " height");
+
+        // How much space is left? Or is the image to big?
+        double widthLeft = pWidth - nWidth;
+        double heightLeft = pHeight - nHeight;
+        System.out.println("Width left: " + widthLeft
+                + " height left: " + heightLeft);
+
+        // scale the image to fit the page in width, height or both
+        double scale = 0;
+
+        if (widthLeft < heightLeft) {
+            scale = pWidth / nWidth;
+        } else {
+            scale = pHeight / nHeight;
+        }
+
+        // preserve ratio (both values are the same)
+        node.getTransforms().add(new Scale(scale, scale));
+
+        // after scale you can check the size fit in the printable area
+        double newWidth = node.getBoundsInParent().getWidth();
+        double newHeight = node.getBoundsInParent().getHeight();
+        System.out.println("New Node's dimensions: " + newWidth
+                + " width " + newHeight + " height");
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null) {
+            boolean success = job.printPage(node);
+            if (success) {
+                job.endJob();
+            }
+        }
     }
 }
 
