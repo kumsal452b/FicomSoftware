@@ -25,14 +25,13 @@ public class Home {
 
     @FXML
     private Text login_type;
-
     @FXML
     private Text auth;
 
     @FXML
     void initialize() throws IOException {
-        PrimaryController controller=new PrimaryController();
-        login_type.setText(PrimaryController.type);
+//        PrimaryController controller=new PrimaryController();
+//        login_type.setText(PrimaryController.type);
 
     }
 }

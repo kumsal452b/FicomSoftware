@@ -1,14 +1,5 @@
 package org.kumsal.ficomSoft;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.print.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.print.PageLayout;
@@ -21,12 +12,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
-import javafx.scene.transform.Transform;
 import org.kairos.layouts.RecyclerView;
 import org.kumsal.ficomSoft.AdapterModelClass.load_adapter;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.print.Book;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class printScreen {
 
@@ -44,18 +41,20 @@ public class printScreen {
 
     @FXML
     private Button yazdir;
+
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
-        PageLayout layout=printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
-        for (int i=0; i<1;i++){
-            printJob.printPage(layout,pane);
+        PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
+        printJob.showPrintDialog(pane.getScene().getWindow());
+        for (int i = 0; i < 1; i++) {
+            printJob.printPage(layout, pane);
         }
-        if (printJob.printPage(layout,pane)){
+        if (printJob.printPage(layout, pane)) {
             printJob.endJob();
         }
 
 
-                                     java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
+        java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
 //        printerJob.setPrintable(new Printable() {
 //            @Override
 //            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
@@ -83,9 +82,9 @@ public class printScreen {
             recycler.getItems().add(theModel);
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
-            SnapshotParameters snapshotParameters=new SnapshotParameters();
+            SnapshotParameters snapshotParameters = new SnapshotParameters();
 //            snapshotParameters.setFill(C)
-            URL url=null;
+            URL url = null;
             try {
                 url = new File("src/main/resources/org/kumsal/ficomSoft/image/image1.jpg").toURI().toURL();
             } catch (MalformedURLException e) {
@@ -94,9 +93,9 @@ public class printScreen {
 //            Image image1 = new Image(url.toString());
 //            ImageView imageView = new ImageView(image1);
 //            printImage(imageView);
-            Book book=new Book();
+            Book book = new Book();
 
-            SnapshotParameters parameters=new SnapshotParameters();
+            SnapshotParameters parameters = new SnapshotParameters();
 
             WritableImage writableImage = recycler.snapshot(new SnapshotParameters(), null);
             WritableImage image = recycler.snapshot(new SnapshotParameters(), null);
