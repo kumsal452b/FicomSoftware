@@ -53,7 +53,6 @@ public class printScreen {
         if (printJob.showPrintDialog(pane.getScene().getWindow())) {
             printJob.endJob();
         }
-        java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
 
     }
 
