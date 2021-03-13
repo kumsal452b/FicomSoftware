@@ -57,11 +57,7 @@
     -fx-border-color: rgb(22, 53, 53);
     -fx-border-width: 1.0 1.0 1.0 7.0;
 }
-.label{
-    -fx-font-family: sky;
-    -fx-background-color: rgb(34, 66, 93);
-    -fx-text-fill: rgb(255, 255, 255);
-}
+
 .homeFragmentPane{
     -fx-background-color: linear-gradient(rgb(53, 69, 69), rgb(21, 91, 103));
     -fx-text-fill: rgba(32,25,126,1);
@@ -90,4 +86,15 @@
 .text-field{
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
+}
+.anchorPane{
+    -fx-border-width: 2;
+   -fx-border-style: groove;
+    -fx-border-color: #0e1312;
+}
+.anchorPane2{
+    -fx-border-width: 0.0 2.0 0.0 2.0;
+    -fx-border-style: groove;
+    -fx-border-color: #0e1312;
+    -fx-background-color: #e7ebf8;
 }

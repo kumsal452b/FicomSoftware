@@ -126,36 +126,8 @@ public class Load {
         ListView<String> deneme = new ListView<>();
 
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
-//            SnapshotParameters snapshotParameters=new SnapshotParameters();
-////            snapshotParameters.setFill(C)
-//            URL url=null;
-//            try {
-//                url = new File("src/main/resources/org/kumsal/ficomSoft/image/image1.jpg").toURI().toURL();
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-////            Image image1 = new Image(url.toString());
-////            ImageView imageView = new ImageView(image1);
-////            printImage(imageView);
-//            Book book=new Book();
-//
-//            WritableImage writableImage = recycler_vıew.snapshot(new SnapshotParameters(), null);
-//            WritableImage image = recycler_vıew.snapshot(new SnapshotParameters(), null);
-//            File file = new File("nodeImage.png");
-//
-//            try {
-//                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-//
-//                Image imageToPrint = new Image(file.toURI().toString());
-//                ImageView imageView = new ImageView(imageToPrint);
-//                printImage(imageView);
-//                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
-//
-//
-//                printImage(bufferedImage);
-//            } catch (IOException ex) {
-//                System.out.println(ex.toString());
-//            }
+            load_model model=recycler_vıew.getItems().get(0);
+            String test=model.getAdet();
             FXMLLoader loader=new FXMLLoader();
             loader.setLocation(getClass().getResource("printScreen.fxml"));
             AnchorPane root= null;
