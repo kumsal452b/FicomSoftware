@@ -23,7 +23,7 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
     }
     public static ArrayList<JFXTextField> textFields=new ArrayList<>();
     public static ArrayList<JFXDatePicker> jfxDatePickers=new ArrayList<>();
-
+    public static int counter=0;
     public class testHolder extends RecyclerView.ViewHolder {
 
         @FXML
@@ -84,6 +84,7 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
         testHolder.single_evraktarihi.setValue(theModel.getEvrakTarihi());
         testHolder.single_imhaTarihi.setValue(theModel.getImhaTarihi());
         testHolder.single_konu.setText(theModel.getKonu());
-
+        counter++;
+        System.out.println(counter);
     }
 }
