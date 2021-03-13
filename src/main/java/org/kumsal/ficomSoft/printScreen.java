@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import org.kairos.layouts.RecyclerView;
-import org.kumsal.ficomSoft.AdapterModelClass.load_adapter;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
 import javax.imageio.ImageIO;
@@ -59,11 +58,11 @@ public class printScreen {
     @FXML
     void initialize() {
 
-        load_adapter adapter = new load_adapter();
-        recycler.setAdapter(adapter);
+//        load_adapter adapter = new load_adapter();
+//        recycler.setAdapter(adapter);
         for (int i = 0; i < 12; i++) {
-            load_model theModel = new load_model(String.valueOf(i), null, "", "", "1", null, null);
-            recycler.getItems().add(theModel);
+//            load_model theModel = new load_model(String.valueOf(i), null, "", "", "1", null, null);
+//            recycler.getItems().add(theModel);
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
             SnapshotParameters snapshotParameters = new SnapshotParameters();

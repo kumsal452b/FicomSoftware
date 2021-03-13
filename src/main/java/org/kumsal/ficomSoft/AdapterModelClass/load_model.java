@@ -8,14 +8,14 @@ import java.time.LocalDate;
 
 public class load_model {
     private String count;
-    private LocalDate time;
-    private String sayi;
-    private String konu;
-    private String adet;
-    private LocalDate evrakTarihi;
-    private LocalDate imhaTarihi;
+    private JFXDatePicker time;
+    private JFXTextField sayi;
+    private JFXTextField konu;
+    private JFXTextField adet;
+    private JFXDatePicker evrakTarihi;
+    private JFXDatePicker imhaTarihi;
 
-    public load_model(String count, LocalDate time, String sayi, String konu, String adet, LocalDate evrakTarihi, LocalDate imhaTarihi) {
+    public load_model(String count, JFXDatePicker time, JFXTextField sayi, JFXTextField konu, JFXTextField adet, JFXDatePicker evrakTarihi, JFXDatePicker imhaTarihi) {
         this.count = count;
         this.time = time;
         this.sayi = sayi;
@@ -26,7 +26,7 @@ public class load_model {
 
     }
 
-    public String getCount() {
+    public String  getCount() {
         return count;
     }
 
@@ -34,51 +34,51 @@ public class load_model {
         this.count = count;
     }
 
-    public LocalDate getTime() {
+    public JFXDatePicker getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(JFXDatePicker time) {
         this.time = time;
     }
 
-    public String getSayi() {
+    public JFXTextField getSayi() {
         return sayi;
     }
 
-    public void setSayi(String sayi) {
+    public void setSayi(JFXTextField sayi) {
         this.sayi = sayi;
     }
 
-    public String getKonu() {
+    public JFXTextField getKonu() {
         return konu;
     }
 
-    public void setKonu(String konu) {
+    public void setKonu(JFXTextField konu) {
         this.konu = konu;
     }
 
-    public String getAdet() {
+    public JFXTextField getAdet() {
         return adet;
     }
 
-    public void setAdet(String adet) {
+    public void setAdet(JFXTextField adet) {
         this.adet = adet;
     }
 
-    public LocalDate getEvrakTarihi() {
+    public JFXDatePicker getEvrakTarihi() {
         return evrakTarihi;
     }
 
-    public void setEvrakTarihi(LocalDate evrakTarihi) {
+    public void setEvrakTarihi(JFXDatePicker evrakTarihi) {
         this.evrakTarihi = evrakTarihi;
     }
 
-    public LocalDate getImhaTarihi() {
+    public JFXDatePicker getImhaTarihi() {
         return imhaTarihi;
     }
 
-    public void setImhaTarihi(LocalDate imhaTarihi) {
+    public void setImhaTarihi(JFXDatePicker imhaTarihi) {
         this.imhaTarihi = imhaTarihi;
     }
 }
