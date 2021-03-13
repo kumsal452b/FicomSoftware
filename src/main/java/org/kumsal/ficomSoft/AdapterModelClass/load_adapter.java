@@ -43,7 +43,11 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
 
         public testHolder(FXMLLoader loader) {
+
             super(loader);
+            single_konu.setOnMouseClicked(mouseEvent -> {
+                System.out.println("tiklandi");
+            });
         }
     }
 

@@ -115,7 +115,9 @@ public class Load {
     @FXML
     void initialize() {
         PrinterJob printerJob = Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
-
+        recycler_vıew.setOnMouseClicked(mouseEvent -> {
+            System.out.println("");
+        });
 
         load_adapter adapter = new load_adapter();
         recycler_vıew.setAdapter(adapter);
