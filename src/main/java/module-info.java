@@ -13,7 +13,7 @@ module org.kumsal.ficomSoft {
     requires javafx.swing;
 
     opens org.kumsal.ficomSoft to com.jfoenix, javafx.fxml,javafx.controls;
-    opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml,javafx.controls;
+    opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml,javafx.controls,javafx.base;
 
     exports org.kumsal.ficomSoft;
 
