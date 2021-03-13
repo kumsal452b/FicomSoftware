@@ -1,5 +1,29 @@
 package org.kumsal.ficomSoft;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
+import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -10,33 +34,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import com.jfoenix.concurrency.JFXUtilities;
-import com.jfoenix.controls.*;
-import com.jfoenix.validation.RequiredFieldValidator;
-import com.mysql.cj.jdbc.MysqlDataSource;
-import javafx.animation.FadeTransition;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
-import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class PrimaryController {
 
@@ -55,11 +52,10 @@ public class PrimaryController {
     @FXML
     private AnchorPane main_anchor_pane;
 
-    private int count=1;
-    private String currentPath="";
+    private int count = 1;
+    private String currentPath = "";
     private FadeTransition fadeTransition;
     private FadeTransition fadeTransition2;
-
 
 
     @FXML
@@ -71,18 +67,18 @@ public class PrimaryController {
     @FXML
     private JFXButton login_screen_button;
 
-    RequiredFieldValidator validator=new RequiredFieldValidator();
+    RequiredFieldValidator validator = new RequiredFieldValidator();
 
 
     @FXML
     void login(ActionEvent event) throws SQLException {
-                                    MysqlDataSource dbSource=ConnectorMysql.connect();
+        MysqlDataSource dbSource = ConnectorMysql.connect();
         ResultSet resultSet;
-        String query="select * from admin";
-        String query2="select * from users";
+        String query = "select * from admin";
+        String query2 = "select * from users";
 
-        ArrayList<LoginModel> theLoggedAdmin=new ArrayList<>();
-        ArrayList<LoginModel> theLoggedUsers=new ArrayList<>();
+        ArrayList<LoginModel> theLoggedAdmin = new ArrayList<>();
+        ArrayList<LoginModel> theLoggedUsers = new ArrayList<>();
 
         Statement forAdmin = dbSource.getConnection().createStatement();
         Statement forusers = dbSource.getConnection().createStatement();
@@ -90,9 +86,9 @@ public class PrimaryController {
         forusers.execute(query2);
         forAdmin.execute(query);
 
-        resultSet=forAdmin.getResultSet();
-        while (resultSet.next()){
-            LoginModel theModel=new LoginModel("Admin",
+        resultSet = forAdmin.getResultSet();
+        while (resultSet.next()) {
+            LoginModel theModel = new LoginModel("Admin",
                     resultSet.getString("ad"),
                     resultSet.getString("soyad"),
                     resultSet.getString("username"),
@@ -100,42 +96,46 @@ public class PrimaryController {
             theLoggedAdmin.add(theModel);
         }
 
-        resultSet=forusers.getResultSet();
-        while (resultSet.next()){
-            LoginModel theModel=new LoginModel("User",
+        resultSet = forusers.getResultSet();
+        while (resultSet.next()) {
+            LoginModel theModel = new LoginModel("User",
                     resultSet.getString("ad"),
                     resultSet.getString("soyad"),
                     resultSet.getString("username"),
                     resultSet.getString("password"));
             theLoggedUsers.add(theModel);
         }
-        String theUsername=login_username.getText();
-        String thePassword=login_password.getText();
-        String loginBy="";
+        String theUsername = login_username.getText();
+        String thePassword = login_password.getText();
+        String loginBy = "";
 
-        loggedSetings(event, theLoggedAdmin, theUsername, thePassword,false);
-        loggedSetings(event,theLoggedUsers, theUsername, thePassword,true);
+        loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
+        loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
 
 
     }
-    static public String type="";
-    static  public String name="";
 
-    private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword,boolean isEnd) {
-        for (int i=0; i<sendLogedData.size();i++){
+    static public String type = "";
+    static public String name = "";
+    public static Stage stage;
 
-            if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)){
+    private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
+        for (int i = 0; i < sendLogedData.size(); i++) {
+
+            if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
                 Node node = (Node) event.getSource();
                 // Step 3
-                Stage stage = (Stage) node.getScene().getWindow();
+
+                stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 try {
+
 
                     // Step 4
                     Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
                     // Step 5
-                    type=sendLogedData.get(i).getUsername();
-                    name=sendLogedData.get(i).getName()+" "+sendLogedData.get(i).getSurname();
+                    type = sendLogedData.get(i).getUsername();
+                    name = sendLogedData.get(i).getName() + " " + sendLogedData.get(i).getSurname();
                     stage.setUserData(sendLogedData.get(i));
                     // Step 6
                     Scene scene = new Scene(root);
@@ -150,12 +150,12 @@ public class PrimaryController {
             }
 
             if (isEnd) {
-                if (i == sendLogedData.size()-1){
+                if (i == sendLogedData.size() - 1) {
                     showError("Password or Username was wrong");
                 }
             }
         }
-        if (sendLogedData.size()==0){
+        if (sendLogedData.size() == 0) {
             showError("Password or Username");
         }
     }
@@ -167,7 +167,6 @@ public class PrimaryController {
     }
 
 
-
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
 
@@ -177,7 +176,7 @@ public class PrimaryController {
         login_username.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (s.length()>0){
+                if (s.length() > 0) {
                     login_username.resetValidation();
                     System.out.println("selam");
                 }
@@ -187,7 +186,7 @@ public class PrimaryController {
         login_password.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (s.length()>0){
+                if (s.length() > 0) {
                     login_username.resetValidation();
                 }
             }
@@ -197,7 +196,7 @@ public class PrimaryController {
         fadeTransition.setNode(prim_imageView);
         fadeTransition2 = new FadeTransition(Duration.millis(4000));
         fadeTransition2.setNode(prim_imageView);
-        currentPath="src/main/resources/org/kumsal/ficomsoft/image/image"+count+".jpg";
+        currentPath = "src/main/resources/org/kumsal/ficomsoft/image/image" + count + ".jpg";
         changeImage(currentPath);
 
         setFadeFromAnim();
@@ -211,11 +210,12 @@ public class PrimaryController {
         prim_imageView.setFitWidth(600);
         prim_imageView.setFitHeight(500);
         prim_imageView.setSmooth(true);
-        double a=main_anchor_pane.prefWidthProperty().divide(2).subtract(prim_imageView.fitWidthProperty().divide(2).get()).get();
+        double a = main_anchor_pane.prefWidthProperty().divide(2).subtract(prim_imageView.fitWidthProperty().divide(2).get()).get();
         prim_imageView.xProperty().bind(main_anchor_pane.prefWidthProperty().divide(2).subtract(prim_imageView.fitWidthProperty().divide(2)));
 //        prim_imageView.setX(500);
     }
-    public void changeImage(String path){
+
+    public void changeImage(String path) {
         File file = new File(path);
         Image image = new Image(file.toURI().toString());
         prim_imageView.setImage(image);
@@ -227,21 +227,23 @@ public class PrimaryController {
         prim_imageView.setFitWidth(600);
         prim_imageView.setFitHeight(500);
     }
+
     public void setFadeFromAnim() {
         fadeTransition2.setFromValue(1);
         fadeTransition2.setToValue(0);
         fadeTransition2.setOnFinished(actionEvent -> {
 
             count++;
-            if (count>3){
-                count=1;
+            if (count > 3) {
+                count = 1;
             }
-            currentPath="src/main/resources/org/kumsal/ficomsoft/image/image"+count+".jpg";
+            currentPath = "src/main/resources/org/kumsal/ficomsoft/image/image" + count + ".jpg";
             changeImage(currentPath);
             setFadeToAnim();
         });
         fadeTransition2.play();
     }
+
     public void setFadeToAnim() {
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);

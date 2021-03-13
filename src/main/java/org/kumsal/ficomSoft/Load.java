@@ -197,6 +197,7 @@ public class Load {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(PrimaryController.stage);
             stage.show();
         });
     }
