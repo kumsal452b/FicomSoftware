@@ -140,6 +140,7 @@ public class PrimaryController {
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
+                    stage.setResizable(true);
                     // Step 7
                     stage.show();
                     return;

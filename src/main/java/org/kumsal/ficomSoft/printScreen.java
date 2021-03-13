@@ -36,7 +36,7 @@ public class printScreen {
     private Pane pane;
 
     @FXML
-    private RecyclerView<load_model> recycler;
+    private RecyclerView<printer_model> recycler;
 
     @FXML
     private Button yazdir;
@@ -58,11 +58,11 @@ public class printScreen {
     @FXML
     void initialize() {
 
-//        load_adapter adapter = new load_adapter();
-//        recycler.setAdapter(adapter);
-        for (int i = 0; i < 12; i++) {
-//            load_model theModel = new load_model(String.valueOf(i), null, "", "", "1", null, null);
-//            recycler.getItems().add(theModel);
+        printer_adapter adapter = new printer_adapter();
+        recycler.setAdapter(adapter);
+        for (int i = 0; i < Load.theModels.size(); i++) {
+            printer_model theModel=Load.theModels.get(i);
+            recycler.getItems().add(theModel);
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
             SnapshotParameters snapshotParameters = new SnapshotParameters();

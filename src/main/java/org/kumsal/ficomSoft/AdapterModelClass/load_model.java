@@ -15,7 +15,7 @@ public class load_model {
     private JFXDatePicker evrakTarihi;
     private JFXDatePicker imhaTarihi;
 
-    public load_model(String count, JFXDatePicker time, JFXTextField sayi, JFXTextField konu, JFXTextField adet, JFXDatePicker evrakTarihi, JFXDatePicker imhaTarihi) {
+    public load_model(String count,JFXTextField sayi, JFXTextField konu, JFXTextField adet,JFXDatePicker time, JFXDatePicker evrakTarihi, JFXDatePicker imhaTarihi) {
         this.count = count;
         this.time = time;
         this.sayi = sayi;

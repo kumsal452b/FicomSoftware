@@ -3,15 +3,6 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.print.*;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,6 +20,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Load {
 
@@ -73,13 +78,13 @@ public class Load {
     private TableView<load_model> table;
 
     @FXML
-    private TableColumn<load_model,String> adet;
+    private TableColumn<load_model, String> adet;
 
     @FXML
-    private TableColumn<load_model,String> sayi;
+    private TableColumn<load_model, String> sayi;
 
     @FXML
-    private TableColumn<load_model,JFXTextField> konu;
+    private TableColumn<load_model, JFXTextField> konu;
 
     @FXML
     private TableColumn<load_model, JFXTextField> sayfaAdedi;
@@ -99,6 +104,7 @@ public class Load {
 
     @FXML
     private Button upload_yazdır;
+    public static ArrayList<printer_model> theModels = new ArrayList<>();
 
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
@@ -109,8 +115,8 @@ public class Load {
                 if (pageIndex != 0) {
                     return NO_SUCH_PAGE;
                 }
-                Paper paper=new Paper();
-                paper.setSize(400,600);
+                Paper paper = new Paper();
+                paper.setSize(400, 600);
                 pageFormat.setPaper(paper);
                 graphics.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
                 return PAGE_EXISTS;
@@ -122,11 +128,12 @@ public class Load {
             e1.printStackTrace();
         }
     }
+
     ObservableList<load_model> models;
 
     @FXML
     void initialize() {
-        models= FXCollections.observableArrayList();
+        models = FXCollections.observableArrayList();
         PrinterJob printerJob = Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
 
         konu.setCellValueFactory(new PropertyValueFactory<>("konu"));
@@ -136,13 +143,46 @@ public class Load {
         adet.setCellValueFactory(new PropertyValueFactory<>("count"));
         sayfaAdedi.setCellValueFactory(new PropertyValueFactory<>("adet"));
         imhatarihi.setCellValueFactory(new PropertyValueFactory<>("imhaTarihi"));
-        for (int i=0; i<10;i++){
-            load_model themodel=new load_model(String.valueOf(i) ,new JFXDatePicker(),new JFXTextField(),new JFXTextField(),
-                    new JFXTextField(),new JFXDatePicker(),new JFXDatePicker());
+
+
+        for (int i = 0; i < 10; i++) {
+            JFXTextField sayi = new JFXTextField();
+            sayi.setPrefHeight(25);
+            load_model themodel = new load_model(String.valueOf(i),
+                    sayi,
+                    new JFXTextField(),
+                    new JFXTextField(),
+                    new JFXDatePicker(),
+                    new JFXDatePicker(),
+                    new JFXDatePicker());
             models.add(themodel);
         }
+//        TableView.TableViewSelectionModel<load_model> selectionModel=table.getSelectionModel();
+//        selectionModel.setSelectionMode(SelectionMode.SINGLE);
         table.getItems().addAll(models);
+        table.getSelectionModel().selectedItemProperty().addListener((observableValue, load_model, t1) -> {
+            System.out.println(load_model.getAdet().getText());
+        });
+        String pattern = "yyyy-MM-dd";
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern(pattern);
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
+            for (int i = 0; i < table.getItems().size(); i++) {
+                load_model theModel = table.getItems().get(i);
+                LocalDate timeNow=theModel.getTime().getValue();
+                LocalDate evrak=theModel.getEvrakTarihi().getValue();
+                LocalDate imha=theModel.getImhaTarihi().getValue();
+
+                String time = timeNow!=null?timeNow.toString():"";
+                String sayi = theModel.getSayi() != null ? theModel.getSayi().getText() : "";
+                String konu = theModel.getKonu() != null ? theModel.getKonu().getText() : "";
+                String adet = theModel.getAdet() != null ? theModel.getAdet().getText() : "";
+                String evrak2 = evrak != null ? evrak.toString() : "";
+                String imhaTarihi = imha != null ? imha.toString() : "";
+                printer_model thePrintModel = new printer_model(
+                        theModel.getCount(), time, sayi, konu, adet, evrak2, imhaTarihi);
+                theModels.add(thePrintModel);
+            }
+
 
             FXMLLoader loader=new FXMLLoader();
             loader.setLocation(getClass().getResource("printScreen.fxml"));
@@ -158,6 +198,7 @@ public class Load {
             stage.show();
         });
     }
+
     public void printImage(Node node) {
 
         Printer printer = Printer.getDefaultPrinter();

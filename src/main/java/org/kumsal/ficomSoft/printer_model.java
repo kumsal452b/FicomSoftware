@@ -1,4 +1,4 @@
-package org.kumsal.ficomSoft.AdapterModelClass;
+package org.kumsal.ficomSoft;
 
 import java.time.LocalDate;
 
@@ -10,9 +10,8 @@ public class printer_model {
     private String adet;
     private String evrakTarihi;
     private String imhaTarihi;
-    private String sira;
 
-    public printer_model(String count, String time, String sayi, String konu, String adet, String evrakTarihi, String imhaTarihi, String sira) {
+    public printer_model(String count, String time, String sayi, String konu, String adet, String evrakTarihi, String imhaTarihi) {
         this.count = count;
         this.time = time;
         this.sayi = sayi;
@@ -20,7 +19,6 @@ public class printer_model {
         this.adet = adet;
         this.evrakTarihi = evrakTarihi;
         this.imhaTarihi = imhaTarihi;
-        this.sira = sira;
     }
 
     public String getCount() {
@@ -77,13 +75,5 @@ public class printer_model {
 
     public void setImhaTarihi(String imhaTarihi) {
         this.imhaTarihi = imhaTarihi;
-    }
-
-    public String getSira() {
-        return sira;
-    }
-
-    public void setSira(String sira) {
-        this.sira = sira;
     }
 }

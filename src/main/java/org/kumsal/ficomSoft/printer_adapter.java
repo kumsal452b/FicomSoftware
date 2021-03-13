@@ -1,7 +1,5 @@
-package org.kumsal.ficomSoft.AdapterModelClass;
+package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
