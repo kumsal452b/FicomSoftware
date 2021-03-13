@@ -45,31 +45,16 @@ public class printScreen {
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
-        printJob.showPrintDialog(pane.getScene().getWindow());
         for (int i = 0; i < 1; i++) {
             printJob.printPage(layout, pane);
         }
-        if (printJob.printPage(layout, pane)) {
+        printJob.showPrintDialog(pane.getScene().getWindow());
+        printJob.getJobSettings().setPageLayout(layout);
+        if (printJob.showPrintDialog(pane.getScene().getWindow())) {
             printJob.endJob();
         }
-
-
         java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
-//        printerJob.setPrintable(new Printable() {
-//            @Override
-//            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-//                if (pageIndex != 0) {
-//                    return NO_SUCH_PAGE;
-//                }
-//                graphics.drawImage(image, 0, 0, 500, image.getHeight(), null);
-//                return PAGE_EXISTS;
-//            }
-//        });
-//        try {
-//            printerJob.print();
-//        } catch (PrinterException e1) {
-//            e1.printStackTrace();
-//        }
+
     }
 
     @FXML
