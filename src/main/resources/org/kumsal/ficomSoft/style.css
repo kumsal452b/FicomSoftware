@@ -97,6 +97,9 @@
     -fx-border-color: #0e1312;
     -fx-background-color: #ffffff;
 }
+.edi{
+    -fx-text-fill: #0e1312;
+}
 .table-row-cell {
     -fx-cell-size: 25px;
     -fx-alignment: bottom-left;

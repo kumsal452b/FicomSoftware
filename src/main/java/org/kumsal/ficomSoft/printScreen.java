@@ -49,7 +49,7 @@ public class printScreen {
         }
         printJob.showPrintDialog(pane.getScene().getWindow());
         printJob.getJobSettings().setPageLayout(layout);
-        if (printJob.showPrintDialog(pane.getScene().getWindow())) {
+        if (printJob.printPage(pane)) {
             printJob.endJob();
         }
 

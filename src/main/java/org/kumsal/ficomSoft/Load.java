@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
@@ -195,6 +196,7 @@ public class Load {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
+            stage.initModality(Modality.WINDOW_MODAL);
             stage.show();
         });
     }

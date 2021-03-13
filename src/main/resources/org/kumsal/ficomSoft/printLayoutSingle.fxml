@@ -17,7 +17,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <TextField fx:id="print_sira" alignment="TOP_LEFT" layoutY="2.0" prefHeight="74.0" prefWidth="43.0" styleClass="anchorPane2" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0" />
+      <TextField fx:id="print_sira" alignment="TOP_LEFT" layoutX="4.0" layoutY="7.0" prefHeight="74.0" prefWidth="48.0" styleClass="edi" text="12121212" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane layoutX="138.0" layoutY="3.0" prefHeight="81.0" prefWidth="59.0" styleClass="anchorPane2" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="print_sayi" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="7.0" layoutY="3.0" prefHeight="74.0" prefWidth="58.0" text="asasa" wrapText="true">

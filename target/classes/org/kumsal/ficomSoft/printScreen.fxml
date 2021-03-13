@@ -5,14 +5,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import org.kairos.layouts.RecyclerView?>
 
-
-<AnchorPane prefHeight="842.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
+<AnchorPane prefHeight="700.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
    <children>
-      <Pane fx:id="pane" layoutX="9.0" layoutY="30.0" prefHeight="808.0" prefWidth="563.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="30.0">
+      <Pane fx:id="pane" layoutX="9.0" layoutY="38.0" prefHeight="700.0" prefWidth="573.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <RecyclerView fx:id="recycler" layoutX="1.0" layoutY="31.0" prefHeight="765.0" prefWidth="573.0" />
+            <RecyclerView fx:id="recycler" layoutY="14.0" prefHeight="700.0" prefWidth="573.0" />
          </children>
       </Pane>
-      <Button fx:id="yazdir" layoutX="48.0" layoutY="2.0" mnemonicParsing="false" text="Yazdır" />
+      <Button fx:id="yazdir" layoutX="14.0" layoutY="2.0" mnemonicParsing="false" text="Yazdır" />
    </children>
 </AnchorPane>
