@@ -2,9 +2,12 @@ package org.kumsal.ficomSoft.AdapterModelClass;
 
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.kairos.layouts.RecyclerView;
 
@@ -12,11 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> {
     public load_adapter() {
 
     }
+    public static ArrayList<JFXTextField> textFields=new ArrayList<>();
+    public static ArrayList<JFXDatePicker> jfxDatePickers=new ArrayList<>();
 
     public class testHolder extends RecyclerView.ViewHolder {
 
@@ -46,8 +52,14 @@ public class load_adapter extends RecyclerView.Adapter<load_adapter.testHolder> 
 
             super(loader);
             single_konu.setOnMouseClicked(mouseEvent -> {
-                System.out.println("tiklandi");
+                if (textFields.contains(single_konu)){
+                    System.out.println(textFields.indexOf(single_konu)+" alan tiklandi");
+                }
             });
+            System.out.println(textFields.size());
+            if (!textFields.contains(single_konu))
+                textFields.add(single_konu);
+
         }
     }
 
