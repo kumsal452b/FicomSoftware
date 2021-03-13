@@ -18,6 +18,7 @@ public class printer_adapter extends RecyclerView.Adapter<printer_adapter.testHo
     public class testHolder extends RecyclerView.ViewHolder {
 
 
+
         @FXML
         private Label print_tariih;
 
@@ -61,11 +62,11 @@ public class printer_adapter extends RecyclerView.Adapter<printer_adapter.testHo
     public void onBindViewHolder(testHolder testHolder, Object o) {
         printer_model theModel = (printer_model) o;
         testHolder.print_adet.setText(theModel.getAdet());
-        testHolder.print_sayi.setText(theModel.getCount());
+        testHolder.print_sayi.setText(theModel.getSayi());
         testHolder.print_tariih.setText(theModel.getTime());
         testHolder.print_evrak.setText(theModel.getEvrakTarihi());
         testHolder.print_imheTarihi.setText(theModel.getImhaTarihi());
         testHolder.print_konusu.setText(theModel.getKonu());
-
+        testHolder.print_sira.setText(theModel.getCount());
     }
 }
