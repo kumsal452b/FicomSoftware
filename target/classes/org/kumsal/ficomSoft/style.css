@@ -92,7 +92,7 @@
     -fx-border-color: #0e1312;
 }
 .anchorPane2{
-    -fx-border-width: 0.0 2.0 0.0 2.0;
+    -fx-border-width: 0.0 0.0 0.0 2.0;
     -fx-border-style: groove;
     -fx-border-color: #0e1312;
     -fx-background-color: #ffffff;
@@ -144,6 +144,9 @@
     -fx-background-color: -fx-table-cell-border-color, #424242;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
+}
+.onlyForWhitePane{
+    -fx-background-color: white;
 }
 
 .table-row-cell:selected {

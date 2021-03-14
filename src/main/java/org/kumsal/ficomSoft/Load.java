@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
 import java.awt.*;
@@ -172,6 +173,7 @@ public class Load {
         String pattern = "yyyy-MM-dd";
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern(pattern);
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
+            theModels.clear();
             for (int i = 0; i < table.getItems().size(); i++) {
                 load_model theModel = table.getItems().get(i);
                 LocalDate timeNow=theModel.getTime().getValue();
@@ -200,6 +202,7 @@ public class Load {
             }
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(PrimaryController.stage);

@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 <?import org.kairos.layouts.RecyclerView?>
 
-<AnchorPane prefHeight="700.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
+<AnchorPane prefHeight="700.0" prefWidth="650.0" styleClass="painMainScreen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
    <children>
-      <Pane fx:id="pane" layoutX="9.0" layoutY="28.0" prefHeight="710.0" prefWidth="573.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Pane fx:id="pane" layoutX="9.0" layoutY="27.0" prefHeight="614.0" prefWidth="650.0" styleClass="onlyForWhitePane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
          <children>
-            <RecyclerView fx:id="recycler" layoutY="13.0" prefHeight="701.0" prefWidth="573.0" />
-            <Line endX="487.0" endY="1.0" layoutX="86.0" layoutY="12.0" startX="-86.0" />
+            <RecyclerView fx:id="recycler" layoutY="23.0" prefHeight="591.0" prefWidth="650.0" />
+            <Line endX="564.0" endY="1.0" layoutX="86.0" layoutY="21.0" startX="-86.0" />
+            <Label layoutX="10.0" layoutY="2.0" text="Sıra">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="65.0" layoutY="2.0" text="Sayı">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="129.0" layoutY="2.0" text="Konu">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="204.0" layoutY="2.0" text="S. Adedı">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="258.0" layoutY="2.0" text="Tarih">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="360.0" layoutY="2.0" text="Evrak Tarihi">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="498.0" layoutY="2.0" text="İmha Tarihi">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Button fx:id="yazdir" layoutX="14.0" layoutY="2.0" mnemonicParsing="false" text="Yazdır" />
+      <Button fx:id="yazdir" layoutX="8.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Yazdır" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/print.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="iptal" layoutX="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" styleClass="button13" text="İptal" textFill="WHITE" />
    </children>
 </AnchorPane>
