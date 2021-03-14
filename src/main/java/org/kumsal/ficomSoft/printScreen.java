@@ -49,14 +49,14 @@ public class printScreen {
         for (int i = 0; i < allOfList.size(); i++) {
             recycler.getItems().clear();
             recycler.getItems().addAll(allOfList.get(i));
-            Thread.sleep(1000);
-//            printJob.printPage(pane);
+            Thread.sleep(2);
+            printJob.printPage(pane);
 //            recycler.notifyAll();
         }
-//        boolean success = printJob.printPage(pane);
-//        if (success) {
-//            printJob.endJob();
-//        }
+        boolean success = printJob.printPage(pane);
+        if (success) {
+            printJob.endJob();
+        }
 
     }
     ArrayList<ArrayList<printer_model>> allOfList=new ArrayList<>();
@@ -69,9 +69,9 @@ public class printScreen {
         for (int i = 0; i < Load.theModels.size(); i++) {
             printer_model theModel = Load.theModels.get(i);
             partOfList.add(theModel);
-            if (i==7 || i==Load.theModels.size()-1){
+            if (i%7==0 || i==Load.theModels.size()-1){
                 allOfList.add(partOfList);
-                partOfList.clear();
+                partOfList=new ArrayList<>();
             }
             recycler.getItems().add(theModel);
         }
@@ -98,7 +98,7 @@ public class printScreen {
 
 
                 printImage(bufferedImage);
-            } catch (IOException ex) {
+            } catch (IOException | InterruptedException ex) {
                 System.out.println(ex.toString());
             }
         });

@@ -92,7 +92,7 @@
     -fx-border-color: #0e1312;
 }
 .anchorPane2{
-    -fx-border-width: 0.0 2.0 0.0 2.0;
+    -fx-border-width: 0.0 0.0 0.0 2.0;
     -fx-border-style: groove;
     -fx-border-color: #0e1312;
     -fx-background-color: #ffffff;

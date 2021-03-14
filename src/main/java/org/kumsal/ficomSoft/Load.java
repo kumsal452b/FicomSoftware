@@ -145,19 +145,24 @@ public class Load {
         sayfaAdedi.setCellValueFactory(new PropertyValueFactory<>("adet"));
         imhatarihi.setCellValueFactory(new PropertyValueFactory<>("imhaTarihi"));
 
-
-        for (int i = 0; i < 10; i++) {
-            JFXTextField sayi = new JFXTextField();
-            sayi.setPrefHeight(25);
-            load_model themodel = new load_model(String.valueOf(i),
-                    sayi,
-                    new JFXTextField(),
-                    new JFXTextField(),
-                    new JFXDatePicker(),
-                    new JFXDatePicker(),
-                    new JFXDatePicker());
-            models.add(themodel);
-        }
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 32; i++) {
+                    JFXTextField sayi = new JFXTextField();
+                    sayi.setPrefHeight(25);
+                    load_model themodel = new load_model(String.valueOf(i),
+                            sayi,
+                            new JFXTextField(),
+                            new JFXTextField(),
+                            new JFXDatePicker(),
+                            new JFXDatePicker(),
+                            new JFXDatePicker());
+                    models.add(themodel);
+                }
+            }
+        });
+        thread.run();
 //        TableView.TableViewSelectionModel<load_model> selectionModel=table.getSelectionModel();
 //        selectionModel.setSelectionMode(SelectionMode.SINGLE);
         table.getItems().addAll(models);
