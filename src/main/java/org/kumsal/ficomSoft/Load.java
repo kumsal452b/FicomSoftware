@@ -168,7 +168,18 @@ public class Load {
         });
         thread.run();
         ekle.setOnMouseClicked(mouseEvent -> {
-            
+//            theModels.clear();
+//            dowload();
+            JFXTextField sayi = new JFXTextField();
+            sayi.setPrefHeight(25);
+            load_model themodel = new load_model(String.valueOf(table.getItems().size()),
+                    sayi,
+                    new JFXTextField(),
+                    new JFXTextField(),
+                    new JFXDatePicker(),
+                    new JFXDatePicker(),
+                    new JFXDatePicker());
+            table.getItems().add(themodel);
         });
 
         table.getItems().addAll(models);
@@ -179,22 +190,7 @@ public class Load {
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern(pattern);
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
             theModels.clear();
-            for (int i = 0; i < table.getItems().size(); i++) {
-                load_model theModel = table.getItems().get(i);
-                LocalDate timeNow=theModel.getTime().getValue();
-                LocalDate evrak=theModel.getEvrakTarihi().getValue();
-                LocalDate imha=theModel.getImhaTarihi().getValue();
-
-                String time = timeNow!=null?timeNow.toString():"";
-                String sayi = theModel.getSayi() != null ? theModel.getSayi().getText() : "";
-                String konu = theModel.getKonu() != null ? theModel.getKonu().getText() : "";
-                String adet = theModel.getAdet() != null ? theModel.getAdet().getText() : "";
-                String evrak2 = evrak != null ? evrak.toString() : "";
-                String imhaTarihi = imha != null ? imha.toString() : "";
-                printer_model thePrintModel = new printer_model(
-                        theModel.getCount(), time, sayi, konu, adet, evrak2, imhaTarihi);
-                theModels.add(thePrintModel);
-            }
+            dowload();
 
 
             FXMLLoader loader=new FXMLLoader();
@@ -213,6 +209,25 @@ public class Load {
             stage.initOwner(PrimaryController.stage);
             stage.show();
         });
+    }
+
+    private void dowload() {
+        for (int i = 0; i < table.getItems().size(); i++) {
+            load_model theModel = table.getItems().get(i);
+            LocalDate timeNow=theModel.getTime().getValue();
+            LocalDate evrak=theModel.getEvrakTarihi().getValue();
+            LocalDate imha=theModel.getImhaTarihi().getValue();
+
+            String time = timeNow!=null?timeNow.toString():"";
+            String sayi = theModel.getSayi() != null ? theModel.getSayi().getText() : "";
+            String konu = theModel.getKonu() != null ? theModel.getKonu().getText() : "";
+            String adet = theModel.getAdet() != null ? theModel.getAdet().getText() : "";
+            String evrak2 = evrak != null ? evrak.toString() : "";
+            String imhaTarihi = imha != null ? imha.toString() : "";
+            printer_model thePrintModel = new printer_model(
+                    theModel.getCount(), time, sayi, konu, adet, evrak2, imhaTarihi);
+            theModels.add(thePrintModel);
+        }
     }
 
     public void printImage(Node node) {
