@@ -41,20 +41,22 @@ public class printScreen {
     @FXML
     private Button yazdir;
 
-    private void printImage(BufferedImage image) {
+    private void printImage(BufferedImage image) throws InterruptedException {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
         printJob.getJobSettings().setPageLayout(layout);
         printJob.showPrintDialog(pane.getScene().getWindow());
         for (int i = 0; i < allOfList.size(); i++) {
+            recycler.getItems().clear();
             recycler.getItems().addAll(allOfList.get(i));
-            recycler.notifyAll();
-            printJob.printPage(pane);
+            Thread.sleep(1000);
+//            printJob.printPage(pane);
+//            recycler.notifyAll();
         }
-        boolean success = printJob.printPage(pane);
-        if (success) {
-            printJob.endJob();
-        }
+//        boolean success = printJob.printPage(pane);
+//        if (success) {
+//            printJob.endJob();
+//        }
 
     }
     ArrayList<ArrayList<printer_model>> allOfList=new ArrayList<>();
@@ -67,7 +69,7 @@ public class printScreen {
         for (int i = 0; i < Load.theModels.size(); i++) {
             printer_model theModel = Load.theModels.get(i);
             partOfList.add(theModel);
-            if (i==7){
+            if (i==7 || i==Load.theModels.size()-1){
                 allOfList.add(partOfList);
                 partOfList.clear();
             }
