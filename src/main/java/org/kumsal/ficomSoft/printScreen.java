@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import org.kairos.layouts.RecyclerView;
-import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class printScreen {
@@ -44,24 +44,33 @@ public class printScreen {
     private void printImage(BufferedImage image) {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
-        for (int i = 0; i < 1; i++) {
-            printJob.printPage(layout, pane);
-        }
-        printJob.showPrintDialog(pane.getScene().getWindow());
         printJob.getJobSettings().setPageLayout(layout);
-        if (printJob.printPage(pane)) {
+        printJob.showPrintDialog(pane.getScene().getWindow());
+        for (int i = 0; i < allOfList.size(); i++) {
+            recycler.getItems().addAll(allOfList.get(i));
+            recycler.notifyAll();
+            printJob.printPage(pane);
+        }
+        boolean success = printJob.printPage(pane);
+        if (success) {
             printJob.endJob();
         }
 
     }
-
+    ArrayList<ArrayList<printer_model>> allOfList=new ArrayList<>();
     @FXML
     void initialize() {
 
         printer_adapter adapter = new printer_adapter();
         recycler.setAdapter(adapter);
+        ArrayList<printer_model> partOfList=new ArrayList<>();
         for (int i = 0; i < Load.theModels.size(); i++) {
-            printer_model theModel=Load.theModels.get(i);
+            printer_model theModel = Load.theModels.get(i);
+            partOfList.add(theModel);
+            if (i==7){
+                allOfList.add(partOfList);
+                partOfList.clear();
+            }
             recycler.getItems().add(theModel);
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
@@ -73,12 +82,6 @@ public class printScreen {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-//            Image image1 = new Image(url.toString());
-//            ImageView imageView = new ImageView(image1);
-//            printImage(imageView);
-            Book book = new Book();
-
-            SnapshotParameters parameters = new SnapshotParameters();
 
             WritableImage writableImage = recycler.snapshot(new SnapshotParameters(), null);
             WritableImage image = recycler.snapshot(new SnapshotParameters(), null);

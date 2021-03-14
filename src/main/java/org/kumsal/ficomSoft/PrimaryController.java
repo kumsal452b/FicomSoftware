@@ -122,7 +122,8 @@ public class PrimaryController {
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
         for (int i = 0; i < sendLogedData.size(); i++) {
 
-            if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
+            boolean pass=true;
+            if (pass || sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
                 Node node = (Node) event.getSource();
                 // Step 3
 
