@@ -105,6 +105,9 @@ public class Load {
     private Button upload_arsivekaydet;
 
     @FXML
+    private Button ekle;
+
+    @FXML
     private Button upload_yazdır;
     public static ArrayList<printer_model> theModels = new ArrayList<>();
 
@@ -164,8 +167,10 @@ public class Load {
             }
         });
         thread.run();
-//        TableView.TableViewSelectionModel<load_model> selectionModel=table.getSelectionModel();
-//        selectionModel.setSelectionMode(SelectionMode.SINGLE);
+        ekle.setOnMouseClicked(mouseEvent -> {
+            
+        });
+
         table.getItems().addAll(models);
         table.getSelectionModel().selectedItemProperty().addListener((observableValue, load_model, t1) -> {
             System.out.println(load_model.getAdet().getText());

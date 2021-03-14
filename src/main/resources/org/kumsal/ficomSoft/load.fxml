@@ -24,8 +24,8 @@
       <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="196.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz." />
       <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="196.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz." />
       <JFXTextField fx:id="upload_aciklama" layoutX="540.0" layoutY="141.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz." />
-      <Button fx:id="upload_arsivekaydet" layoutX="367.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" text="Arşive Kaydet" />
-      <Button fx:id="upload_yazdır" layoutX="540.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" text="Yazdır" />
+      <Button fx:id="upload_arsivekaydet" layoutX="367.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Arşive Kaydet" textFill="#030303" />
+      <Button fx:id="upload_yazdır" layoutX="491.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Yazdır" textFill="#140c0c" />
       <TableView fx:id="table" fixedCellSize="0.0" layoutX="39.0" layoutY="239.0" prefHeight="345.0" prefWidth="641.0" styleClass="table-row-cell" stylesheets="@style.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="239.0">
         <columns>
           <TableColumn fx:id="adet" prefWidth="51.0" text="Sıra" />
@@ -37,5 +37,6 @@
             <TableColumn fx:id="imhatarihi" prefWidth="141.0" text="İmha Tarihi" />
         </columns>
       </TableView>
+      <Button fx:id="ekle" layoutX="616.0" layoutY="196.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="34.0" styleClass="buttonHomeFragment" text="+" textFill="#140c0c" />
    </children>
 </AnchorPane>
