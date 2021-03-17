@@ -143,7 +143,8 @@ public class PrimaryController {
                     ownSave.setString(1,type);
                     ownSave.setString(2,sendLogedData.get(i).getId());
                     ownSave.setString(3,username);
-                    ownSave.setDate(4, (Date) Date.from(Instant.now()));
+                    Date dta=Date.from(Instant.now());
+                    ownSave.setDate(4, Date.);
                     ResultSet resultSet=ownSave.executeQuery();
                     // Step 6
                     Scene scene = new Scene(root);
