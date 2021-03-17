@@ -149,10 +149,14 @@ public class PrimaryController {
                     java.text.SimpleDateFormat sdf =
                             new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     datetime = sdf.format(dt);
-                    Timestamp timestamp=new Timestamp(System.currentTimeMillis());
-                    
-                    ownSave.setDate(4, );
+                    ownSave.setString(4,datetime);
                     ownSave.execute();
+
+                    PreparedStatement ownType=dbSource.getConnection().prepareStatement("select * from ownType where date='?' and username='?'");
+                    ownType.setString(1,datetime);
+                    ownType.setString(1,username);
+                    ResultSet resultSet=ownType.executeQuery();
+                    
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
