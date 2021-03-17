@@ -122,6 +122,7 @@ public class PrimaryController {
     static public String username="";
     static public  Stage stage;
     static public String datetime="";
+    static public String ownTypeID="";
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
         for (int i = 0; i < sendLogedData.size(); i++) {
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
@@ -157,9 +158,8 @@ public class PrimaryController {
                     ownType.setString(2,username);
                     ResultSet resultSet=ownType.executeQuery();
                     while (resultSet.next()) {
-                        
+                        ownTypeID=resultSet.getString("OTID");
                     }
-
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);

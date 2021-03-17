@@ -181,7 +181,6 @@ public class Load {
                     new JFXDatePicker());
             table.getItems().add(themodel);
         });
-
         table.getItems().addAll(models);
         table.getSelectionModel().selectedItemProperty().addListener((observableValue, load_model, t1) -> {
             System.out.println(load_model.getAdet().getText());
@@ -191,8 +190,6 @@ public class Load {
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
             theModels.clear();
             dowload();
-
-
             FXMLLoader loader=new FXMLLoader();
             loader.setLocation(getClass().getResource("printScreen.fxml"));
             AnchorPane root= null;
@@ -208,6 +205,9 @@ public class Load {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(PrimaryController.stage);
             stage.show();
+        });
+        upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
+
         });
     }
 
