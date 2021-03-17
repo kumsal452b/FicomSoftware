@@ -18,22 +18,27 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
+import javax.naming.spi.DirectoryManager;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -109,6 +114,12 @@ public class Load {
 
     @FXML
     private Button upload_yazdır;
+
+    @FXML
+    private Button file;
+
+    @FXML
+    private AnchorPane main_pane;
     public static ArrayList<printer_model> theModels = new ArrayList<>();
 
     private void printImage(BufferedImage image) {
@@ -208,6 +219,43 @@ public class Load {
         });
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
 
+        });
+        file.setOnMouseClicked(mouseEvent -> {
+            FileChooser fileChooser=new FileChooser();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("PDF", "*.pdf")
+            );
+            List<File> files= fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
+            for(File file:files){
+                File tempFile=new File("src/main/resources/org/kumsal/ficomsoft/files/"+file.getName());
+                CopyOption option=new CopyOption() {
+                    @Override
+                    public int hashCode() {
+                        return super.hashCode();
+                    }
+
+                    @Override
+                    public boolean equals(Object obj) {
+                        return super.equals(obj);
+                    }
+
+                    @Override
+                    protected Object clone() throws CloneNotSupportedException {
+                        return super.clone();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return super.toString();
+                    }
+                };
+                try {
+                    Files.copy(file.toPath(),tempFile.toPath(),option);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
         });
     }
 
