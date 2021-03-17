@@ -152,11 +152,14 @@ public class PrimaryController {
                     ownSave.setString(4,datetime);
                     ownSave.execute();
 
-                    PreparedStatement ownType=dbSource.getConnection().prepareStatement("select * from ownType where date='?' and username='?'");
+                    PreparedStatement ownType=dbSource.getConnection().prepareStatement("select * from ownType where date=? and username=?");
                     ownType.setString(1,datetime);
-                    ownType.setString(1,username);
+                    ownType.setString(2,username);
                     ResultSet resultSet=ownType.executeQuery();
-                    
+                    while (resultSet.next()) {
+                        
+                    }
+
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
