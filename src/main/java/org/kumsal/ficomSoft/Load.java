@@ -3,6 +3,7 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Preloader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.*;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 
 import javax.naming.spi.DirectoryManager;
@@ -35,6 +38,7 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -226,37 +230,26 @@ public class Load {
                     new FileChooser.ExtensionFilter("PDF", "*.pdf")
             );
             List<File> files= fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
+            List<String> fileName=new ArrayList<>();
             for(File file:files){
                 File tempFile=new File("src/main/resources/org/kumsal/ficomsoft/files/"+file.getName());
-                CopyOption option=new CopyOption() {
-                    @Override
-                    public int hashCode() {
-                        return super.hashCode();
-                    }
 
-                    @Override
-                    public boolean equals(Object obj) {
-                        return super.equals(obj);
-                    }
-
-                    @Override
-                    protected Object clone() throws CloneNotSupportedException {
-                        return super.clone();
-                    }
-
-                    @Override
-                    public String toString() {
-                        return super.toString();
-                    }
-                };
                 try {
-                    Files.copy(file.toPath(),tempFile.toPath(),option);
+                    Files.copy(file.toPath(),tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    fileName.add(file.getName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
+            Notifications.create()
+                    .darkStyle()
+                    .title("Başarılı")
+                    // sets node to display
+                    .hideAfter(Duration.seconds(10))
+                    .show();
         });
+
     }
 
     private void dowload() {
