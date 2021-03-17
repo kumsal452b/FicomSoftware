@@ -32,6 +32,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -118,10 +120,10 @@ public class PrimaryController {
     static public String type = "";
     static public String name = "";
     static public String username="";
-    public static Stage stage;
-
+    static public  Stage stage;
+    static public String datetime="";
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < sendLogedData.size(); i++) {
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
                 Node node = (Node) event.getSource();
                 // Step 3
@@ -143,9 +145,14 @@ public class PrimaryController {
                     ownSave.setString(1,type);
                     ownSave.setString(2,sendLogedData.get(i).getId());
                     ownSave.setString(3,username);
-                    Date dta=Date.from(Instant.now());
-                    ownSave.setDate(4, Date.);
-                    ResultSet resultSet=ownSave.executeQuery();
+                    java.util.Date dt = new java.util.Date();
+                    java.text.SimpleDateFormat sdf =
+                            new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    datetime = sdf.format(dt);
+                    Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+                    
+                    ownSave.setDate(4, );
+                    ownSave.execute();
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
