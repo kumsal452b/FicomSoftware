@@ -13,9 +13,9 @@ public class ConnectorMysql {
     private String driver = "com.mysql.cj.jdbc.Driver";
     public static MysqlDataSource connect(){
         MysqlDataSource nese = new MysqlDataSource();
-        String jdbcConnection="jdbc:mysql://localhost:3306/ficomdb?useSSL=false&serverTimezone=GMT";
-        String user="hbstudent";
-        String password="hbstudent";
+        String jdbcConnection="jdbc:mysql://localhost:3306/fıcomdb?useSSL=false&serverTimezone=GMT";
+        String user="root";
+        String password="";
         nese.setUrl(jdbcConnection);
         nese.setPassword(password);
         nese.setUser(user);

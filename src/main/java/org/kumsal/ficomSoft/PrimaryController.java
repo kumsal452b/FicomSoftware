@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import com.mysql.cj.jdbc.MysqlDataSource;
+import com.mysql.cj.xdevapi.PreparableStatement;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,9 +30,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -68,11 +68,10 @@ public class PrimaryController {
     private JFXButton login_screen_button;
 
     RequiredFieldValidator validator = new RequiredFieldValidator();
-
+    MysqlDataSource dbSource = ConnectorMysql.connect();
 
     @FXML
     void login(ActionEvent event) throws SQLException {
-        MysqlDataSource dbSource = ConnectorMysql.connect();
         ResultSet resultSet;
         String query = "select * from admin";
         String query2 = "select * from users";
@@ -92,17 +91,18 @@ public class PrimaryController {
                     resultSet.getString("ad"),
                     resultSet.getString("soyad"),
                     resultSet.getString("username"),
-                    resultSet.getString("password"));
+                    resultSet.getString("password"),
+                    resultSet.getString("AID"));
             theLoggedAdmin.add(theModel);
         }
-
         resultSet = forusers.getResultSet();
         while (resultSet.next()) {
             LoginModel theModel = new LoginModel("User",
                     resultSet.getString("ad"),
                     resultSet.getString("soyad"),
                     resultSet.getString("username"),
-                    resultSet.getString("password"));
+                    resultSet.getString("password"),
+                    resultSet.getString("UID"));
             theLoggedUsers.add(theModel);
         }
         String theUsername = login_username.getText();
@@ -117,13 +117,12 @@ public class PrimaryController {
 
     static public String type = "";
     static public String name = "";
+    static public String username="";
     public static Stage stage;
 
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
-        for (int i = 0; i < sendLogedData.size(); i++) {
-
-            boolean pass=true;
-            if (pass || sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
+        for (int i = 0; i < 1; i++) {
+            if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
                 Node node = (Node) event.getSource();
                 // Step 3
 
@@ -135,9 +134,17 @@ public class PrimaryController {
                     // Step 4
                     Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
                     // Step 5
-                    type = sendLogedData.get(i).getUsername();
+                    type = sendLogedData.get(i).getLoginby();
+                    username=sendLogedData.get(i).getUsername();
                     name = sendLogedData.get(i).getName() + " " + sendLogedData.get(i).getSurname();
                     stage.setUserData(sendLogedData.get(i));
+
+                    PreparedStatement ownSave=dbSource.getConnection().prepareStatement("INSERT INTO `owntype` (`OTID`, `ownname`, `login_id`, `username`, `date`) VALUES (NULL, ?, ?, ?, ?)");
+                    ownSave.setString(1,type);
+                    ownSave.setString(2,sendLogedData.get(i).getId());
+                    ownSave.setString(3,username);
+                    ownSave.setDate(4, (Date) Date.from(Instant.now()));
+                    ResultSet resultSet=ownSave.executeQuery();
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
@@ -145,7 +152,7 @@ public class PrimaryController {
                     // Step 7
                     stage.show();
                     return;
-                } catch (IOException e) {
+                } catch (IOException | SQLException e) {
                     System.err.println(String.format("Error: %s", e.getMessage()));
                 }
             }

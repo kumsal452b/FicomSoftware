@@ -6,15 +6,24 @@ public class LoginModel {
     private String surname;
     private String password;
     private String username;
-
+    private String id;
     public LoginModel(){};
 
-    public LoginModel(String loginby, String name, String surname, String username, String password) {
+    public LoginModel(String loginby, String name, String surname, String username, String password,String theId) {
         this.loginby = loginby;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.username = username;
+        this.id=theId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPassword() {

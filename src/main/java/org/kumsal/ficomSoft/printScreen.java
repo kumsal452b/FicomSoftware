@@ -46,7 +46,7 @@ public class printScreen {
 
     private void printImage(BufferedImage image) throws InterruptedException {
         PrinterJob printJob = PrinterJob.createPrinterJob();
-        PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
+        PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.HARDWARE_MINIMUM);
         printJob.getJobSettings().setPageLayout(layout);
         boolean accept=printJob.showPrintDialog(pane.getScene().getWindow());
         boolean success=false;
@@ -55,7 +55,6 @@ public class printScreen {
             for (int i = 0; i < allOfList.size(); i++) {
                 recycler.getItems().clear();
                 recycler.getItems().addAll(allOfList.get(i));
-                Thread.sleep(2);
                 success= printJob.printPage(pane);
                 if (!success){
                     recycler.getItems().addAll(allGlobElement);
