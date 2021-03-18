@@ -58,14 +58,16 @@ public class MainPageController extends Activity {
     private String currentFragment="";
 
     @FXML
-    void main_page_currentFiles(ActionEvent event) {
+    void main_page_currentFiles(ActionEvent event) throws IOException {
         main_page_home.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().add("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_load.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
-
+        close("Loaded_file.fxml");
+        currentFragment="Loaded_file.fxml";
+        access=true;
     }
 
     @FXML

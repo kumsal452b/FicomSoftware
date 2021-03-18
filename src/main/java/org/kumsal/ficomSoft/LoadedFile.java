@@ -82,17 +82,48 @@ public class LoadedFile {
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
 
         Statement fileList=dataSource.getConnection().createStatement();
-        ResultSet resultSet=fileList.executeQuery("select * from load_flle");
+        ResultSet resultSet=fileList.executeQuery("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID");
         LoadedFileModel loadedFile;
         int sira=1;
+        JFXButton sil;
         while (resultSet.next()){
-            loadedFile=new LoadedFileModel(
-                    String.valueOf(sira),
-                    resultSet.getString(2),
-                        
-            );
+            if (PrimaryController.type.equals("Admin")){
+                sil=new JFXButton("Sil");
+                loadedFile=new LoadedFileModel(
+                        String.valueOf(sira),
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        sil,
+                        new JFXButton("Degistr")
+                );
+            }else {
+                loadedFile=new LoadedFileModel(
+                        String.valueOf(sira),
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        null,
+                        new JFXButton("Degistr")
+                );
+            }
+            theFileModel.add(loadedFile);
             sira++;
         }
+        table.getItems().addAll(theFileModel);
     }
-
 }
