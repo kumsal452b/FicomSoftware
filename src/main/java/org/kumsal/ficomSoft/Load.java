@@ -39,6 +39,8 @@ import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -316,7 +318,7 @@ public class Load {
                 }
 
                 PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
-                        "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                        "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`,`prossTime`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
                 );
                 preparedStatement.setInt(1,destisNo.get(upload_destıs_no.getSelectionModel().getSelectedIndex()));
                 preparedStatement.setInt(2,Integer.valueOf(PrimaryController.ownTypeID));
@@ -331,7 +333,33 @@ public class Load {
                 preparedStatement.setDate(10,Date.valueOf(tarihSql));
                 LocalDate imhaSql=upload_imha.getValue();
                 preparedStatement.setDate(11,Date.valueOf(imhaSql));
+                java.util.Date dt = new java.util.Date();
+                java.text.SimpleDateFormat sdf =
+                        new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String datetime = sdf.format(dt);
+                preparedStatement.setString(12,datetime);
                 preparedStatement.execute();
+                PreparedStatement ownType=dbSource.getConnection().prepareStatement("select * from load_file where OTID=? and prossTime=?");
+                ownType.setInt(1,Integer.valueOf(PrimaryController.ownTypeID));
+                ownType.setString(2,datetime);
+                ResultSet resultSet=ownType.executeQuery();
+                String proccessId="";
+                while (resultSet.next()) {
+                    proccessId=resultSet.getString("FLID");
+                }
+                try {
+                    if (files.size()>0){
+                        for(File file:files) {
+                            Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String fileSql="";
+                
+                Statement saveFile=
+
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -361,12 +389,6 @@ public class Load {
                 tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + file.getName());
                 destFile.add(tempFile);
                 listview.getItems().add(file.getName());
-//                try {
-//                    Files.copy(file.toPath(),tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//                    fileName.add(file.getName());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
             }
             Notifications.create()
