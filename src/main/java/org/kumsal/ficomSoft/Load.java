@@ -4,9 +4,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import javafx.application.Preloader;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,22 +15,22 @@ import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
-import javafx.stage.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
-import javax.naming.spi.DirectoryManager;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.Menu;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -39,12 +38,8 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -61,7 +56,7 @@ public class Load {
     private URL location;
 
     @FXML
-    private JFXComboBox<Integer> upload_destıs_no;
+    private JFXComboBox<String> upload_destıs_no;
 
     @FXML
     private JFXTextField upload_birim;
@@ -162,24 +157,17 @@ public class Load {
     ObservableList<load_model> models;
     File tempFile;
     List<File> files;
-    List<File> destFile=new ArrayList<>();
-    List<File> sourceFile=new ArrayList<>();
-    ConnectorMysql dbSource=new ConnectorMysql();
+    List<File> destFile = new ArrayList<>();
+    List<File> sourceFile = new ArrayList<>();
+    MysqlDataSource dbSource = ConnectorMysql.connect();
+
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
 
-        models = FXCollections.observableArrayList();
+
         PrinterJob printerJob = Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
-
-        konu.setCellValueFactory(new PropertyValueFactory<>("konu"));
-        evraktarihi.setCellValueFactory(new PropertyValueFactory<>("evrakTarihi"));
-        tarih.setCellValueFactory(new PropertyValueFactory<>("time"));
-        sayi.setCellValueFactory(new PropertyValueFactory<>("sayi"));
-        adet.setCellValueFactory(new PropertyValueFactory<>("count"));
-        sayfaAdedi.setCellValueFactory(new PropertyValueFactory<>("adet"));
-        imhatarihi.setCellValueFactory(new PropertyValueFactory<>("imhaTarihi"));
-
-        Thread thread=new Thread(new Runnable() {
+        initilizeElement();
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 32; i++) {
@@ -213,13 +201,13 @@ public class Load {
         });
         table.getItems().addAll(models);
         String pattern = "yyyy-MM-dd";
-        DateTimeFormatter formatter=DateTimeFormatter.ofPattern(pattern);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
             theModels.clear();
             dowload();
-            FXMLLoader loader=new FXMLLoader();
+            FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("printScreen.fxml"));
-            AnchorPane root= null;
+            AnchorPane root = null;
             try {
                 root = loader.load();
             } catch (IOException e) {
@@ -234,13 +222,89 @@ public class Load {
             stage.show();
         });
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
-            PreparedStatement preparedStatement=dbS
+            try {
+                if (upload_imha.getValue()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("İmha tarihi boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_tarih.getValue()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Tarih boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_destıs_no.getSelectionModel().getSelectedIndex()==-1){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Destıs no boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_birim.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Birim boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_spdno.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("SPD no boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_spdkarsilik.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("SPD Karşılık boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                
+
+                PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
+                        "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                );
+                preparedStatement.setInt(1,destisNo.get(upload_destıs_no.getSelectionModel().getSelectedIndex()));
+                preparedStatement.setInt(2,Integer.valueOf(PrimaryController.ownTypeID));
+                preparedStatement.setString(3,upload_birim.getText());
+                preparedStatement.setString(4,upload_spdno.getText());
+                preparedStatement.setString(5,upload_spdkarsilik.getText());
+                preparedStatement.setString(6,upload_ozelkod.getText());
+                preparedStatement.setString(7,upload_ozelkodkarssiligi.getText());
+                preparedStatement.setString(8,upload_klasorno.getText());
+                preparedStatement.setString(9,upload_aciklama.getText());
+                LocalDate tarihSql=upload_tarih.getValue();
+                preparedStatement.setDate(10,Date.valueOf(tarihSql));
+                LocalDate imhaSql=upload_imha.getValue();
+                preparedStatement.setDate(10,Date.valueOf(imhaSql));
+                preparedStatement.execute();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
         });
-        ContextMenu contextMenu=new ContextMenu();
-        MenuItem item=new MenuItem("Sil");
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item = new MenuItem("Sil");
         item.setOnAction(event -> {
-            int indis=listview.getSelectionModel().getSelectedIndex();
+            int indis = listview.getSelectionModel().getSelectedIndex();
             destFile.remove(indis);
             sourceFile.remove(indis);
             listview.getItems().remove(indis);
@@ -250,15 +314,15 @@ public class Load {
         listview.setContextMenu(contextMenu);
         listview.setExpanded(true);
         file.setOnMouseClicked(mouseEvent -> {
-            FileChooser fileChooser=new FileChooser();
+            FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("PDF", "*.pdf")
             );
-            files= fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
-            List<String> fileName=new ArrayList<>();
+            files = fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
+            List<String> fileName = new ArrayList<>();
             sourceFile.addAll(files);
-            for(File file:files){
-                tempFile=new File("src/main/resources/org/kumsal/ficomsoft/files/"+file.getName());
+            for (File file : files) {
+                tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + file.getName());
                 destFile.add(tempFile);
                 listview.getItems().add(file.getName());
 //                try {
@@ -274,19 +338,42 @@ public class Load {
                     .text("Dosyalar tanimlandı")
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
-                    .show();
+                    .showConfirm();
         });
 
+    }
+    private List<Integer> destisNo=new ArrayList<>();
+
+    private void initilizeElement() throws SQLException {
+        models = FXCollections.observableArrayList();
+        konu.setCellValueFactory(new PropertyValueFactory<>("konu"));
+        evraktarihi.setCellValueFactory(new PropertyValueFactory<>("evrakTarihi"));
+        tarih.setCellValueFactory(new PropertyValueFactory<>("time"));
+        sayi.setCellValueFactory(new PropertyValueFactory<>("sayi"));
+        adet.setCellValueFactory(new PropertyValueFactory<>("count"));
+        sayfaAdedi.setCellValueFactory(new PropertyValueFactory<>("adet"));
+        imhatarihi.setCellValueFactory(new PropertyValueFactory<>("imhaTarihi"));
+
+        Statement forDestis = dbSource.getConnection().createStatement();
+        forDestis.execute("select * from destis");
+
+
+        ResultSet resultSet;
+        resultSet = forDestis.getResultSet();
+        while (resultSet.next()) {
+            upload_destıs_no.setValue(resultSet.getString("destisno"));
+            destisNo.add(resultSet.getInt("DID"));
+        }
     }
 
     private void dowload() {
         for (int i = 0; i < table.getItems().size(); i++) {
             load_model theModel = table.getItems().get(i);
-            LocalDate timeNow=theModel.getTime().getValue();
-            LocalDate evrak=theModel.getEvrakTarihi().getValue();
-            LocalDate imha=theModel.getImhaTarihi().getValue();
+            LocalDate timeNow = theModel.getTime().getValue();
+            LocalDate evrak = theModel.getEvrakTarihi().getValue();
+            LocalDate imha = theModel.getImhaTarihi().getValue();
 
-            String time = timeNow!=null?timeNow.toString():"";
+            String time = timeNow != null ? timeNow.toString() : "";
             String sayi = theModel.getSayi() != null ? theModel.getSayi().getText() : "";
             String konu = theModel.getKonu() != null ? theModel.getKonu().getText() : "";
             String adet = theModel.getAdet() != null ? theModel.getAdet().getText() : "";
