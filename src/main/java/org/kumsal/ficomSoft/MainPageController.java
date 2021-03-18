@@ -104,10 +104,6 @@ public class MainPageController extends Activity {
     ArrayList<String> stack=new ArrayList<>();
     AnchorPane pane=null;
     void close(String name) throws IOException {
-
-//        AnchorPane pane=FXMLLoader.load(getClass().getResource(currentFragment));
-//        mainFragment.getChildren().remove(0);
-//        mainFragment.getChildren().add(pane);
         FadeTransition transition=new FadeTransition(Duration.millis(500),pane);
         transition.setFromValue(1.0);
         transition.setToValue(0.0);
