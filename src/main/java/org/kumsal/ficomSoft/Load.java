@@ -225,7 +225,7 @@ public class Load {
         });
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
             try {
-                if (upload_imha.getValue()==null){
+                if (upload_imha.getValue() == null) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("İmha tarihi boş bırakılamaz.")
@@ -234,7 +234,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_tarih.getValue()==null){
+                if (upload_tarih.getValue() == null) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Tarih boş bırakılamaz.")
@@ -243,7 +243,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_destıs_no.getSelectionModel().getSelectedIndex()==-1){
+                if (upload_destıs_no.getSelectionModel().getSelectedIndex() == -1) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Destıs no boş bırakılamaz.")
@@ -252,8 +252,8 @@ public class Load {
                             .showError();
                     return;
                 }
-                String test=upload_birim.getText();
-                if (upload_birim.getText().equals("")){
+                String test = upload_birim.getText();
+                if (upload_birim.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Birim boş bırakılamaz.")
@@ -262,7 +262,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_spdno.getText().equals("")){
+                if (upload_spdno.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("SPD no boş bırakılamaz.")
@@ -271,7 +271,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_spdkarsilik.getText().equals("")){
+                if (upload_spdkarsilik.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("SPD Karşılık boş bırakılamaz.")
@@ -280,7 +280,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_ozelkod.getText().equals("")){
+                if (upload_ozelkod.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Özel kod boş bırakılamaz.")
@@ -289,7 +289,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_ozelkodkarssiligi.getText().equals("")){
+                if (upload_ozelkodkarssiligi.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Özel kod karşılık boş bırakılamaz.")
@@ -298,7 +298,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_klasorno.getText().equals("")){
+                if (upload_klasorno.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Klasör no boş bırakılamaz.")
@@ -307,7 +307,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_aciklama.getText().equals("")){
+                if (upload_aciklama.getText().equals("")) {
                     Notifications.create()
                             .title("Başarılı")
                             .text("Açıklama boş bırakılamaz.")
@@ -320,45 +320,53 @@ public class Load {
                 PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
                         "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`,`prossTime`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
                 );
-                preparedStatement.setInt(1,destisNo.get(upload_destıs_no.getSelectionModel().getSelectedIndex()));
-                preparedStatement.setInt(2,Integer.valueOf(PrimaryController.ownTypeID));
-                preparedStatement.setString(3,upload_birim.getText());
-                preparedStatement.setString(4,upload_spdno.getText());
-                preparedStatement.setString(5,upload_spdkarsilik.getText());
-                preparedStatement.setString(6,upload_ozelkod.getText());
-                preparedStatement.setString(7,upload_ozelkodkarssiligi.getText());
-                preparedStatement.setString(8,upload_klasorno.getText());
-                preparedStatement.setString(9,upload_aciklama.getText());
-                LocalDate tarihSql=upload_tarih.getValue();
-                preparedStatement.setDate(10,Date.valueOf(tarihSql));
-                LocalDate imhaSql=upload_imha.getValue();
-                preparedStatement.setDate(11,Date.valueOf(imhaSql));
+                preparedStatement.setInt(1, destisNo.get(upload_destıs_no.getSelectionModel().getSelectedIndex()));
+                preparedStatement.setInt(2, Integer.valueOf(PrimaryController.ownTypeID));
+                preparedStatement.setString(3, upload_birim.getText());
+                preparedStatement.setString(4, upload_spdno.getText());
+                preparedStatement.setString(5, upload_spdkarsilik.getText());
+                preparedStatement.setString(6, upload_ozelkod.getText());
+                preparedStatement.setString(7, upload_ozelkodkarssiligi.getText());
+                preparedStatement.setString(8, upload_klasorno.getText());
+                preparedStatement.setString(9, upload_aciklama.getText());
+                LocalDate tarihSql = upload_tarih.getValue();
+                preparedStatement.setDate(10, Date.valueOf(tarihSql));
+                LocalDate imhaSql = upload_imha.getValue();
+                preparedStatement.setDate(11, Date.valueOf(imhaSql));
                 java.util.Date dt = new java.util.Date();
                 java.text.SimpleDateFormat sdf =
                         new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String datetime = sdf.format(dt);
-                preparedStatement.setString(12,datetime);
+                preparedStatement.setString(12, datetime);
                 preparedStatement.execute();
-                PreparedStatement ownType=dbSource.getConnection().prepareStatement("select * from load_file where OTID=? and prossTime=?");
-                ownType.setInt(1,Integer.valueOf(PrimaryController.ownTypeID));
-                ownType.setString(2,datetime);
-                ResultSet resultSet=ownType.executeQuery();
-                String proccessId="";
+                PreparedStatement ownType = dbSource.getConnection().prepareStatement("select * from load_flle where OTID=? and prossTime=?");
+                ownType.setInt(1, Integer.valueOf(PrimaryController.ownTypeID));
+                ownType.setString(2, datetime);
+                ResultSet resultSet = ownType.executeQuery();
+                String proccessId = "";
                 while (resultSet.next()) {
-                    proccessId=resultSet.getString("FLID");
+                    proccessId = resultSet.getString("LFID");
                 }
                 try {
-                    if (files.size()>0){
-                        for(File file:files) {
+                    if (files.size() > 0) {
+                        String filename="";
+                        String partOfsql="(NULL, '"+filename+"', '"+proccessId+"')";
+                        String fileSql = "INSERT INTO `file` (`FID`, `filepath`, `LFID`) VALUES ";
+                        int index=0;
+                        for (File file : files) {
                             Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            filename=destFile.get(index).getPath();
+                            fileSql+=partOfsql;
+                            if (index!=files.size()){
+                                fileSql+=",";
+                            }
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                String fileSql="";
-                
-                Statement saveFile=
+
+
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -400,7 +408,8 @@ public class Load {
         });
 
     }
-    private List<Integer> destisNo=new ArrayList<>();
+
+    private List<Integer> destisNo = new ArrayList<>();
 
     private void initilizeElement() throws SQLException {
         models = FXCollections.observableArrayList();
