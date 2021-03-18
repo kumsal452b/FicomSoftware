@@ -159,18 +159,15 @@ public class MainPageController extends Activity {
     void initialize() throws IOException {
 
         mainPane.widthProperty().addListener((observableValue, number, t1) -> {
-            System.out.println(t1);
-            int calculate = (number.intValue() * 224) / 974;
+            System.out.println("t1"+mainPane.getWidth());
+            int calculate = (t1.intValue()* 224) / 1200;
             System.out.println("calc " + calculate);
             if (calculate != 0) {
                 mainFragment.setLayoutX(calculate);
             }
         });
         mainPane.heightProperty().addListener((observableValue, number, t1) -> {
-            System.out.println(t1);
-            int calculate = (number.intValue() * 1) / 600;
-            System.out.println("calc " + calculate);
-            mainFragment.setLayoutY(calculate);
+            int calculate = (number.intValue() * 10) / 600;
         });
 
 

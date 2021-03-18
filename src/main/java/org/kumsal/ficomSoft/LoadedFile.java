@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -64,7 +66,6 @@ public class LoadedFile {
     private JFXTextField ara;
     MysqlDataSource dataSource = ConnectorMysql.connect();
     ObservableList<LoadedFileModel> theFileModel;
-
     @FXML
     void initialize() throws SQLException {
         theFileModel= FXCollections.observableArrayList();
@@ -80,6 +81,7 @@ public class LoadedFile {
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
         sil.setCellValueFactory(new PropertyValueFactory<>("sil"));
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
+
 
         Statement fileList=dataSource.getConnection().createStatement();
         ResultSet resultSet=fileList.executeQuery("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID");
@@ -124,6 +126,27 @@ public class LoadedFile {
             theFileModel.add(loadedFile);
             sira++;
         }
-        table.getItems().addAll(theFileModel);
+        FilteredList<LoadedFileModel> filteredList=new FilteredList<>(theFileModel,b -> true);
+        ara.textProperty().addListener((observableValue, s, t1) -> {
+            filteredList.setPredicate(loadedFileModel->{
+                if (t1==null || t1.isEmpty()){
+                    return true;
+                }
+                String lowerCaseFilter = t1.toLowerCase();
+                if (loadedFileModel.getAciklama().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+                    return true; // Filter matches first name.
+                } else if (loadedFileModel.getBirimad().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches last name.
+                }
+                else if (String.valueOf(loadedFileModel.getYuktarihi()).indexOf(lowerCaseFilter)!=-1)
+                    return true;
+                else
+                    return false; // Does not match.
+
+            });
+        });
+        SortedList<LoadedFileModel> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedData);
     }
 }

@@ -1,5 +1,5 @@
 module org.kumsal.ficomSoft {
-    requires javafx.controls;
+
     requires javafx.fxml;
     requires com.jfoenix;
     requires de.jensd.fx.glyphs.fontawesome;
@@ -12,6 +12,8 @@ module org.kumsal.ficomSoft {
     requires  javafx.graphics;
     requires javafx.swing;
     requires org.controlsfx.controls;
+    requires javafx.controls;
+
     opens org.kumsal.ficomSoft to com.jfoenix, javafx.fxml,javafx.controls;
     opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml,javafx.controls,javafx.base;
 
