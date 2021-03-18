@@ -1,30 +1,22 @@
 package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import org.kairos.core.Activity;
-import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
-
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 public class MainPageController extends Activity {
 
     @FXML
@@ -55,7 +47,18 @@ public class MainPageController extends Activity {
     @FXML
     private AnchorPane mainFragment;
 
-    private String currentFragment="";
+
+    @FXML
+    private Label pw;
+
+    @FXML
+    private Label ph;
+
+
+    @FXML
+    private AnchorPane mainPane;
+
+    private String currentFragment = "";
 
     @FXML
     void main_page_currentFiles(ActionEvent event) throws IOException {
@@ -66,8 +69,8 @@ public class MainPageController extends Activity {
         main_page_load.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
         close("Loaded_file.fxml");
-        currentFragment="Loaded_file.fxml";
-        access=true;
+        currentFragment = "Loaded_file.fxml";
+        access = true;
     }
 
     @FXML
@@ -79,7 +82,7 @@ public class MainPageController extends Activity {
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
 
-        Transition transition=new FadeTransition(Duration.millis(1000));
+        Transition transition = new FadeTransition(Duration.millis(1000));
 //        transition.
 
     }
@@ -97,34 +100,36 @@ public class MainPageController extends Activity {
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
         close("Load.fxml");
-       currentFragment="Load.fxml";
-        access=true;
+        currentFragment = "Load.fxml";
+        access = true;
     }
-    boolean access=true;
-    ArrayList<String> stack=new ArrayList<>();
-    AnchorPane pane=null;
+
+    boolean access = true;
+    ArrayList<String> stack = new ArrayList<>();
+    AnchorPane pane = null;
+
     void close(String name) throws IOException {
-        FadeTransition transition=new FadeTransition(Duration.millis(500),pane);
+        FadeTransition transition = new FadeTransition(Duration.millis(500), pane);
         transition.setFromValue(1.0);
         transition.setToValue(0.0);
         transition.play();
         transition.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                    if (access){
-                        AnchorPane pane= null;
-                        try {
-                            pane = FXMLLoader.load(getClass().getResource(name));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        mainFragment.getChildren().add(pane);
-                        transition.setNode(pane);
-                        transition.setFromValue(0.0);
-                        transition.setToValue(1.0);
-                        transition.play();
-                        access=false;
+                if (access) {
+                    AnchorPane pane = null;
+                    try {
+                        pane = FXMLLoader.load(getClass().getResource(name));
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                    mainFragment.getChildren().add(pane);
+                    transition.setNode(pane);
+                    transition.setFromValue(0.0);
+                    transition.setToValue(1.0);
+                    transition.play();
+                    access = false;
+                }
             }
         });
     }
@@ -153,13 +158,24 @@ public class MainPageController extends Activity {
     @FXML
     void initialize() throws IOException {
 
+        mainPane.widthProperty().addListener((observableValue, number, t1) -> {
+            System.out.println(t1);
+            int calculate = (number.intValue() * 224) / 974;
+            System.out.println("calc " + calculate);
+            if (calculate != 0) {
+                mainFragment.setLayoutX(calculate);
+            }
+        });
+        mainPane.heightProperty().addListener((observableValue, number, t1) -> {
+            System.out.println(t1);
+            int calculate = (number.intValue() * 1) / 600;
+            System.out.println("calc " + calculate);
+            mainFragment.setLayoutY(calculate);
+        });
 
 
-//        AnchorPane pane= FXMLLoader.load(getClass().getResource("load.fxml"));
-//        JFXTextField pane2= (JFXTextField) pane.getChildren().get(1);
-//        pane2.setText("selam yavrum");
-        pane=FXMLLoader.load(getClass().getResource("home.fxml"));
-        currentFragment="home.fxml";
+        pane = FXMLLoader.load(getClass().getResource("home.fxml"));
+        currentFragment = "home.fxml";
         mainFragment.getChildren().add(pane);
         main_page_home.getStyleClass().add("currentButton");
         main_page_home.setOnMouseClicked(mouseEvent -> {
@@ -171,8 +187,8 @@ public class MainPageController extends Activity {
             main_page_folders.getStyleClass().remove("currentButton");
             try {
                 close("Home.fxml");
-                currentFragment=("Home.fxml");
-                access=true;
+                currentFragment = ("Home.fxml");
+                access = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
