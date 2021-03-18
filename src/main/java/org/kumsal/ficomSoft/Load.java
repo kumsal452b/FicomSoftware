@@ -268,7 +268,7 @@ public class Load {
                             filename = destFile.get(index).getName();
                             partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
                             fileSql += partOfsql;
-                            if (index != files.size() - 1) {
+                            if (index != sourceFile.size() - 1) {
                                 fileSql += ",";
                             }
                             index++;
@@ -323,6 +323,7 @@ public class Load {
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("PDF", "*.pdf")
             );
+            files = fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
             for (File file : files) {
                 tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + file.getName());
                 destFile.add(tempFile);
