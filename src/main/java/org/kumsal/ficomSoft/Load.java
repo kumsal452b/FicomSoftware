@@ -225,97 +225,7 @@ public class Load {
         });
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
             try {
-                if (upload_imha.getValue() == null) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("İmha tarihi boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_tarih.getValue() == null) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Tarih boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_destıs_no.getSelectionModel().getSelectedIndex() == -1) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Destıs no boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                String test = upload_birim.getText();
-                if (upload_birim.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Birim boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_spdno.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("SPD no boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_spdkarsilik.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("SPD Karşılık boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_ozelkod.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Özel kod boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_ozelkodkarssiligi.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Özel kod karşılık boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_klasorno.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Klasör no boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
-                if (upload_aciklama.getText().equals("")) {
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Açıklama boş bırakılamaz.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    return;
-                }
+                checkFields();
 
                 PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
                         "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`,`prossTime`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
@@ -348,24 +258,47 @@ public class Load {
                     proccessId = resultSet.getString("LFID");
                 }
                 try {
-                    if (files.size() > 0) {
-                        String filename="";
-                        String partOfsql="(NULL, '"+filename+"', '"+proccessId+"')";
+                    if (sourceFile.size() > 0) {
+                        String filename = "";
+                        String partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
                         String fileSql = "INSERT INTO `file` (`FID`, `filepath`, `LFID`) VALUES ";
-                        int index=0;
-                        for (File file : files) {
-                            Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            filename=destFile.get(index).getPath();
-                            fileSql+=partOfsql;
-                            if (index!=files.size()){
-                                fileSql+=",";
+                        int index = 0;
+                        for (File file : sourceFile) {
+                            Files.copy(file.toPath(), destFile.get(index).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            filename = destFile.get(index).getName();
+                            partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
+                            fileSql += partOfsql;
+                            if (index != files.size() - 1) {
+                                fileSql += ",";
                             }
+                            index++;
                         }
+                        index = 0;
+                        System.out.println(fileSql);
+                        Statement saveFile = dbSource.getConnection().createStatement();
+                        saveFile.execute(fileSql);
+                        fileSql = "";
+                        files.clear();
+                        sourceFile.clear();
+                        destFile.clear();
+                        upload_aciklama.setText("");
+                        upload_klasorno.setText("");
+                        upload_ozelkodkarssiligi.setText("");
+                        upload_ozelkod.setText("");
+                        upload_spdkarsilik.setText("");
+                        upload_spdno.setText("");
+                        upload_birim.setText("");
+                        listview.getItems().clear();
+                        Notifications.create()
+                                .title("Bşarılı")
+                                .text("Kayıtlar arşive eklendi")
+                                .hideAfter(Duration.seconds(3))
+                                .position(Pos.BASELINE_LEFT)
+                                .showConfirm();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
 
             } catch (SQLException throwables) {
@@ -390,15 +323,13 @@ public class Load {
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("PDF", "*.pdf")
             );
-            files = fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
-            List<String> fileName = new ArrayList<>();
-            sourceFile.addAll(files);
             for (File file : files) {
                 tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + file.getName());
                 destFile.add(tempFile);
                 listview.getItems().add(file.getName());
 
             }
+            sourceFile.addAll(files);
             Notifications.create()
                     .title("Başarılı")
                     .text("Dosyalar tanimlandı")
@@ -407,6 +338,100 @@ public class Load {
                     .showConfirm();
         });
 
+    }
+
+    private void checkFields() {
+        if (upload_imha.getValue() == null) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("İmha tarihi boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_tarih.getValue() == null) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Tarih boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_destıs_no.getSelectionModel().getSelectedIndex() == -1) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Destıs no boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        String test = upload_birim.getText();
+        if (upload_birim.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Birim boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_spdno.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("SPD no boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_spdkarsilik.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("SPD Karşılık boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_ozelkod.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Özel kod boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_ozelkodkarssiligi.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Özel kod karşılık boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_klasorno.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Klasör no boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
+        if (upload_aciklama.getText().equals("")) {
+            Notifications.create()
+                    .title("Hata")
+                    .text("Açıklama boş bırakılamaz.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
+                    .showError();
+            return;
+        }
     }
 
     private List<Integer> destisNo = new ArrayList<>();
