@@ -9,46 +9,46 @@ import javafx.scene.control.TableView;
 public class LoadedFile {
 
     @FXML
-    private TableView<?> table;
+    private TableView<LoadedFileModel> table;
 
     @FXML
-    private TableColumn<?, ?> sira;
+    private TableColumn<LoadedFileModel, String> sira;
 
     @FXML
-    private TableColumn<?, ?> destisno;
+    private TableColumn<LoadedFileModel, String> destisno;
 
     @FXML
-    private TableColumn<?, ?> birimad;
+    private TableColumn<LoadedFileModel, String> birimad;
 
     @FXML
-    private TableColumn<?, ?> spdkod;
+    private TableColumn<LoadedFileModel, String> spdkod;
 
     @FXML
-    private TableColumn<?, ?> spdkarsilik;
+    private TableColumn<LoadedFileModel, String> spdkarsilik;
 
     @FXML
-    private TableColumn<?, ?> ozelkod;
+    private TableColumn<LoadedFileModel, String> ozelkod;
 
     @FXML
-    private TableColumn<?, ?> ozelkarsilik;
+    private TableColumn<LoadedFileModel, String> ozelkarsilik;
 
     @FXML
-    private TableColumn<?, ?> klasno;
+    private TableColumn<LoadedFileModel, String> klasno;
 
     @FXML
-    private TableColumn<?, ?> ktarihi;
+    private TableColumn<LoadedFileModel, String> ktarihi;
 
     @FXML
-    private TableColumn<?, ?> aciklama;
+    private TableColumn<LoadedFileModel, String> aciklama;
 
     @FXML
-    private TableColumn<?, ?> yuktarihi;
+    private TableColumn<LoadedFileModel, String> yuktarihi;
 
     @FXML
-    private TableColumn<?, JFXButton> sil;
+    private TableColumn<LoadedFileModel, JFXButton> sil;
 
     @FXML
-    private TableColumn<?, JFXButton> desgistir;
+    private TableColumn<LoadedFileModel, JFXButton> desgistir;
 
     @FXML
     private JFXTextField ara;
