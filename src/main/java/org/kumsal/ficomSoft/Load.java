@@ -278,7 +278,6 @@ public class Load {
                         Statement saveFile = dbSource.getConnection().createStatement();
                         saveFile.execute(fileSql);
                         fileSql = "";
-                        files.clear();
                         sourceFile.clear();
                         destFile.clear();
                         upload_aciklama.setText("");
