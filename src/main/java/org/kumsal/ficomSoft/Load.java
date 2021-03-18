@@ -26,6 +26,7 @@ import javafx.stage.*;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.AdapterModelClass.load_model;
+import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 import javax.naming.spi.DirectoryManager;
 import javax.swing.*;
@@ -43,6 +44,7 @@ import java.net.URL;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -162,6 +164,7 @@ public class Load {
     List<File> files;
     List<File> destFile=new ArrayList<>();
     List<File> sourceFile=new ArrayList<>();
+    ConnectorMysql dbSource=new ConnectorMysql();
     @FXML
     void initialize() {
 
@@ -209,9 +212,6 @@ public class Load {
             table.getItems().add(themodel);
         });
         table.getItems().addAll(models);
-        table.getSelectionModel().selectedItemProperty().addListener((observableValue, load_model, t1) -> {
-            System.out.println(load_model.getAdet().getText());
-        });
         String pattern = "yyyy-MM-dd";
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern(pattern);
         upload_yazdır.setOnMouseClicked(mouseEvent -> {
@@ -234,6 +234,7 @@ public class Load {
             stage.show();
         });
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
+            PreparedStatement preparedStatement=dbS
 
         });
         ContextMenu contextMenu=new ContextMenu();
