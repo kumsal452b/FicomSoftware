@@ -250,7 +250,8 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_birim.getText()==""){
+                String test=upload_birim.getText();
+                if (upload_birim.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("Birim boş bırakılamaz.")
@@ -259,7 +260,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_spdno.getText()==null){
+                if (upload_spdno.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("SPD no boş bırakılamaz.")
@@ -268,7 +269,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_spdkarsilik.getText()==null){
+                if (upload_spdkarsilik.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("SPD Karşılık boş bırakılamaz.")
@@ -277,7 +278,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_ozelkod.getText()==null){
+                if (upload_ozelkod.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("Özel kod boş bırakılamaz.")
@@ -286,7 +287,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_ozelkodkarssiligi.getText()==null){
+                if (upload_ozelkodkarssiligi.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("Özel kod karşılık boş bırakılamaz.")
@@ -295,7 +296,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_klasorno.getText()==null){
+                if (upload_klasorno.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("Klasör no boş bırakılamaz.")
@@ -304,7 +305,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_aciklama.getText()==null){
+                if (upload_aciklama.getText().equals("")){
                     Notifications.create()
                             .title("Başarılı")
                             .text("Açıklama boş bırakılamaz.")
