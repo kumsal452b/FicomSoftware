@@ -250,7 +250,7 @@ public class Load {
                             .showError();
                     return;
                 }
-                if (upload_birim.getText()==null){
+                if (upload_birim.getText()==""){
                     Notifications.create()
                             .title("Başarılı")
                             .text("Birim boş bırakılamaz.")
@@ -277,7 +277,42 @@ public class Load {
                             .showError();
                     return;
                 }
-                
+                if (upload_ozelkod.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Özel kod boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_ozelkodkarssiligi.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Özel kod karşılık boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_klasorno.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Klasör no boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (upload_aciklama.getText()==null){
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Açıklama boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
 
                 PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
                         "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -294,7 +329,7 @@ public class Load {
                 LocalDate tarihSql=upload_tarih.getValue();
                 preparedStatement.setDate(10,Date.valueOf(tarihSql));
                 LocalDate imhaSql=upload_imha.getValue();
-                preparedStatement.setDate(10,Date.valueOf(imhaSql));
+                preparedStatement.setDate(11,Date.valueOf(imhaSql));
                 preparedStatement.execute();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -361,7 +396,7 @@ public class Load {
         ResultSet resultSet;
         resultSet = forDestis.getResultSet();
         while (resultSet.next()) {
-            upload_destıs_no.setValue(resultSet.getString("destisno"));
+            upload_destıs_no.getItems().add(resultSet.getString("destisno"));
             destisNo.add(resultSet.getInt("DID"));
         }
     }
