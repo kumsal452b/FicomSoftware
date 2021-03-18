@@ -2,20 +2,23 @@ package org.kumsal.ficomSoft;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Preloader;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.print.PageLayout;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
@@ -27,6 +30,7 @@ import org.kumsal.ficomSoft.AdapterModelClass.load_model;
 import javax.naming.spi.DirectoryManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Menu;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -124,6 +128,10 @@ public class Load {
 
     @FXML
     private AnchorPane main_pane;
+
+    @FXML
+    private JFXListView<String> listview;
+
     public static ArrayList<printer_model> theModels = new ArrayList<>();
 
     private void printImage(BufferedImage image) {
@@ -150,9 +158,13 @@ public class Load {
     }
 
     ObservableList<load_model> models;
-
+    File tempFile;
+    List<File> files;
+    List<File> destFile=new ArrayList<>();
+    List<File> sourceFile=new ArrayList<>();
     @FXML
     void initialize() {
+
         models = FXCollections.observableArrayList();
         PrinterJob printerJob = Objects.requireNonNull(PrinterJob.createPrinterJob(), "Cannot create printer job");
 
@@ -224,29 +236,43 @@ public class Load {
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
 
         });
+        ContextMenu contextMenu=new ContextMenu();
+        MenuItem item=new MenuItem("Sil");
+        item.setOnAction(event -> {
+            int indis=listview.getSelectionModel().getSelectedIndex();
+            destFile.remove(indis);
+            sourceFile.remove(indis);
+            listview.getItems().remove(indis);
+        });
+        contextMenu.getItems().add(item);
+
+        listview.setContextMenu(contextMenu);
+        listview.setExpanded(true);
         file.setOnMouseClicked(mouseEvent -> {
             FileChooser fileChooser=new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("PDF", "*.pdf")
             );
-            List<File> files= fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
+            files= fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
             List<String> fileName=new ArrayList<>();
+            sourceFile.addAll(files);
             for(File file:files){
-                File tempFile=new File("src/main/resources/org/kumsal/ficomsoft/files/"+file.getName());
-
-                try {
-                    Files.copy(file.toPath(),tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    fileName.add(file.getName());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                tempFile=new File("src/main/resources/org/kumsal/ficomsoft/files/"+file.getName());
+                destFile.add(tempFile);
+                listview.getItems().add(file.getName());
+//                try {
+//                    Files.copy(file.toPath(),tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//                    fileName.add(file.getName());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
             }
             Notifications.create()
-                    .darkStyle()
                     .title("Başarılı")
-                    // sets node to display
-                    .hideAfter(Duration.seconds(10))
+                    .text("Dosyalar tanimlandı")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BASELINE_LEFT)
                     .show();
         });
 
