@@ -7,12 +7,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
+import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,6 +68,13 @@ public class LoadedFile {
     private JFXTextField ara;
     MysqlDataSource dataSource = ConnectorMysql.connect();
     ObservableList<LoadedFileModel> theFileModel;
+
+    @FXML
+    void onClic(ActionEvent event){
+
+    }
+
+    public
     @FXML
     void initialize() throws SQLException {
         theFileModel= FXCollections.observableArrayList();
@@ -91,6 +100,10 @@ public class LoadedFile {
         while (resultSet.next()){
             if (PrimaryController.type.equals("Admin")){
                 sil=new JFXButton("Sil");
+                sil.getStyleClass().add("button13");
+                sil.setOnAction(event -> {
+                    System.out.println(event.getSource().toString());;
+                });
                 loadedFile=new LoadedFileModel(
                         String.valueOf(sira),
                         resultSet.getString(1),

@@ -14,7 +14,7 @@ module org.kumsal.ficomSoft {
     requires org.controlsfx.controls;
     requires javafx.controls;
 
-    opens org.kumsal.ficomSoft to com.jfoenix, javafx.fxml,javafx.controls;
+    opens org.kumsal.ficomSoft;
     opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml,javafx.controls,javafx.base;
 
     exports org.kumsal.ficomSoft;
