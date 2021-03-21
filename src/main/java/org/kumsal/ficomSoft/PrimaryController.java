@@ -135,13 +135,11 @@ public class PrimaryController {
 
 
                     // Step 4
-                    Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
                     // Step 5
                     type = sendLogedData.get(i).getLoginby();
                     username=sendLogedData.get(i).getUsername();
                     name = sendLogedData.get(i).getName() + " " + sendLogedData.get(i).getSurname();
                     stage.setUserData(sendLogedData.get(i));
-
                     PreparedStatement ownSave=dbSource.getConnection().prepareStatement("INSERT INTO `owntype` (`OTID`, `ownname`, `login_id`, `username`, `date`) VALUES (NULL, ?, ?, ?, ?)");
                     ownSave.setString(1,type);
                     ownSave.setString(2,sendLogedData.get(i).getId());
@@ -160,6 +158,10 @@ public class PrimaryController {
                     while (resultSet.next()) {
                         ownTypeID=resultSet.getString("OTID");
                     }
+
+                    Parent root = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
+
+
                     // Step 6
                     Scene scene = new Scene(root);
                     stage.setScene(scene);

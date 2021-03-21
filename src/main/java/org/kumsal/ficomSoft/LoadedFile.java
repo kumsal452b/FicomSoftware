@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 import java.awt.event.ActionEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -92,8 +93,10 @@ public class LoadedFile {
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
 
 
-        Statement fileList=dataSource.getConnection().createStatement();
-        ResultSet resultSet=fileList.executeQuery("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID");
+        PreparedStatement fileList=dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
+        fileList.setString(1,PrimaryController.username);
+
+        ResultSet resultSet=fileList.executeQuery();
         LoadedFileModel loadedFile;
         int sira=1;
         JFXButton sil;

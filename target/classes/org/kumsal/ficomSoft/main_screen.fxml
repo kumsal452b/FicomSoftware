@@ -1,61 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.MainPageController">
+<AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.MainPageController">
     <children>
-        <Pane layoutX="-1.0" layoutY="2.0" prefHeight="600.0" prefWidth="225.0" styleClass="painMainScreen" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-            <ImageView fitHeight="157.0" fitWidth="184.0" layoutX="20.0" pickOnBounds="true" preserveRatio="true">
+      <VBox prefHeight="600.0" prefWidth="224.0" styleClass="painMainScreen">
+         <children>
+            <ImageView fitHeight="145.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/ficomtranslogo.png" />
                </image>
             </ImageView>
-                <Button fx:id="main_page_home" graphicTextGap="50.0" layoutX="-1.0" layoutY="162.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Ana Sayfa" textFill="#1e1313" translateX="1.0" />
-                <Button fx:id="main_page_load" graphicTextGap="50.0" layoutX="-1.0" layoutY="222.0" mnemonicParsing="false" onAction="#onLoad" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Dosya Yükle" translateX="1.0" />
-                <Button fx:id="main_page_current" layoutX="-1.0" layoutY="280.0" mnemonicParsing="false" onAction="#main_page_currentFiles" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Yüklenen Dosyalar" translateX="1.0" />
-            <Button fx:id="main_page_folders" graphicTextGap="50.0" layoutX="-1.0" layoutY="339.0" mnemonicParsing="false" onAction="#showFolder" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Klasörller" translateX="1.0" />
-            <Button fx:id="main_page_print" layoutX="-1.0" layoutY="406.0" mnemonicParsing="false" onAction="#onPrint" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Sırtlık Çıkartma" translateX="1.0" />
-            <Button fx:id="main_page_destroy" layoutX="-1.0" layoutY="470.0" mnemonicParsing="false" onAction="#onDestroy" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="İmha Listesi" textFill="#392828" translateX="1.0" />
-            <ImageView fitHeight="30.0" fitWidth="55.0" layoutX="20.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth2">
+                <JFXButton fx:id="main_page_home" graphicTextGap="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Ana Sayfa" textFill="#1e1313" />
+                <JFXButton fx:id="main_page_load" graphicTextGap="50.0" mnemonicParsing="false" onAction="#onLoad" prefHeight="50.0" prefWidth="225.0" ripplerFill="#b99d9d" styleClass="mainScreenPainRigth" text="Dosya Yükle" />
+            <JFXButton fx:id="main_page_folders" graphicTextGap="50.0" mnemonicParsing="false" onAction="#showFolder" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Klasörller" />
+                <JFXButton fx:id="main_page_current" mnemonicParsing="false" onAction="#main_page_currentFiles" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Yüklenen Dosyalar" />
+            <JFXButton fx:id="main_page_print" mnemonicParsing="false" onAction="#onPrint" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Sırtlık Çıkartma" />
+            <JFXButton fx:id="main_page_destroy" mnemonicParsing="false" onAction="#onDestroy" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="İmha Listesi" textFill="#392828" />
+            <JFXButton fx:id="settings" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Ayarlar" />
+         </children>
+      </VBox>
+      <AnchorPane fx:id="mainFragment" layoutX="224.0" prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" />
+      <VBox disable="true" layoutX="10.0" layoutY="157.0" prefHeight="330.0" prefWidth="35.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth2">
                <image>
                   <Image url="@image/home.png" />
                </image>
+               <viewport>
+                  <Rectangle2D minX="12.0" minY="12.0" width="12.0" />
+               </viewport>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/upload.png" />
                </image>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/storage.png" />
                </image>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/folder.png" />
                </image>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/print.png" />
                </image>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="479.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
+            <ImageView fx:id="imageViewFor" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
                   <Image url="@image/destroy.png" />
                </image>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </ImageView>
-            <Label fx:id="pw" layoutX="35.0" layoutY="540.0" text="Label" textFill="WHITE" />
-            <Label fx:id="ph" layoutX="122.0" layoutY="540.0" text="Label" textFill="WHITE" />
-            </children>
-        </Pane>
-      <AnchorPane fx:id="mainFragment" layoutX="224.0" prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" />
+            <ImageView fitHeight="30.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth2">
+               <image>
+                  <Image url="@image/setting.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D minX="12.0" minY="12.0" width="12.0" />
+               </viewport>
+            </ImageView>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

@@ -157,7 +157,9 @@ public class MainPageController extends Activity {
 
     @FXML
     void initialize() throws IOException {
-
+        if (PrimaryController.type.equals("User")){
+            main_page_destroy.setVisible(false);
+        }
         mainPane.widthProperty().addListener((observableValue, number, t1) -> {
             System.out.println("t1"+mainPane.getWidth());
             int calculate = (t1.intValue()* 224) / 1200;
