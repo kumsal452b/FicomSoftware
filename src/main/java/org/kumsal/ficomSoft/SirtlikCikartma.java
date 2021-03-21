@@ -4,15 +4,23 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXRadioButton;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class SirtlikCikartma {
 
@@ -26,7 +34,7 @@ public class SirtlikCikartma {
     private TableView<SirtlikModel> table;
 
     @FXML
-    private TableColumn<SirtlikModel,JFXCheckBox> ısCheck;
+    private TableColumn<SirtlikModel, JFXCheckBox> ısCheck;
 
     @FXML
     private TableColumn<SirtlikModel, String> destisno;
@@ -76,8 +84,10 @@ public class SirtlikCikartma {
     @FXML
     private JFXDatePicker onlyDate;
 
+    MysqlDataSource dbSource = ConnectorMysql.connect();
+
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         onlyDate.setDisable(true);
         ısCheck.setCellValueFactory(new PropertyValueFactory<>("ısCheck"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
@@ -90,13 +100,59 @@ public class SirtlikCikartma {
         aciklama.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
 
-        ToggleGroup group=new ToggleGroup();
+
+        ToggleGroup group = new ToggleGroup();
         group.getToggles().add(option2);
         group.getToggles().add(oprion1);
+        oprion1.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (oprion1.isSelected()) {
+                    onlyDate.setDisable(true);
+                    first.setDisable(false);
+                    seccond.setDisable(false);
+                }
+            }
+        });
+        option2.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (option2.isSelected()) {
+                    onlyDate.setDisable(false);
+                    first.setDisable(true);
+                    seccond.setDisable(true);
 
-//        Group group1=new Group();
-//        group1.getChildren().add(oprion1);
-//        group1.getChildren().add(option2);
+                }
+            }
+        });
+        PreparedStatement fileList = dbSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
+        fileList.setString(1, PrimaryController.username);
 
+        ResultSet resultSet = fileList.executeQuery();
+        SirtlikModel loadedFile;
+        int sira = 1;
+        JFXButton sil;
+        while (resultSet.next()) {
+
+//                loadedFile=new SirtlikModel(
+//                        new JFXCheckBox(),
+//                        resultSet.getString(1),
+//                        resultSet.getString(2),
+//                        resultSet.getString(3),
+//                        resultSet.getString(4),
+//                        resultSet.getString(5),
+//                        resultSet.getString(6),
+//                        resultSet.getString(7),
+//                        resultSet.getString(8),
+//                        resultSet.getString(9),
+//                        resultSet.getString(10)
+//                );
+
+        }
+//            table.add(loadedFile);
     }
 }
+
+
+
+

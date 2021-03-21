@@ -5,9 +5,6 @@ import com.jfoenix.controls.JFXCheckBox;
 
 public class SirtlikModel {
 
-    private String sira;
-
-
     private String destisno;
 
 
@@ -40,8 +37,7 @@ public class SirtlikModel {
     private JFXCheckBox ısCheck;
 
 
-    public SirtlikModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXCheckBox isCheck) {
-        this.sira = sira;
+    public SirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXCheckBox isCheck) {
         this.destisno = destisno;
         this.birimad = birimad;
         this.spdkod = spdkod;
@@ -62,14 +58,7 @@ public class SirtlikModel {
     public void setIsCheck(JFXCheckBox ısCheck) {
         this.ısCheck = ısCheck;
     }
-
-    public String getSira() {
-        return sira;
-    }
-
-    public void setSira(String sira) {
-        this.sira = sira;
-    }
+    
 
     public String getDestisno() {
         return destisno;
