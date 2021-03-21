@@ -1,6 +1,7 @@
 package org.kumsal.ficomSoft;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 
 public class SirtlikModel {
 
@@ -36,13 +37,10 @@ public class SirtlikModel {
 
     private String yuktarihi;
 
+    private JFXCheckBox ısCheck;
 
-    private JFXButton sil;
 
-
-    private JFXButton desgistir;
-
-    public SirtlikModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXButton sil, JFXButton desgistir) {
+    public SirtlikModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXCheckBox isCheck) {
         this.sira = sira;
         this.destisno = destisno;
         this.birimad = birimad;
@@ -54,8 +52,15 @@ public class SirtlikModel {
         this.ktarihi = ktarihi;
         this.aciklama = aciklama;
         this.yuktarihi = yuktarihi;
-        this.sil = sil;
-        this.desgistir = desgistir;
+        this.ısCheck=isCheck;
+    }
+
+    public JFXCheckBox getIsCheck() {
+        return ısCheck;
+    }
+
+    public void setIsCheck(JFXCheckBox ısCheck) {
+        this.ısCheck = ısCheck;
     }
 
     public String getSira() {
@@ -144,21 +149,5 @@ public class SirtlikModel {
 
     public void setYuktarihi(String yuktarihi) {
         this.yuktarihi = yuktarihi;
-    }
-
-    public JFXButton getSil() {
-        return sil;
-    }
-
-    public void setSil(JFXButton sil) {
-        this.sil = sil;
-    }
-
-    public JFXButton getDesgistir() {
-        return desgistir;
-    }
-
-    public void setDesgistir(JFXButton desgistir) {
-        this.desgistir = desgistir;
     }
 }
