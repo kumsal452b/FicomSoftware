@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
+<?import com.jfoenix.controls.JFXRadioButton?>
 <AnchorPane prefHeight="600.0" prefWidth="974.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.SirtlikCikartma">
    <children>
       <TableView fx:id="table" layoutX="38.0" layoutY="142.0" prefHeight="444.0" prefWidth="885.0">
@@ -52,11 +52,11 @@
       </JFXButton>
       <HBox layoutX="47.0" layoutY="50.0" prefHeight="48.0" prefWidth="407.0">
          <children>
-            <JFXCheckBox fx:id="oprion1" selected="true" text=" ">
+            <JFXRadioButton fx:id="oprion1" selected="true" text=" ">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
-            </JFXCheckBox>
+            </JFXRadioButton>
             <JFXDatePicker fx:id="first" prefHeight="29.0" prefWidth="169.0" promptText="İlk">
                <HBox.margin>
                   <Insets right="10.0" />
@@ -76,11 +76,11 @@
       </HBox>
       <HBox layoutX="47.0" layoutY="97.0" prefHeight="39.0" prefWidth="407.0">
          <children>
-            <JFXCheckBox fx:id="option2" text=" ">
+            <JFXRadioButton fx:id="option2" text=" ">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
-            </JFXCheckBox>
+            </JFXRadioButton>
             <JFXDatePicker fx:id="onlyDate" prefHeight="29.0" prefWidth="169.0" promptText="Tarih değeri giriniz..." />
          </children>
       </HBox>

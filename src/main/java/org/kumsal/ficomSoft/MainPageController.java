@@ -135,13 +135,16 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void onPrint(ActionEvent event) {
+    void onPrint(ActionEvent event) throws IOException {
         main_page_home.getStyleClass().remove("currentButton");
         main_page_print.getStyleClass().add("currentButton");
         main_page_load.getStyleClass().remove("currentButton");
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+        close("sirtlikCikartma.fxml");
+        currentFragment = "sirtlikCikartma.fxml";
+        access = true;
 
     }
 
