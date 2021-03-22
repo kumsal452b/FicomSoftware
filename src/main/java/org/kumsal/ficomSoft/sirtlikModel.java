@@ -20,7 +20,9 @@ public class sirtlikModel {
 
     private String ktarihi;
 
-    public sirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi) {
+    private String imhaTarihi;
+
+    public sirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi,String imhaT) {
         this.destisno = destisno;
         this.birimad = birimad;
         this.spdkod = spdkod;
@@ -30,10 +32,19 @@ public class sirtlikModel {
         this.klasno = klasno;
         this.ktarihi = ktarihi;
         this.yuktarihi = yuktarihi;
+        this.imhaTarihi=imhaT;
     }
+
 
     private String yuktarihi;
 
+    public String getImhaTarihi() {
+        return imhaTarihi;
+    }
+
+    public void setImhaTarihi(String imhaTarihi) {
+        this.imhaTarihi = imhaTarihi;
+    }
 
     public String getDestisno() {
         return destisno;
