@@ -138,25 +138,26 @@ public class SirtlikCikartma {
                     );
                     allDataSirtlik.add(theModel);
                 }
-               if (allDataSirtlik.size()>0){
-                   FXMLLoader loader = new FXMLLoader();
-                   loader.setLocation(getClass().getResource("sirtlikYazdir.fxml"));
-                   AnchorPane root = null;
-                   try {
-                       root = loader.load();
-                   } catch (IOException e) {
-                       e.printStackTrace();
-                   }
-                   Scene scene = new Scene(root);
-                   Stage stage = new Stage();
-                   stage.initStyle(StageStyle.UNDECORATED);
-                   stage.setScene(scene);
-                   stage.initModality(Modality.WINDOW_MODAL);
-                   stage.initOwner(PrimaryController.stage);
-                   stage.show();
-               }else{
 
-               }
+            }
+            if (allDataSirtlik.size()>0){
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("sirtlikYazdir.fxml"));
+                AnchorPane root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(PrimaryController.stage);
+                stage.show();
+            }else{
+
             }
         });
 

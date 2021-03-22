@@ -82,12 +82,13 @@ public class sirtlikScreen {
         recyclerView.setAdapter(new sirlik_adapter());
         recycler.setAdapter(new sirtlikHorizontalAdapter());
         int count=0;
+        int index=0;
         for (sirtlikModel2 model2:SirtlikCikartma.allDataSirtlik){
-            recyclerView.getItems().add(model2);
+            recyclerView.getItems().add(index,model2);
+            index++;
             count++;
             if (count%3==0 && count!=0){
                 recycler.getItems().add(recyclerView);
-                recyclerView.getItems().clear();
             }
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
