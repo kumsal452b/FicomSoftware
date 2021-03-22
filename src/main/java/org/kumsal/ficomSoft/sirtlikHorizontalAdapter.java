@@ -2,7 +2,6 @@ package org.kumsal.ficomSoft;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import org.kairos.layouts.RecyclerView;
 
 import java.io.File;
@@ -17,7 +16,7 @@ public class sirtlikHorizontalAdapter extends RecyclerView.Adapter<sirtlikHorizo
     public class testHolder extends RecyclerView.ViewHolder {
 
         @FXML
-        private RecyclerView<?> recyclerHorizontal;
+        private RecyclerView<RecyclerView<sirtlikModel2>> recyclerHorizontal;
 
         public testHolder(FXMLLoader loader) {
             super(loader);
@@ -38,14 +37,7 @@ public class sirtlikHorizontalAdapter extends RecyclerView.Adapter<sirtlikHorizo
 
     @Override
     public void onBindViewHolder(testHolder testHolder, Object o) {
-        sirtlikModel theModel = (sirtlikModel) o;
-        testHolder.birimadi.setText(theModel.getBirimad());
-        testHolder.imhatarihi.setText(theModel.getImhaTarihi());
-        testHolder.klasorno.setText(theModel.getKlasno());
-        testHolder.klasoryili.setText(theModel.getKtarihi());
-        testHolder.destisno.setText(theModel.getDestisno());
-        testHolder.spdkarsilik.setText(theModel.getSpdkarsilik());
-        testHolder.spdkod.setText(theModel.getSpdkod());
-        testHolder.ozelkod.setText(theModel.getOzelkod());
+        RecyclerView<sirtlikModel2> theModel = (RecyclerView<sirtlikModel2>) o;
+        testHolder.recyclerHorizontal.getItems().add(theModel);
     }
 }

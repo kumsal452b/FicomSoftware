@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -23,13 +25,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
@@ -98,6 +106,7 @@ public class SirtlikCikartma {
 
     MysqlDataSource dbSource = ConnectorMysql.connect();
     ObservableList<SirtlikModel> modelObservableValue;
+    public static ArrayList<sirtlikModel2> allDataSirtlik=new ArrayList<>();
 
     @FXML
     void initialize() throws SQLException {
@@ -113,6 +122,44 @@ public class SirtlikCikartma {
         ktarihi.setCellValueFactory(new PropertyValueFactory<>("ktarihi"));
         aciklama.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
+        yazdir.setOnMouseClicked(mouseEvent -> {
+            for (SirtlikModel model:table.getItems()){
+                if (model.getIsCheck().isSelected()){
+                    sirtlikModel2 theModel=new sirtlikModel2(
+                            model.getDestisno(),
+                            model.getBirimad(),
+                            model.getSpdkod(),
+                            model.getSpdkarsilik(),
+                            model.getOzelkod(),
+                            model.getOzelkarsilik(),
+                            model.getOzelkarsilik(),
+                            model.getKtarihi(),
+                            model.getImhaTarihi()
+                    );
+                    allDataSirtlik.add(theModel);
+                }
+               if (allDataSirtlik.size()>0){
+                   FXMLLoader loader = new FXMLLoader();
+                   loader.setLocation(getClass().getResource("sirtlikYazdir.fxml"));
+                   AnchorPane root = null;
+                   try {
+                       root = loader.load();
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+                   Scene scene = new Scene(root);
+                   Stage stage = new Stage();
+                   stage.initStyle(StageStyle.UNDECORATED);
+                   stage.setScene(scene);
+                   stage.initModality(Modality.WINDOW_MODAL);
+                   stage.initOwner(PrimaryController.stage);
+                   stage.show();
+               }else{
+
+               }
+            }
+        });
+
 
 
         ToggleGroup group = new ToggleGroup();
