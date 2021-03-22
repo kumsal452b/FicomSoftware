@@ -1,43 +1,28 @@
 package org.kumsal.ficomSoft;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 
-public class SirtlikModel {
+public class sirtlikModel {
 
     private String destisno;
 
-
     private String birimad;
-
 
     private String spdkod;
 
-
     private String spdkarsilik;
-
 
     private String ozelkod;
 
-
     private String ozelkarsilik;
-
 
     private String klasno;
 
-
     private String ktarihi;
-
-
-    private String aciklama;
-
 
     private String yuktarihi;
 
-    private JFXCheckBox ısCheck;
-
-
-    public SirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXCheckBox isCheck) {
+    public sirtlikModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXButton sil, JFXButton desgistir) {
         this.destisno = destisno;
         this.birimad = birimad;
         this.spdkod = spdkod;
@@ -46,19 +31,16 @@ public class SirtlikModel {
         this.ozelkarsilik = ozelkarsilik;
         this.klasno = klasno;
         this.ktarihi = ktarihi;
-        this.aciklama = aciklama;
         this.yuktarihi = yuktarihi;
-        this.ısCheck=isCheck;
     }
 
-    public JFXCheckBox getIsCheck() {
-        return ısCheck;
+    public String getSira() {
+        return sira;
     }
 
-    public void setIsCheck(JFXCheckBox ısCheck) {
-        this.ısCheck = ısCheck;
+    public void setSira(String sira) {
+        this.sira = sira;
     }
-
 
     public String getDestisno() {
         return destisno;
@@ -138,5 +120,21 @@ public class SirtlikModel {
 
     public void setYuktarihi(String yuktarihi) {
         this.yuktarihi = yuktarihi;
+    }
+
+    public JFXButton getSil() {
+        return sil;
+    }
+
+    public void setSil(JFXButton sil) {
+        this.sil = sil;
+    }
+
+    public JFXButton getDesgistir() {
+        return desgistir;
+    }
+
+    public void setDesgistir(JFXButton desgistir) {
+        this.desgistir = desgistir;
     }
 }

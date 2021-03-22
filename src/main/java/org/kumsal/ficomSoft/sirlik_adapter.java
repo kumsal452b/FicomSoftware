@@ -20,26 +20,28 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
 
 
         @FXML
-        private Label print_tariih;
+        private Label destisno;
 
         @FXML
-        private TextField print_sira;
+        private Label birimadi;
 
         @FXML
-        private Label print_sayi;
+        private Label spdkod;
 
         @FXML
-        private Label print_konusu;
+        private Label spdkarsilik;
 
         @FXML
-        private Label print_adet;
+        private Label ozelkod;
 
         @FXML
-        private Label print_evrak;
+        private Label klasorno;
 
         @FXML
-        private Label print_imheTarihi;
+        private Label klasoryili;
 
+        @FXML
+        private Label imhatarihi;
 
         public testHolder(FXMLLoader loader) {
             super(loader);
@@ -50,7 +52,7 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
         URL url=null;
         try {
-            url = new File("src/main/resources/org/kumsal/ficomSoft/printLayoutSingle.fxml").toURI().toURL();
+            url = new File("src/main/resources/org/kumsal/ficomSoft/sirtlikModel.fxml").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
