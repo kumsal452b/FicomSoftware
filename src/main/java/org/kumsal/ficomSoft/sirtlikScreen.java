@@ -2,6 +2,7 @@ package org.kumsal.ficomSoft;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
@@ -72,6 +73,7 @@ public class sirtlikScreen {
     ArrayList<printer_model> allGlobElement=new ArrayList<>();
     @FXML
     void initialize() {
+        recycler.setOrientation(Orientation.HORIZONTAL);
         iptal.setOnMouseClicked(mouseEvent -> {
             Node node = (Node) mouseEvent.getSource();
             // Step 3
@@ -79,6 +81,7 @@ public class sirtlikScreen {
             stage.close();
         });
         printer_adapter adapter = new printer_adapter();
+
         recycler.setAdapter(adapter);
         ArrayList<printer_model> partOfList=new ArrayList<>();
         for (int i = 0; i < Load.theModels.size(); i++) {
