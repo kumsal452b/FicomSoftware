@@ -48,6 +48,7 @@ public class sirtlikScreen {
         printJob.getJobSettings().setPageLayout(layout);
         boolean accept=printJob.showPrintDialog(pane.getScene().getWindow());
         boolean success=false;
+        recycler.getItems().
 
         if (accept){
             for (int i = 0; i < allOfList.size(); i++) {
