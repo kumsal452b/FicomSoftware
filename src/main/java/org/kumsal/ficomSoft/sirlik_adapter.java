@@ -16,9 +16,6 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
     }
 
     public class testHolder extends RecyclerView.ViewHolder {
-
-
-
         @FXML
         private Label destisno;
 
@@ -71,6 +68,5 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
         testHolder.spdkarsilik.setText(theModel.getSpdkarsilik());
         testHolder.spdkod.setText(theModel.getSpdkod());
         testHolder.ozelkod.setText(theModel.getOzelkod());
-        
     }
 }
