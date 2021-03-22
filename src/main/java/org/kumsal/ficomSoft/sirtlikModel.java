@@ -20,9 +20,7 @@ public class sirtlikModel {
 
     private String ktarihi;
 
-    private String yuktarihi;
-
-    public sirtlikModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXButton sil, JFXButton desgistir) {
+    public sirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi) {
         this.destisno = destisno;
         this.birimad = birimad;
         this.spdkod = spdkod;
@@ -34,13 +32,8 @@ public class sirtlikModel {
         this.yuktarihi = yuktarihi;
     }
 
-    public String getSira() {
-        return sira;
-    }
+    private String yuktarihi;
 
-    public void setSira(String sira) {
-        this.sira = sira;
-    }
 
     public String getDestisno() {
         return destisno;
@@ -106,14 +99,6 @@ public class sirtlikModel {
         this.ktarihi = ktarihi;
     }
 
-    public String getAciklama() {
-        return aciklama;
-    }
-
-    public void setAciklama(String aciklama) {
-        this.aciklama = aciklama;
-    }
-
     public String getYuktarihi() {
         return yuktarihi;
     }
@@ -122,19 +107,4 @@ public class sirtlikModel {
         this.yuktarihi = yuktarihi;
     }
 
-    public JFXButton getSil() {
-        return sil;
-    }
-
-    public void setSil(JFXButton sil) {
-        this.sil = sil;
-    }
-
-    public JFXButton getDesgistir() {
-        return desgistir;
-    }
-
-    public void setDesgistir(JFXButton desgistir) {
-        this.desgistir = desgistir;
-    }
 }
