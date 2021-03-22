@@ -35,7 +35,7 @@ public class sirtlikScreen {
     private Pane pane;
 
     @FXML
-    private RecyclerView<printer_model> recycler;
+    private RecyclerView<RecyclerView<sirtlikModel2>> recycler;
 
     @FXML
     private Button yazdir;
@@ -43,23 +43,27 @@ public class sirtlikScreen {
     @FXML
     private Button iptal;
 
+    private RecyclerView<sirtlikModel2> recyclerView=new RecyclerView<>();
+
+    private ArrayList<RecyclerView<sirtlikModel2>> horizontalDate=new ArrayList<>();
+
     private void printImage(BufferedImage image) throws InterruptedException {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         PageLayout layout = printJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.HARDWARE_MINIMUM);
         printJob.getJobSettings().setPageLayout(layout);
         boolean accept=printJob.showPrintDialog(pane.getScene().getWindow());
         boolean success=false;
-        recycler.getItems().
+
 
         if (accept){
             for (int i = 0; i < allOfList.size(); i++) {
                 recycler.getItems().clear();
-                recycler.getItems().addAll(allOfList.get(i));
-                success= printJob.printPage(pane);
-                if (!success){
-                    recycler.getItems().addAll(allGlobElement);
-                    break;
-                }
+//                recycler.getItems().addAll(allOfList.get(i));
+//                success= printJob.printPage(pane);
+//                if (!success){
+//                    recycler.getItems().addAll(allGlobElement);
+//                    break;
+//                }
             }
         }
 
@@ -71,28 +75,20 @@ public class sirtlikScreen {
     }
     ArrayList<ArrayList<printer_model>> allOfList=new ArrayList<>();
     ArrayList<printer_model> allGlobElement=new ArrayList<>();
+
     @FXML
     void initialize() {
-        recycler.setOrientation(Orientation.HORIZONTAL);
-        iptal.setOnMouseClicked(mouseEvent -> {
-            Node node = (Node) mouseEvent.getSource();
-            // Step 3
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.close();
-        });
-        printer_adapter adapter = new printer_adapter();
 
-        recycler.setAdapter(adapter);
-        ArrayList<printer_model> partOfList=new ArrayList<>();
-        for (int i = 0; i < Load.theModels.size(); i++) {
-            printer_model theModel = Load.theModels.get(i);
-            partOfList.add(theModel);
-            if ((i%14==0 && i!=0)|| i==Load.theModels.size()-1){
-                allOfList.add(partOfList);
-                partOfList=new ArrayList<>();
+        recyclerView.setAdapter(new sirlik_adapter());
+        recycler.setAdapter(new sirtlikHorizontalAdapter());
+        int count=0;
+        for (sirtlikModel2 model2:SirtlikCikartma.allDataSirtlik){
+            recyclerView.getItems().add(model2);
+            count++;
+            if (count%3==0 && count!=0){
+                recycler.getItems().add(recyclerView);
+                recyclerView.getItems().clear();
             }
-            allGlobElement.add(theModel);
-            recycler.getItems().add(theModel);
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
             SnapshotParameters snapshotParameters = new SnapshotParameters();

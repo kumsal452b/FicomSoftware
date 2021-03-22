@@ -1,9 +1,6 @@
 package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-
-public class SirtlikModel {
+public class sirtlikModel2 {
 
     private String destisno;
 
@@ -23,9 +20,7 @@ public class SirtlikModel {
 
     private String imhaTarihi;
 
-    private JFXCheckBox ısCheck;
-
-    public SirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String imhaT, String string, JFXCheckBox ischeck) {
+    public sirtlikModel2(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String imhaT) {
         this.destisno = destisno;
         this.birimad = birimad;
         this.spdkod = spdkod;
@@ -36,7 +31,6 @@ public class SirtlikModel {
         this.ktarihi = ktarihi;
         this.yuktarihi = yuktarihi;
         this.imhaTarihi=imhaT;
-        this.ısCheck=ischeck;
     }
 
 
@@ -118,17 +112,8 @@ public class SirtlikModel {
         return yuktarihi;
     }
 
-    public JFXCheckBox getIsCheck() {
-        return ısCheck;
-    }
-
-    public void setIsCheck(JFXCheckBox ısCheck) {
-        this.ısCheck = ısCheck;
-    }
-
     public void setYuktarihi(String yuktarihi) {
         this.yuktarihi = yuktarihi;
     }
-
 
 }
