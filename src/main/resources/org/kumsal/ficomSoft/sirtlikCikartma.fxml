@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.SirtlikCikartma">
    <children>
-      <TableView fx:id="table" layoutX="38.0" layoutY="142.0" prefHeight="444.0" prefWidth="885.0">
+      <TableView fx:id="table" layoutX="38.0" layoutY="142.0" prefHeight="444.0" prefWidth="885.0" tableMenuButtonVisible="true">
          <columns>
             <TableColumn fx:id="ısCheck" prefWidth="51.0" text="#" />
             <TableColumn fx:id="destisno" prefWidth="66.0" text="Destis No" />

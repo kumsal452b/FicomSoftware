@@ -58,7 +58,7 @@ public class SirtlikModel {
     public void setIsCheck(JFXCheckBox ısCheck) {
         this.ısCheck = ısCheck;
     }
-    
+
 
     public String getDestisno() {
         return destisno;

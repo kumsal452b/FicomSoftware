@@ -3,23 +3,35 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
+
+import java.io.File;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import com.jfoenix.controls.JFXRadioButton;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.MapChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class SirtlikCikartma {
@@ -85,9 +97,11 @@ public class SirtlikCikartma {
     private JFXDatePicker onlyDate;
 
     MysqlDataSource dbSource = ConnectorMysql.connect();
+    ObservableList<SirtlikModel> modelObservableValue;
 
     @FXML
     void initialize() throws SQLException {
+        modelObservableValue= FXCollections.observableArrayList();
         onlyDate.setDisable(true);
         ısCheck.setCellValueFactory(new PropertyValueFactory<>("ısCheck"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
@@ -118,13 +132,66 @@ public class SirtlikCikartma {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (option2.isSelected()) {
-                    onlyDate.setDisable(false);
-                    first.setDisable(true);
-                    seccond.setDisable(true);
+                        onlyDate.setDisable(false);
+                        first.setDisable(true);
+                        seccond.setDisable(true);
+                        table.getItems().clear();
+                    if (onlyDate.getValue()!=null){
+                        LocalDate date=onlyDate.getValue();
+                        String date2=date.toString();
+                        for (SirtlikModel models: modelObservableValue){
+                            if (models.getKtarihi().equals(date2)){
+                                table.getItems().add(models);
+                            }
+                        }
+                    }
 
                 }
             }
         });
+
+        File file = new File("src/main/resources/org/kumsal/ficomSoft/image/ficomtranslogo.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView imageView=new ImageView(image);
+        table.setPlaceholder(imageView);
+        onlyDate.valueProperty().addListener((observableValue, localDate, t1) -> {
+            table.getItems().clear();
+            if (onlyDate.getValue()!=null){
+                LocalDate date=onlyDate.getValue();
+                String date2=date.toString();
+                for (SirtlikModel models: modelObservableValue){
+                    if (models.getKtarihi().equals(date2)){
+                        table.getItems().add(models);
+                    }
+                }
+            }
+
+        });
+        first.valueProperty().addListener((observableValue, localDate, t1) -> {
+            table.getItems().clear();
+            if (seccond.getValue()!=null && first.getValue()!=null){
+                if (betweenDate(first.getValue(),seccond.getValue())){
+                    for (SirtlikModel models: modelObservableValue){
+                        if (betweenDateForPivot(first.getValue(),seccond.getValue(),models.getKtarihi())){
+                            table.getItems().add(models);
+                        }
+                    }
+                }
+            }
+        });
+        seccond.valueProperty().addListener((observableValue, localDate, t1) -> {
+            table.getItems().clear();
+            if (seccond.getValue()!=null && first.getValue()!=null){
+                if (betweenDate(first.getValue(),seccond.getValue())){
+                    for (SirtlikModel models: modelObservableValue){
+                        if (betweenDateForPivot(first.getValue(),seccond.getValue(),models.getKtarihi())){
+                            table.getItems().add(models);
+                        }
+                    }
+                }
+            }
+        });
+
         PreparedStatement fileList = dbSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
         fileList.setString(1, PrimaryController.username);
 
@@ -134,22 +201,64 @@ public class SirtlikCikartma {
         JFXButton sil;
         while (resultSet.next()) {
 
-//                loadedFile=new SirtlikModel(
-//                        new JFXCheckBox(),
-//                        resultSet.getString(1),
-//                        resultSet.getString(2),
-//                        resultSet.getString(3),
-//                        resultSet.getString(4),
-//                        resultSet.getString(5),
-//                        resultSet.getString(6),
-//                        resultSet.getString(7),
-//                        resultSet.getString(8),
-//                        resultSet.getString(9),
-//                        resultSet.getString(10)
-//                );
-
+                loadedFile=new SirtlikModel(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        new JFXCheckBox()
+                );
+                modelObservableValue.add(loadedFile);
         }
 //            table.add(loadedFile);
+    }
+    public static boolean betweenDateForPivot(LocalDate first, LocalDate second,String pwvot){
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+        try {
+            Date date1 = myFormat.parse(first.toString());
+            Date date2 = myFormat.parse(second.toString());
+            Date pivot=myFormat.parse(pwvot);
+            long diff = pivot.getTime() - date1.getTime();
+            long diff2=date2.getTime()-pivot.getTime();
+            if (diff>=0 && diff2>=0){
+                return true;
+            }else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean betweenDate(LocalDate first, LocalDate second){
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+        try {
+            Date date1 = myFormat.parse(first.toString());
+            Date date2 = myFormat.parse(second.toString());
+            long diff = date2.getTime() - date1.getTime();
+            long differance=TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            if (differance<0){
+                Notifications.create()
+                        .title("Hata")
+                        .text("Son tarih ilk tarihten önce olamaz")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.CENTER_LEFT)
+                        .showError();
+                this.first.setValue(this.seccond.getValue());
+                return false;
+            }else{
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 
