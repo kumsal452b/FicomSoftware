@@ -3,7 +3,6 @@ package org.kumsal.ficomSoft;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import org.kairos.layouts.RecyclerView;
 
 import java.io.File;
@@ -59,7 +58,7 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
 
     @Override
     public void onBindViewHolder(testHolder testHolder, Object o) {
-        sirtlikModel theModel = (sirtlikModel) o;
+        SirtlikModel theModel = (SirtlikModel) o;
         testHolder.birimadi.setText(theModel.getBirimad());
         testHolder.imhatarihi.setText(theModel.getImhaTarihi());
         testHolder.klasorno.setText(theModel.getKlasno());
