@@ -86,15 +86,22 @@ public class sirtlikScreen {
         recycler.setOrientation(Orientation.VERTICAL);
         int count=0;
         int index=0;
+        ArrayList<sirtlikModel2> tempData=new ArrayList<>();
+        ArrayList<RecyclerView<sirtlikModel2>> horizontal=new ArrayList<>();
         for (sirtlikModel2 model2:SirtlikCikartma.allDataSirtlik){
-            recyclerView.getItems().add(index,model2);
+            tempData.add(model2);
             index++;
             count++;
             if (count%3==0 && count!=0){
-                recycler.getItems().add(recyclerView);
-                index=0;
+                recyclerView.getItems().addAll(tempData);
+                tempData.clear();
+                horizontal.add(recyclerView);
+                recyclerView=new RecyclerView<>();
+                recyclerView.setAdapter(new sirlik_adapter());
+                recyclerView.setOrientation(Orientation.VERTICAL);
             }
         }
+        recycler.getItems().addAll(horizontal);
         yazdir.setOnMouseClicked(mouseEvent -> {
             SnapshotParameters snapshotParameters = new SnapshotParameters();
 //            snapshotParameters.setFill(C)
