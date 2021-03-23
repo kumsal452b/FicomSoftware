@@ -80,7 +80,10 @@ public class sirtlikScreen {
     void initialize() {
 
         recyclerView.setAdapter(new sirlik_adapter());
+        recyclerView.setOrientation(Orientation.VERTICAL);
+
         recycler.setAdapter(new sirtlikHorizontalAdapter());
+        recycler.setOrientation(Orientation.VERTICAL);
         int count=0;
         int index=0;
         for (sirtlikModel2 model2:SirtlikCikartma.allDataSirtlik){
@@ -89,6 +92,7 @@ public class sirtlikScreen {
             count++;
             if (count%3==0 && count!=0){
                 recycler.getItems().add(recyclerView);
+                index=0;
             }
         }
         yazdir.setOnMouseClicked(mouseEvent -> {

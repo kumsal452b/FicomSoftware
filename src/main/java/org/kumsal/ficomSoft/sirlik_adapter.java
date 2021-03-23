@@ -58,7 +58,7 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
 
     @Override
     public void onBindViewHolder(testHolder testHolder, Object o) {
-        SirtlikModel theModel = (SirtlikModel) o;
+        sirtlikModel2 theModel = (sirtlikModel2) o;
         testHolder.birimadi.setText(theModel.getBirimad());
         testHolder.imhatarihi.setText(theModel.getImhaTarihi());
         testHolder.klasorno.setText(theModel.getKlasno());
