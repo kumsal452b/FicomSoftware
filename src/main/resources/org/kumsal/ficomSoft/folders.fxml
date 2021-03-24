@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.LoadedFile">
+<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.Folders">
     <children>
         <VBox layoutX="-2.0" prefHeight="200.0" prefWidth="366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -17,26 +21,31 @@
                         <Insets top="90.0" />
                     </VBox.margin>
                 </JFXTextField>
-                <TableView fx:id="table" prefHeight="483.0" prefWidth="958.0">
-                    <columns>
+            <HBox prefHeight="500.0" prefWidth="200.0">
+               <children>
+                  <Pane fx:id="adminPanel" prefHeight="485.0" prefWidth="920.0">
+                     <children>
+                        <JFXTextField fx:id="destisno_giriniz" labelFloat="true" layoutX="108.0" layoutY="121.0" prefHeight="25.0" prefWidth="211.0" promptText="Destis no giriniz." />
+                        <JFXButton fx:id="ekle" layoutX="108.0" layoutY="179.0" prefHeight="25.0" prefWidth="211.0" styleClass="buttonHomeFragment" stylesheets="@style.css" text="Ekle" textFill="WHITE" />
+                        <Label layoutX="14.0" layoutY="14.0" text="Klasör Ekleyin" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <TableView fx:id="table" prefHeight="400.0" prefWidth="936.0">
+                     <columns>
                         <TableColumn fx:id="sira" prefWidth="51.0" text="#" />
                         <TableColumn fx:id="destisno" prefWidth="66.0" text="Destis No" />
-                        <TableColumn fx:id="birimad" prefWidth="66.0" text="Birim Adı" />
-                        <TableColumn fx:id="spdkod" prefWidth="66.0" text="SPD Kodu" />
-                        <TableColumn fx:id="spdkarsilik" prefWidth="117.0" text="SPD Karşılığı" />
-                        <TableColumn fx:id="ozelkod" prefWidth="63.0" text="Özel kod" />
-                        <TableColumn fx:id="ozelkarsilik" prefWidth="95.0" text="Öz. Kod Karş." />
-                        <TableColumn fx:id="klasno" prefWidth="89.0" text="Klasör No" />
-                        <TableColumn fx:id="ktarihi" prefWidth="63.0" text="K. Tarihi" />
-                        <TableColumn fx:id="aciklama" prefWidth="108.0" text="Açıklama" />
-                        <TableColumn fx:id="yuktarihi" prefWidth="72.0" text="Yüklenme tarihi" />
-                        <TableColumn fx:id="sil" minWidth="1.0" prefWidth="50.0" text="#" />
-                        <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="50.0" text="#" />
-                    </columns>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </TableView>
+                        <TableColumn fx:id="kayıt_tarihi" prefWidth="108.0" text="Kayıt Tarihi" />
+                        <TableColumn fx:id="kayıt_saati" prefWidth="116.0" text="Kayıt Saati" />
+                        <TableColumn fx:id="sil" minWidth="1.0" text="#" />
+                        <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="73.0" text="#" />
+                     </columns>
+                  </TableView>
+               </children>
+            </HBox>
             </children>
         </VBox>
     </children>
