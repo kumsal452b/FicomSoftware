@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 import com.mysql.cj.MysqlConnection;
 import com.mysql.cj.jdbc.MysqlDataSource;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -34,6 +35,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
+
+import javax.swing.*;
 
 public class Folders implements EventHandler<ActionEvent> {
 
@@ -95,6 +98,7 @@ public class Folders implements EventHandler<ActionEvent> {
         }
     }
 
+    ArrayList<Integer> folderIndex=new ArrayList<>();
     @FXML
     void initialize() throws SQLException {
 
@@ -186,17 +190,52 @@ public class Folders implements EventHandler<ActionEvent> {
             sil.setOnAction(event -> {
                 JFXButton theButton=(JFXButton) event.getSource();
                 int currentIndex=buttonsSil.indexOf(theButton);
-                
-                JFXDialogLayout layout=new JFXDialogLayout();
-                layout.setHeading(new Text("Devam etmek iser misiniz"));
-                layout.setBody(new Text("ksdjskdjskjdskdsd"));
-                layout.setActions(new JFXButton("selam"));
+                JFXButton evet=new JFXButton("Evet");
                 JFXDialog dialog=new JFXDialog(stacpane,new Label("temel"), JFXDialog.DialogTransition.CENTER);
+                JFXDialogLayout layout=new JFXDialogLayout();
+                layout.setHeading(new Text("Dikkat"));
+                layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
+                evet.setOnAction(event1 -> {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            table.getItems().remove(index);
+                        }
+                    });
+                    buttonsSil.remove(index);
+                    buttonsDegistir.remove(index);
+                    try {
+                        PreparedStatement preparedStatement=dbSource.getConnection().prepareStatement(
+                                "DELETE FROM `destis` WHERE `destis`.`DID` = ?"
+                        );
+                        preparedStatement.setInt(1,folderIndex.get(index));
+                        preparedStatement.execute();
+                        folderIndex.remove(index);
+                        Notifications.create()
+                                .title("Başarılı")
+                                .text("Klasör silindi")
+                                .hideAfter(Duration.seconds(3))
+                                .position(Pos.BASELINE_LEFT)
+                                .showConfirm();
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                    dialog.close();
+                });
+                JFXButton iptal=new JFXButton("Iptal");
+                iptal.setOnAction(event1 -> {
+
+
+                });
+                layout.setActions(evet,iptal);
                 dialog.setContent(layout);
                 dialog.show();
 
             });
             degistir.setOnAction(this);
+            folderIndex.add(resultSet.getInt(1));
             foldersModel foldersModel=new foldersModel(String.valueOf(theIndex),
                     resultSet.getString(2),
                     resultSet.getString(3),
