@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXButton;
 public class foldersModel {
 
     private String sira;
-    
+
     private String destisno;
 
     private String yuklemeSaati;
