@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -18,6 +19,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
@@ -28,7 +31,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
-public class Folders {
+public class Folders implements EventHandler<ActionEvent> {
 
     @FXML
     private ResourceBundle resources;
@@ -70,6 +73,17 @@ public class Folders {
     private TableColumn<foldersModel, JFXButton> desgistir;
     MysqlDataSource dbSource= ConnectorMysql.connect();
     ObservableList<foldersModel> foldersModels1;
+    ArrayList<JFXButton> buttons=new ArrayList<>();
+
+    @Override
+    public void handle(ActionEvent event) {
+        JFXButton theButton=(JFXButton) event.getSource();
+        if (theButton.getText().equals("Sil")){
+
+        }else{
+
+        }
+    }
 
     @FXML
     void initialize() throws SQLException {
@@ -86,6 +100,7 @@ public class Folders {
         int index=1;
         JFXButton sil;
         JFXButton degistir;
+
         updateList(resultSet, index);
         ekle.setOnMouseClicked(mouseEvent -> {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -93,6 +108,7 @@ public class Folders {
             Date dt=new Date();
             String date=myFormat.format(dt);
             String time=myFormatTime.format(dt);
+
 
             try {
                if (!destisno_giriniz.getText().equals("") && destisno_giriniz.getText()!=null){
@@ -148,11 +164,19 @@ public class Folders {
         JFXButton degistir;
         JFXButton sil;
         int theIndex=index;
+
         while (resultSet.next()){
             sil=new JFXButton("Sil");
             sil.getStyleClass().add("deleteButton");
             degistir=new JFXButton("Değiştir");
             degistir.getStyleClass().add("changeButton");
+            buttons.add(sil);
+            buttons.add(degistir);
+            sil.setOnAction(event -> {
+                JFXButton theButton=(JFXButton) event.getSource();
+                System.out.println(theButton.getText());
+            });
+            degistir.setOnAction(this);
             foldersModel foldersModel=new foldersModel(String.valueOf(theIndex),
                     resultSet.getString(2),
                     resultSet.getString(3),
