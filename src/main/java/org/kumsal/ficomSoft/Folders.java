@@ -1,7 +1,8 @@
 package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.animation.alert.JFXAlertAnimation;
+import com.jfoenix.controls.*;
+
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,10 +24,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
@@ -51,6 +55,7 @@ public class Folders implements EventHandler<ActionEvent> {
     @FXML
     private JFXButton ekle;
 
+
     @FXML
     private TableView<foldersModel> table;
 
@@ -71,9 +76,14 @@ public class Folders implements EventHandler<ActionEvent> {
 
     @FXML
     private TableColumn<foldersModel, JFXButton> desgistir;
+
+    @FXML
+    private StackPane stacpane;
+
     MysqlDataSource dbSource= ConnectorMysql.connect();
     ObservableList<foldersModel> foldersModels1;
-    ArrayList<JFXButton> buttons=new ArrayList<>();
+    ArrayList<JFXButton> buttonsSil=new ArrayList<>();
+    ArrayList<JFXButton> buttonsDegistir=new ArrayList<>();
 
     @Override
     public void handle(ActionEvent event) {
@@ -87,6 +97,7 @@ public class Folders implements EventHandler<ActionEvent> {
 
     @FXML
     void initialize() throws SQLException {
+
         foldersModels1= FXCollections.observableArrayList();
         sira.setCellValueFactory(new PropertyValueFactory<>("sira"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
@@ -170,11 +181,20 @@ public class Folders implements EventHandler<ActionEvent> {
             sil.getStyleClass().add("deleteButton");
             degistir=new JFXButton("Değiştir");
             degistir.getStyleClass().add("changeButton");
-            buttons.add(sil);
-            buttons.add(degistir);
+            buttonsSil.add(sil);
+            buttonsDegistir.add(degistir);
             sil.setOnAction(event -> {
                 JFXButton theButton=(JFXButton) event.getSource();
-                System.out.println(theButton.getText());
+                int currentIndex=buttonsSil.indexOf(theButton);
+                
+                JFXDialogLayout layout=new JFXDialogLayout();
+                layout.setHeading(new Text("Devam etmek iser misiniz"));
+                layout.setBody(new Text("ksdjskdjskjdskdsd"));
+                layout.setActions(new JFXButton("selam"));
+                JFXDialog dialog=new JFXDialog(stacpane,new Label("temel"), JFXDialog.DialogTransition.CENTER);
+                dialog.setContent(layout);
+                dialog.show();
+
             });
             degistir.setOnAction(this);
             foldersModel foldersModel=new foldersModel(String.valueOf(theIndex),
