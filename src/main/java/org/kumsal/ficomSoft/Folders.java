@@ -16,6 +16,8 @@ import com.mysql.cj.MysqlConnection;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
@@ -85,7 +87,6 @@ public class Folders {
         JFXButton sil;
         JFXButton degistir;
         updateList(resultSet, index);
-        table.getItems().addAll(foldersModels1);
         ekle.setOnMouseClicked(mouseEvent -> {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
             SimpleDateFormat myFormatTime = new SimpleDateFormat("HH:mm:ss");
@@ -94,12 +95,11 @@ public class Folders {
             String time=myFormatTime.format(dt);
 
             try {
-               if (destisno_giriniz.getText()!="" && destisno_giriniz.getText()!=null){
+               if (!destisno_giriniz.getText().equals("") && destisno_giriniz.getText()!=null){
                    PreparedStatement savedFolder=dbSource.getConnection().prepareStatement("INSERT INTO `destis` (`DID`, `destisno`, `kayitT`, `kayitS`) VALUES (NULL, ?, ?, ?)");
                    savedFolder.setString(1,destisno_giriniz.getText());
                    savedFolder.setString(2,date);
                    savedFolder.setString(3,time);
-                   if (savedFolder.execute()){
                        Notifications.create()
                                .title("Başarılı")
                                .text("Klasör kaydedildi")
@@ -107,30 +107,53 @@ public class Folders {
                                .position(Pos.BASELINE_LEFT)
                                .showConfirm();
                        updateList(resultSet, index);
-
-                   }
                }else{
                    Notifications.create()
                            .title("Hata")
                            .text("Destis no boş bırakılamaz.")
                            .hideAfter(Duration.seconds(3))
                            .position(Pos.CENTER_LEFT)
-                           .showConfirm();
+                           .showError();
                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
 
         });
+        FilteredList<foldersModel> filteredList=new FilteredList<>(foldersModels1, b -> true);
+        ara.textProperty().addListener((observableValue, s, t1) -> {
+            filteredList.setPredicate(loadedFileModel->{
+                if (t1==null || t1.isEmpty()){
+                    return true;
+                }
+                String lowerCaseFilter = t1.toLowerCase();
+                if (loadedFileModel.getDestisno().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+                    return true; // Filter matches first name.
+                } else if (loadedFileModel.getYuklemeSaati().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches last name.
+                }
+                else if (String.valueOf(loadedFileModel.getYuktarihi()).indexOf(lowerCaseFilter)!=-1)
+                    return true;
+                else
+                    return false; // Does not match.
+
+            });
+        });
+        SortedList<foldersModel> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedData);
     }
 
     private void updateList(ResultSet resultSet, int index) throws SQLException {
         JFXButton degistir;
         JFXButton sil;
+        int theIndex=index;
         while (resultSet.next()){
             sil=new JFXButton("Sil");
+            sil.getStyleClass().add("deleteButton");
             degistir=new JFXButton("Değiştir");
-            foldersModel foldersModel=new foldersModel(String.valueOf(index),
+            degistir.getStyleClass().add("changeButton");
+            foldersModel foldersModel=new foldersModel(String.valueOf(theIndex),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getString(4),
@@ -138,6 +161,7 @@ public class Folders {
                     degistir
                     );
             foldersModels1.add(foldersModel);
+            theIndex++;
         }
     }
 }

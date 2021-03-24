@@ -76,6 +76,15 @@
     -fx-border-color: #1c3734;
     -fx-border-radius: 0.0 0.0 20.0 20.0;
 }
+.deleteButton{
+    -fx-background-color: #d63b3b;
+    -fx-text-fill: white;
+}
+.changeButton{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a0f0f;
+}
+
 .paneForHome{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
 }

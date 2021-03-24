@@ -100,13 +100,16 @@ public class LoadedFile {
         LoadedFileModel loadedFile;
         int sira=1;
         JFXButton sil;
+        JFXButton degistir;
         while (resultSet.next()){
             if (PrimaryController.type.equals("Admin")){
                 sil=new JFXButton("Sil");
-                sil.getStyleClass().add("button13");
+                sil.getStyleClass().add("deleteButton");
                 sil.setOnAction(event -> {
                     System.out.println(event.getSource().toString());;
                 });
+                degistir=new JFXButton("Degistr");
+                degistir.getStyleClass().add("changeButton");
                 loadedFile=new LoadedFileModel(
                         String.valueOf(sira),
                         resultSet.getString(1),
@@ -120,7 +123,7 @@ public class LoadedFile {
                         resultSet.getString(9),
                         resultSet.getString(10),
                         sil,
-                        new JFXButton("Degistr")
+                        degistir
                 );
             }else {
                 loadedFile=new LoadedFileModel(
