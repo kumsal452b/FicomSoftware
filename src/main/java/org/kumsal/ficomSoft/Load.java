@@ -42,12 +42,15 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class Load {
 
@@ -432,7 +435,9 @@ public class Load {
                     .showError();
             return;
         }
-        
+        if (!betweenDate(upload_tarih.getValue(),upload_imha.getValue())){
+            return;
+        }
     }
 
     private List<Integer> destisNo = new ArrayList<>();
@@ -475,6 +480,29 @@ public class Load {
             printer_model thePrintModel = new printer_model(
                     theModel.getCount(), time, sayi, konu, adet, evrak2, imhaTarihi);
             theModels.add(thePrintModel);
+        }
+    }
+    public boolean betweenDate(LocalDate first, LocalDate second){
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+        try {
+            java.util.Date date1 = myFormat.parse(first.toString());
+            java.util.Date date2 = myFormat.parse(second.toString());
+            long diff = date2.getTime() - date1.getTime();
+            long differance= TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            if (differance<0){
+                Notifications.create()
+                        .title("Hata")
+                        .text("Tarih İmha tarihinden sonra olamaz")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.CENTER_LEFT)
+                        .showError();
+                return false;
+            }else{
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
