@@ -109,7 +109,7 @@ public class destroyList {
         ozelkarsilik.setCellValueFactory(new PropertyValueFactory<>("ozelkarsilik"));
         klasno.setCellValueFactory(new PropertyValueFactory<>("klasno"));
         ktarihi.setCellValueFactory(new PropertyValueFactory<>("ktarihi"));
-        imhaT.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
+        imhaT.setCellValueFactory(new PropertyValueFactory<>("imhaTarihi"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
         yazdir.setOnMouseClicked(mouseEvent -> {
             for (SirtlikModel model:table.getItems()){

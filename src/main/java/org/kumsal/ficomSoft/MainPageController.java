@@ -1,5 +1,6 @@
 package org.kumsal.ficomSoft;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
@@ -47,13 +48,8 @@ public class MainPageController extends Activity {
     @FXML
     private AnchorPane mainFragment;
 
-
     @FXML
-    private Label pw;
-
-    @FXML
-    private Label ph;
-
+    private JFXButton settings;
 
     @FXML
     private AnchorPane mainPane;
@@ -74,13 +70,16 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void onDestroy(ActionEvent event) {
+    void onDestroy(ActionEvent event) throws IOException {
         main_page_home.getStyleClass().remove("currentButton");
         main_page_destroy.getStyleClass().add("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
         main_page_load.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+        close("destroyList.fxml");
+        currentFragment = "destroyList.fxml";
+        access = true;
 
         Transition transition = new FadeTransition(Duration.millis(1000));
 //        transition.
@@ -99,8 +98,8 @@ public class MainPageController extends Activity {
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
-        close("destroyList.fxml");
-        currentFragment = "destroyList.fxml";
+        close("Load.fxml");
+        currentFragment = "Load.fxml";
         access = true;
     }
 
