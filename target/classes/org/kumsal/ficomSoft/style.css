@@ -84,6 +84,11 @@
     -fx-background-color: #ffffff;
     -fx-text-fill: #1a0f0f;
 }
+.anchorPaneBorder{
+    -fx-border-color: #0e1312;
+    -fx-border-style: groove;
+    -fx-border-width: 1px;
+}
 
 .paneForHome{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));

@@ -3,21 +3,6 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
-
 import com.jfoenix.controls.JFXRadioButton;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.beans.value.ChangeListener;
@@ -42,7 +27,21 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
-public class SirtlikCikartma {
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+
+public class destroyList {
 
     @FXML
     private ResourceBundle resources;
@@ -127,7 +126,7 @@ public class SirtlikCikartma {
                 if (model.getIsCheck().isSelected()){
                     sirtlikModel2 theModel=new sirtlikModel2(
                             model.getDestisno(),
-                            "-",
+                            model.getBirimad(),
                             model.getSpdkod(),
                             model.getSpdkarsilik(),
                             model.getOzelkod(),

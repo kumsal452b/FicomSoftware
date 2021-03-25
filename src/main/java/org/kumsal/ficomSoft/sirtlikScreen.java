@@ -49,7 +49,7 @@ public class sirtlikScreen {
 
     private void printImage(BufferedImage image) throws InterruptedException {
         PrinterJob printJob = PrinterJob.createPrinterJob();
-        PageLayout layout = printJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 10.0,0.0,10.0,0.0);
+        PageLayout layout = printJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 10.0,0.0,0.0,0.0);
         printJob.getJobSettings().setPageLayout(layout);
         boolean accept=printJob.showPrintDialog(pane.getScene().getWindow());
         boolean success=false;
@@ -83,7 +83,7 @@ public class sirtlikScreen {
         int index=1;
         for (sirtlikModel2 model2:SirtlikCikartma.allDataSirtlik){
             partOfModel.add(model2);
-            if (index%3==0 && index!=0 || index==SirtlikCikartma.allDataSirtlik.size()){
+            if (index%4==0 && index!=0 || index==SirtlikCikartma.allDataSirtlik.size()){
                 allOfList.add(partOfModel);
                 partOfModel=new ArrayList<>();
             }
