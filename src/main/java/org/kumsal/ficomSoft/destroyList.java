@@ -80,7 +80,7 @@ public class destroyList {
     private TableColumn<SirtlikModel, String> ktarihi;
 
     @FXML
-    private TableColumn<SirtlikModel, String> aciklama;
+    private TableColumn<SirtlikModel, String> imhaT;;
 
     @FXML
     private TableColumn<SirtlikModel, String> yuktarihi;
@@ -89,19 +89,10 @@ public class destroyList {
     private JFXButton yazdir;
 
     @FXML
-    private JFXRadioButton oprion1;
-
-    @FXML
     private JFXDatePicker first;
 
     @FXML
     private JFXDatePicker seccond;
-
-    @FXML
-    private JFXRadioButton option2;
-
-    @FXML
-    private JFXDatePicker onlyDate;
 
     MysqlDataSource dbSource = ConnectorMysql.connect();
     ObservableList<SirtlikModel> modelObservableValue;
@@ -110,7 +101,6 @@ public class destroyList {
     @FXML
     void initialize() throws SQLException {
         modelObservableValue= FXCollections.observableArrayList();
-        onlyDate.setDisable(true);
         ısCheck.setCellValueFactory(new PropertyValueFactory<>("ısCheck"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
         spdkod.setCellValueFactory(new PropertyValueFactory<>("spdkod"));
@@ -119,7 +109,7 @@ public class destroyList {
         ozelkarsilik.setCellValueFactory(new PropertyValueFactory<>("ozelkarsilik"));
         klasno.setCellValueFactory(new PropertyValueFactory<>("klasno"));
         ktarihi.setCellValueFactory(new PropertyValueFactory<>("ktarihi"));
-        aciklama.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
+        imhaT.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
         yazdir.setOnMouseClicked(mouseEvent -> {
             for (SirtlikModel model:table.getItems()){

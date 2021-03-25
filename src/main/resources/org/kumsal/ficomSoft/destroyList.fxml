@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.SirtlikCikartma">
+<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.destroyList">
    <children>
       <TableView fx:id="table" layoutX="38.0" layoutY="142.0" prefHeight="444.0" prefWidth="885.0" tableMenuButtonVisible="true">
          <columns>
@@ -26,16 +25,11 @@
             <TableColumn fx:id="ozelkarsilik" prefWidth="95.0" text="Öz. Kod Karş." />
             <TableColumn fx:id="klasno" prefWidth="89.0" text="Klasör No" />
             <TableColumn fx:id="ktarihi" prefWidth="63.0" text="K. Tarihi" />
-            <TableColumn fx:id="aciklama" prefWidth="108.0" text="Açıklama" />
+            <TableColumn fx:id="imhaT" prefWidth="108.0" text="İmha Tarihi" />
             <TableColumn fx:id="yuktarihi" prefWidth="90.0" text="Yüklenme tarihi" />
          </columns>
       </TableView>
       <Label layoutX="47.0" layoutY="14.0" text="Lütfen tarih aralığını giriniz.">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="478.0" layoutY="47.0" text="tarihleri arasında ki sırtlıkları görüyorsunuz">
          <font>
             <Font size="18.0" />
          </font>
@@ -51,11 +45,6 @@
       </JFXButton>
       <HBox layoutX="47.0" layoutY="50.0" prefHeight="48.0" prefWidth="433.0">
          <children>
-            <JFXRadioButton fx:id="oprion1" selected="true" text=" ">
-               <HBox.margin>
-                  <Insets top="10.0" />
-               </HBox.margin>
-            </JFXRadioButton>
             <JFXDatePicker fx:id="first" prefHeight="29.0" prefWidth="169.0" promptText="İlk">
                <HBox.margin>
                   <Insets right="10.0" />
@@ -75,18 +64,12 @@
       </HBox>
       <HBox layoutX="47.0" layoutY="97.0" prefHeight="39.0" prefWidth="407.0">
          <children>
-            <JFXRadioButton fx:id="option2" text=" ">
-               <HBox.margin>
-                  <Insets top="10.0" />
-               </HBox.margin>
-            </JFXRadioButton>
-            <JFXDatePicker fx:id="onlyDate" prefHeight="29.0" prefWidth="169.0" promptText="Tarih değeri giriniz..." />
+            <Label text="tarihleri arasında ki imha listesini görüyorsunuz">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
-      <Label layoutX="478.0" layoutY="103.0" text="Sadece girilen tarih için sırtlık görüyorsunuz">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

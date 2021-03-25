@@ -99,8 +99,8 @@ public class MainPageController extends Activity {
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
-        close("Load.fxml");
-        currentFragment = "Load.fxml";
+        close("destroyList.fxml");
+        currentFragment = "destroyList.fxml";
         access = true;
     }
 
