@@ -1,14 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.kumsal.ficomSoft.Settings"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.set">
+   <children>
+      <HBox layoutX="14.0" layoutY="54.0" prefHeight="561.0" prefWidth="648.0">
+         <children>
+            <VBox prefHeight="584.0" prefWidth="324.0">
+               <children>
+                  <Label text="Admin Paneli" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Line endX="227.2928924560547" endY="-2.707106828689575" startX="-95.0" />
+                  <HBox prefHeight="529.0" prefWidth="327.0">
+                     <children>
+                        <TableView prefHeight="529.0" prefWidth="88.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="Username" />
+                           </columns>
+                        </TableView>
+                        <Line endX="-97.70710754394531" endY="528.2929077148438" startX="-100.0" />
+                        <VBox prefHeight="554.0" prefWidth="236.0">
+                           <children>
+                              <Label text="Username" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField />
+                              <Label text="Ad" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField />
+                              <Label text="Soyad" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField />
+                              <Label text="Password" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField />
+                              <JFXButton prefHeight="40.0" prefWidth="219.0" styleClass="buttonHomeFragment" text="Güncelle" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="555.0" prefWidth="301.0">
+               <children>
+                  <Label text="Kişisel Panel" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Line endX="230.46446228027344" startX="530.75732421875" />
+                  <HBox prefHeight="545.0" prefWidth="302.0">
+                     <children>
+                        <Line endX="-100.0" endY="539.2929077148438" startX="-100.0" />
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>
