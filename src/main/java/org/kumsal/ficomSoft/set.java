@@ -3,11 +3,16 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class set {
 
@@ -49,10 +54,12 @@ public class set {
 
     @FXML
     private Label rozetler;
+    MysqlDataSource dbsource= ConnectorMysql.connect();
 
     @FXML
-    void initialize() {
-
-
+    void initialize() throws SQLException {
+        if (PrimaryController.type.equals("Admin")){
+            PreparedStatement statement=dbsource.getConnection().prepareStatement("select * from Users");
+        }
     }
 }
