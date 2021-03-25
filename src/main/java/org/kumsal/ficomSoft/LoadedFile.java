@@ -8,10 +8,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 import java.awt.event.ActionEvent;
@@ -75,7 +78,13 @@ public class LoadedFile {
 
     }
 
-    public
+    @SuppressWarnings("unchecked")
+    private void editFocusedCell() {
+        final TablePosition< LoadedFileModel, String > focusedCell = table
+                .focusModelProperty().get().focusedCellProperty().get();
+        table.edit(focusedCell.getRow(), focusedCell.getTableColumn());
+    }
+
     @FXML
     void initialize() throws SQLException {
         theFileModel= FXCollections.observableArrayList();
@@ -92,7 +101,30 @@ public class LoadedFile {
         sil.setCellValueFactory(new PropertyValueFactory<>("sil"));
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
 
+        table.setEditable(true);
+        table.getSelectionModel().cellSelectionEnabledProperty().set(true);
+        table.setEditable(true);
+        // allows the individual cells to be selected
+        table.getSelectionModel().cellSelectionEnabledProperty().set(true);
+        // when character or numbers pressed it will start edit in editable
+        // fields
+        table.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey()) {
+                editFocusedCell();
+            } else if (keyEvent.getCode() == KeyCode.RIGHT ||
+                    keyEvent.getCode() == KeyCode.TAB) {
+                table.getSelectionModel().selectNext();
+                keyEvent.consume();
+            } else if (keyEvent.getCode() == KeyCode.LEFT) {
+                // work around due to
+                // TableView.getSelectionModel().selectPrevious() due to a bug
+                // stopping it from working on
+                // the first column in the last row of the table
+//            selectPrevious();
+//            event.consume();
+            }
 
+        });
         PreparedStatement fileList=dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
         fileList.setString(1,PrimaryController.username);
 

@@ -131,13 +131,13 @@ public class Folders implements EventHandler<ActionEvent> {
                    savedFolder.setString(1,destisno_giriniz.getText());
                    savedFolder.setString(2,date);
                    savedFolder.setString(3,time);
+                   savedFolder.execute();
                        Notifications.create()
                                .title("Başarılı")
                                .text("Klasör kaydedildi")
                                .hideAfter(Duration.seconds(3))
                                .position(Pos.BASELINE_LEFT)
                                .showConfirm();
-                       updateList(resultSet, index);
                }else{
                    Notifications.create()
                            .title("Hata")
@@ -196,12 +196,7 @@ public class Folders implements EventHandler<ActionEvent> {
                 layout.setHeading(new Text("Dikkat"));
                 layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
                 evet.setOnAction(event1 -> {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            table.getItems().remove(index);
-                        }
-                    });
+                    foldersModels1.remove(index);
                     buttonsSil.remove(index);
                     buttonsDegistir.remove(index);
                     try {
