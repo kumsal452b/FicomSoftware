@@ -64,6 +64,7 @@ public class MainPageController extends Activity {
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_load.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+        settings.getStyleClass().remove("currentButton");
         close("Loaded_file.fxml");
         currentFragment = "Loaded_file.fxml";
         access = true;
@@ -77,6 +78,7 @@ public class MainPageController extends Activity {
         main_page_load.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+        settings.getStyleClass().remove("currentButton");
         close("destroyList.fxml");
         currentFragment = "destroyList.fxml";
         access = true;
@@ -98,6 +100,7 @@ public class MainPageController extends Activity {
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+        settings.getStyleClass().remove("currentButton");
         close("Load.fxml");
         currentFragment = "Load.fxml";
         access = true;
@@ -141,6 +144,7 @@ public class MainPageController extends Activity {
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
+        settings.getStyleClass().remove("currentButton");
         close("sirtlikCikartma.fxml");
         currentFragment = "sirtlikCikartma.fxml";
         access = true;
@@ -155,6 +159,7 @@ public class MainPageController extends Activity {
         main_page_destroy.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().remove("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
+        settings.getStyleClass().remove("currentButton");
         close("folders.fxml");
         currentFragment = "folders.fxml";
         access = true;
@@ -165,6 +170,22 @@ public class MainPageController extends Activity {
         if (PrimaryController.type.equals("User")){
             main_page_destroy.setVisible(false);
         }
+        settings.setOnAction(event -> {
+            main_page_home.getStyleClass().remove("currentButton");
+            main_page_folders.getStyleClass().remove("currentButton");
+            main_page_load.getStyleClass().remove("currentButton");
+            main_page_destroy.getStyleClass().remove("currentButton");
+            main_page_current.getStyleClass().remove("currentButton");
+            main_page_print.getStyleClass().remove("currentButton");
+            settings.getStyleClass().add("currentButton");
+            try {
+                close("settings.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            currentFragment = "settings.fxml";
+            access = true;
+        });
         mainPane.widthProperty().addListener((observableValue, number, t1) -> {
             System.out.println("t1"+mainPane.getWidth());
             int calculate = (t1.intValue()* 224) / 1200;
