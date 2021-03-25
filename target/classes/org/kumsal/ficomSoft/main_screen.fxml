@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.MainPageController">
+<AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.MainPageController">
     <children>
-      <VBox prefHeight="600.0" prefWidth="224.0" styleClass="painMainScreen">
+      <VBox prefHeight="600.0" prefWidth="224.0" styleClass="painMainScreen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="145.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -27,7 +27,7 @@
          </children>
       </VBox>
       <AnchorPane fx:id="mainFragment" layoutX="224.0" prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" />
-      <VBox disable="true" layoutX="10.0" layoutY="157.0" prefHeight="330.0" prefWidth="35.0">
+      <VBox disable="true" layoutX="10.0" layoutY="157.0" prefHeight="330.0" prefWidth="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="160.0">
          <children>
             <ImageView fitHeight="30.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth2">
                <image>
