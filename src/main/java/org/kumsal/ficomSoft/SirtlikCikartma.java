@@ -3,21 +3,6 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
-
 import com.jfoenix.controls.JFXRadioButton;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.beans.value.ChangeListener;
@@ -41,6 +26,20 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class SirtlikCikartma {
 
@@ -106,11 +105,11 @@ public class SirtlikCikartma {
 
     MysqlDataSource dbSource = ConnectorMysql.connect();
     ObservableList<SirtlikModel> modelObservableValue;
-    public static ArrayList<sirtlikModel2> allDataSirtlik=new ArrayList<>();
+    public static ArrayList<sirtlikModel2> allDataSirtlik = new ArrayList<>();
 
     @FXML
     void initialize() throws SQLException {
-        modelObservableValue= FXCollections.observableArrayList();
+        modelObservableValue = FXCollections.observableArrayList();
         onlyDate.setDisable(true);
         ısCheck.setCellValueFactory(new PropertyValueFactory<>("ısCheck"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
@@ -123,11 +122,11 @@ public class SirtlikCikartma {
         aciklama.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
         yazdir.setOnMouseClicked(mouseEvent -> {
-            for (SirtlikModel model:table.getItems()){
-                if (model.getIsCheck().isSelected()){
-                    sirtlikModel2 theModel=new sirtlikModel2(
+            for (SirtlikModel model : table.getItems()) {
+                if (model.getIsCheck().isSelected()) {
+                    sirtlikModel2 theModel = new sirtlikModel2(
                             model.getDestisno(),
-                            "-",
+                            model.getBirimad(),
                             model.getSpdkod(),
                             model.getSpdkarsilik(),
                             model.getOzelkod(),
@@ -140,7 +139,7 @@ public class SirtlikCikartma {
                 }
 
             }
-            if (allDataSirtlik.size()>0){
+            if (allDataSirtlik.size() > 0) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("sirtlikYazdir.fxml"));
                 AnchorPane root = null;
@@ -156,11 +155,10 @@ public class SirtlikCikartma {
                 stage.initModality(Modality.WINDOW_MODAL);
                 stage.initOwner(PrimaryController.stage);
                 stage.show();
-            }else{
+            } else {
 
             }
         });
-
 
 
         ToggleGroup group = new ToggleGroup();
@@ -180,15 +178,15 @@ public class SirtlikCikartma {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (option2.isSelected()) {
-                        onlyDate.setDisable(false);
-                        first.setDisable(true);
-                        seccond.setDisable(true);
-                        table.getItems().clear();
-                    if (onlyDate.getValue()!=null){
-                        LocalDate date=onlyDate.getValue();
-                        String date2=date.toString();
-                        for (SirtlikModel models: modelObservableValue){
-                            if (models.getKtarihi().equals(date2)){
+                    onlyDate.setDisable(false);
+                    first.setDisable(true);
+                    seccond.setDisable(true);
+                    table.getItems().clear();
+                    if (onlyDate.getValue() != null) {
+                        LocalDate date = onlyDate.getValue();
+                        String date2 = date.toString();
+                        for (SirtlikModel models : modelObservableValue) {
+                            if (models.getKtarihi().equals(date2)) {
                                 table.getItems().add(models);
                             }
                         }
@@ -200,15 +198,15 @@ public class SirtlikCikartma {
 
         File file = new File("src/main/resources/org/kumsal/ficomSoft/image/ficomtranslogo.png");
         Image image = new Image(file.toURI().toString());
-        ImageView imageView=new ImageView(image);
+        ImageView imageView = new ImageView(image);
         table.setPlaceholder(imageView);
         onlyDate.valueProperty().addListener((observableValue, localDate, t1) -> {
             table.getItems().clear();
-            if (onlyDate.getValue()!=null){
-                LocalDate date=onlyDate.getValue();
-                String date2=date.toString();
-                for (SirtlikModel models: modelObservableValue){
-                    if (models.getKtarihi().equals(date2)){
+            if (onlyDate.getValue() != null) {
+                LocalDate date = onlyDate.getValue();
+                String date2 = date.toString();
+                for (SirtlikModel models : modelObservableValue) {
+                    if (models.getKtarihi().equals(date2)) {
                         table.getItems().add(models);
                     }
                 }
@@ -217,10 +215,10 @@ public class SirtlikCikartma {
         });
         first.valueProperty().addListener((observableValue, localDate, t1) -> {
             table.getItems().clear();
-            if (seccond.getValue()!=null && first.getValue()!=null){
-                if (betweenDate(first.getValue(),seccond.getValue())){
-                    for (SirtlikModel models: modelObservableValue){
-                        if (betweenDateForPivot(first.getValue(),seccond.getValue(),models.getKtarihi())){
+            if (seccond.getValue() != null && first.getValue() != null) {
+                if (betweenDate(first.getValue(), seccond.getValue())) {
+                    for (SirtlikModel models : modelObservableValue) {
+                        if (betweenDateForPivot(first.getValue(), seccond.getValue(), models.getKtarihi())) {
                             table.getItems().add(models);
                         }
                     }
@@ -229,10 +227,10 @@ public class SirtlikCikartma {
         });
         seccond.valueProperty().addListener((observableValue, localDate, t1) -> {
             table.getItems().clear();
-            if (seccond.getValue()!=null && first.getValue()!=null){
-                if (betweenDate(first.getValue(),seccond.getValue())){
-                    for (SirtlikModel models: modelObservableValue){
-                        if (betweenDateForPivot(first.getValue(),seccond.getValue(),models.getKtarihi())){
+            if (seccond.getValue() != null && first.getValue() != null) {
+                if (betweenDate(first.getValue(), seccond.getValue())) {
+                    for (SirtlikModel models : modelObservableValue) {
+                        if (betweenDateForPivot(first.getValue(), seccond.getValue(), models.getKtarihi())) {
                             table.getItems().add(models);
                         }
                     }
@@ -249,34 +247,35 @@ public class SirtlikCikartma {
         JFXButton sil;
         while (resultSet.next()) {
 
-                loadedFile=new SirtlikModel(
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6),
-                        resultSet.getString(7),
-                        resultSet.getString(8),
-                        resultSet.getString(9),
-                        resultSet.getString(10),
-                        new JFXCheckBox()
-                );
-                modelObservableValue.add(loadedFile);
+            loadedFile = new SirtlikModel(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9),
+                    resultSet.getString(10),
+                    new JFXCheckBox()
+            );
+            modelObservableValue.add(loadedFile);
         }
 //            table.add(loadedFile);
     }
-    public static boolean betweenDateForPivot(LocalDate first, LocalDate second,String pwvot){
+
+    public static boolean betweenDateForPivot(LocalDate first, LocalDate second, String pwvot) {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
         try {
             Date date1 = myFormat.parse(first.toString());
             Date date2 = myFormat.parse(second.toString());
-            Date pivot=myFormat.parse(pwvot);
+            Date pivot = myFormat.parse(pwvot);
             long diff = pivot.getTime() - date1.getTime();
-            long diff2=date2.getTime()-pivot.getTime();
-            if (diff>=0 && diff2>=0){
+            long diff2 = date2.getTime() - pivot.getTime();
+            if (diff >= 0 && diff2 >= 0) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (ParseException e) {
@@ -284,14 +283,15 @@ public class SirtlikCikartma {
             return false;
         }
     }
-    public boolean betweenDate(LocalDate first, LocalDate second){
+
+    public boolean betweenDate(LocalDate first, LocalDate second) {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
         try {
             Date date1 = myFormat.parse(first.toString());
             Date date2 = myFormat.parse(second.toString());
             long diff = date2.getTime() - date1.getTime();
-            long differance=TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-            if (differance<0){
+            long differance = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            if (differance < 0) {
                 Notifications.create()
                         .title("Hata")
                         .text("Son tarih ilk tarihten önce olamaz")
@@ -300,7 +300,7 @@ public class SirtlikCikartma {
                         .showError();
                 this.first.setValue(this.seccond.getValue());
                 return false;
-            }else{
+            } else {
                 return true;
             }
         } catch (ParseException e) {

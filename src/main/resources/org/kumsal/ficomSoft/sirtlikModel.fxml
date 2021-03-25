@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -90,20 +89,17 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Label fx:id="imhatarihi" text="yanit" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                   <Label text="BİRİM ADI:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="birimadi" prefHeight="40.0" prefWidth="265.0" text="VAN GENÇLİK İL MÜDÜRLÜĞÜ" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="imhatarihi" text="yanit" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="birimadi" text="yanit" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
