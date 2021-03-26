@@ -13,6 +13,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -58,6 +59,9 @@ public class set {
 
     @FXML
     private Label rozetler;
+
+    @FXML
+    private CheckBox isAuth;
     MysqlDataSource dbsource= ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
     @FXML
@@ -72,7 +76,8 @@ public class set {
                         resultSet.getString(4),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(5)
+                        resultSet.getString(5),
+                        resultSet.getBoolean(6)
                 );
                 theusersList.add(themodel);
             }
@@ -82,6 +87,10 @@ public class set {
                 soyad.setText(t1.getSurname());
                 usernamegir.setText(t1.getUsername());
                 password.setText(t1.getPassword());
+                isAuth.setSelected(t1.isAuth());
+            });
+            gunceller.setOnAction(event -> {
+
             });
         }
     }
