@@ -72,6 +72,7 @@ public class PrimaryController {
 
     RequiredFieldValidator validator = new RequiredFieldValidator();
     MysqlDataSource dbSource = ConnectorMysql.connect();
+    ArrayListM
 
     @FXML
     void login(ActionEvent event) throws SQLException {

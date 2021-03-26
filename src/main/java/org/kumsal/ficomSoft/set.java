@@ -20,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class set {
-
     @FXML
     private ResourceBundle resources;
 
