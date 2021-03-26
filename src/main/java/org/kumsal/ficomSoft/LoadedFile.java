@@ -157,7 +157,33 @@ public class LoadedFile {
                         sil,
                         degistir
                 );
-            }else {
+            }else if (PrimaryController.isAuth){
+                sil=new JFXButton("Sil");
+                sil.getStyleClass().add("deleteButton");
+                sil.setOnAction(event -> {
+                    System.out.println(event.getSource().toString());;
+                });
+                degistir=new JFXButton("Degistr");
+                degistir.getStyleClass().add("changeButton");
+                loadedFile=new LoadedFileModel(
+                        String.valueOf(sira),
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        sil,
+                       degistir
+                );
+            }
+            else {
+                degistir=new JFXButton("Degistr");
+                degistir.getStyleClass().add("changeButton");
                 loadedFile=new LoadedFileModel(
                         String.valueOf(sira),
                         resultSet.getString(1),
@@ -171,8 +197,7 @@ public class LoadedFile {
                         resultSet.getString(9),
                         resultSet.getString(10),
                         null,
-                        new JFXButton("Degistr")
-                );
+                        degistir);
             }
             theFileModel.add(loadedFile);
             sira++;

@@ -72,8 +72,7 @@ public class PrimaryController {
 
     RequiredFieldValidator validator = new RequiredFieldValidator();
     MysqlDataSource dbSource = ConnectorMysql.connect();
-    ArrayListM
-
+    ArrayList<Boolean> isAuthList=new ArrayList<>();
     @FXML
     void login(ActionEvent event) throws SQLException {
         ResultSet resultSet;
@@ -108,6 +107,7 @@ public class PrimaryController {
                     resultSet.getString("password"),
                     resultSet.getString("UID"));
             theLoggedUsers.add(theModel);
+            isAuthList.add(resultSet.getBoolean(6));
         }
         String theUsername = login_username.getText();
         String thePassword = login_password.getText();
@@ -125,6 +125,7 @@ public class PrimaryController {
     static public  Stage stage;
     static public String datetime="";
     static public String ownTypeID="";
+    static public Boolean isAuth=false;
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
         for (int i = 0; i < sendLogedData.size(); i++) {
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
@@ -142,6 +143,9 @@ public class PrimaryController {
                     username=sendLogedData.get(i).getUsername();
                     name = sendLogedData.get(i).getName() + " " + sendLogedData.get(i).getSurname();
                     stage.setUserData(sendLogedData.get(i));
+                    if (type.equals("User")){
+                        isAuth=isAuthList.get(i);
+                    }
                     PreparedStatement ownSave=dbSource.getConnection().prepareStatement("INSERT INTO `owntype` (`OTID`, `ownname`, `login_id`, `username`, `date`) VALUES (NULL, ?, ?, ?, ?)");
                     ownSave.setString(1,type);
                     ownSave.setString(2,sendLogedData.get(i).getId());

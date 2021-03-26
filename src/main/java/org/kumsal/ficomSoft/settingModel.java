@@ -5,12 +5,21 @@ public class settingModel {
     private String name;
     private String surname;
     private String password;
-
-    public settingModel(String username, String name, String surname, String password) {
+    private boolean isAuth;
+    public settingModel(String username, String name, String surname, String password,boolean isAuth) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
+        this.isAuth=isAuth;
+    }
+
+    public boolean isAuth() {
+        return isAuth;
+    }
+
+    public void setAuth(boolean auth) {
+        isAuth = auth;
     }
 
     public String getName() {
