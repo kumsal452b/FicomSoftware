@@ -13,11 +13,14 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 public class set {
@@ -64,6 +67,7 @@ public class set {
     private CheckBox isAuth;
     MysqlDataSource dbsource= ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
+    private int GlobalID=0;
     @FXML
     void initialize() throws SQLException {
         theusersList= FXCollections.observableArrayList();
@@ -77,7 +81,8 @@ public class set {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(5),
-                        resultSet.getBoolean(6)
+                        resultSet.getBoolean(6),
+                        resultSet.getInt(1)
                 );
                 theusersList.add(themodel);
             }
@@ -88,8 +93,81 @@ public class set {
                 usernamegir.setText(t1.getUsername());
                 password.setText(t1.getPassword());
                 isAuth.setSelected(t1.isAuth());
+                GlobalID=t1.getId();
             });
             gunceller.setOnAction(event -> {
+                PreparedStatement updateUers= null;
+                if (ad.getText().equals("")) {
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Ad boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (soyad.getText().equals("")) {
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Soyad boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                if (usernamegir.getText().equals("")) {
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Kullanıcı adı boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                for (settingModel themodel:theusersList){
+                    if (themodel.getUsername().equals(usernamegir.getText())){
+                        Notifications.create()
+                                .title("Hata")
+                                .text("Aynı Kullanıcı adı zaten mevcut.")
+                                .hideAfter(Duration.seconds(3))
+                                .position(Pos.BASELINE_LEFT)
+                                .showWarning();
+                        return;
+                    }
+                }
+                if (ad.getText().equals("")) {
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Özel kod karşılık boş bırakılamaz.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                try {
+                    updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? , `isAuth` =? WHERE `users`.`UID` = ?");
+                    updateUers.setString(1,ad.getText());
+                    updateUers.setString(2,soyad.getText());
+                    updateUers.setString(3,usernamegir.getText());
+                    updateUers.setString(4,password.getText());
+                    updateUers.setBoolean(5,isAuth.isSelected());
+                    updateUers.setInt(6,GlobalID);
+                    updateUers.execute();
+                    Notifications.create()
+                            .title("Başarılı")
+                            .text("Kullanıcı başarılı bir şekilde güncellendi.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showConfirm();
+                } catch (SQLException throwables) {
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Güncelleme sırasında bir hata oluştu, lütden daha sonra tekrar deneyiniz..")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    throwables.printStackTrace();
+                }
 
             });
         }
