@@ -1,43 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
 
 <AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.LoadedFile">
    <children>
-      <VBox layoutX="-2.0" prefHeight="200.0" prefWidth="366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox prefHeight="600.0" prefWidth="974.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXTextField fx:id="ara" labelFloat="true" prefHeight="25.0" prefWidth="156.0" promptText="Bir şeyler arayın...">
-               <VBox.margin>
-                  <Insets top="90.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <TableView fx:id="table" prefHeight="483.0" prefWidth="958.0">
-              <columns>
-                <TableColumn fx:id="sira" prefWidth="51.0" text="#" />
-                <TableColumn fx:id="destisno" prefWidth="66.0" text="Destis No" />
-                  <TableColumn fx:id="birimad" prefWidth="66.0" text="Birim Adı" />
-                  <TableColumn fx:id="spdkod" prefWidth="66.0" text="SPD Kodu" />
-                  <TableColumn fx:id="spdkarsilik" prefWidth="117.0" text="SPD Karşılığı" />
-                  <TableColumn fx:id="ozelkod" prefWidth="63.0" text="Özel kod" />
-                  <TableColumn fx:id="ozelkarsilik" prefWidth="95.0" text="Öz. Kod Karş." />
-                  <TableColumn fx:id="klasno" prefWidth="89.0" text="Klasör No" />
-                  <TableColumn fx:id="ktarihi" prefWidth="63.0" text="K. Tarihi" />
-                  <TableColumn fx:id="aciklama" prefWidth="108.0" text="Açıklama" />
-                  <TableColumn fx:id="yuktarihi" prefWidth="72.0" text="Yüklenme tarihi" />
-                  <TableColumn fx:id="sil" minWidth="1.0" prefWidth="50.0" text="#" />
-                  <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="50.0" text="#" />
-              </columns>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </TableView>
+            <VBox prefHeight="600.0" prefWidth="876.0">
+               <children>
+                  <JFXTextField fx:id="ara" labelFloat="true" prefHeight="25.0" prefWidth="156.0" promptText="Bir şeyler arayın...">
+                     <VBox.margin>
+                        <Insets top="90.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <StackPane prefHeight="500.0" prefWidth="876.0">
+                     <children>
+                        <TableView fx:id="table" prefHeight="475.0" prefWidth="335.0">
+                           <columns>
+                              <TableColumn fx:id="sira" prefWidth="51.0" text="#" />
+                              <TableColumn fx:id="destisno" prefWidth="52.0" text="Destis No" />
+                              <TableColumn fx:id="birimad" prefWidth="64.0" text="Birim Adı" />
+                              <TableColumn fx:id="spdkod" prefWidth="52.0" text="SPD Kodu" />
+                              <TableColumn fx:id="spdkarsilik" prefWidth="87.0" text="SPD Karşılığı" />
+                              <TableColumn fx:id="ozelkod" prefWidth="73.0" text="Özel kod" />
+                              <TableColumn fx:id="ozelkarsilik" prefWidth="90.0" text="Öz. Kod Karş." />
+                              <TableColumn fx:id="klasno" minWidth="0.0" prefWidth="71.0" text="Klasör No" />
+                              <TableColumn fx:id="ktarihi" prefWidth="86.0" text="K. Tarihi" />
+                              <TableColumn fx:id="aciklama" minWidth="0.0" prefWidth="78.0" text="Açıklama" />
+                              <TableColumn fx:id="yuktarihi" minWidth="0.0" prefWidth="75.0" text="Yüklenme tarihi" />
+                              <TableColumn fx:id="sil" minWidth="0.0" prefWidth="44.0" text="#" />
+                              <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="52.0" text="#" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+            <VBox fx:id="slidder" prefHeight="600.0" prefWidth="111.0">
+               <children>
+                   <JFXComboBox fx:id="upload_destıs_no" labelFloat="true" layoutX="39.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Destis No Seçiniz">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></JFXComboBox>
+                   <JFXTextField fx:id="upload_birim" labelFloat="true" layoutX="201.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Birim giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXTextField>
+                   <JFXTextField fx:id="upload_spdno" labelFloat="true" layoutX="367.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Kodu giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXTextField>
+                   <JFXTextField fx:id="upload_spdkarsilik" labelFloat="true" layoutX="540.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Karşılığı giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXTextField>
+                   <JFXTextField fx:id="upload_ozelkod" labelFloat="true" layoutX="39.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kodu giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXTextField>
+                   <JFXTextField fx:id="upload_ozelkodkarssiligi" labelFloat="true" layoutX="201.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kod karşılığı">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXTextField>
+                   <JFXTextField fx:id="upload_klasorno" layoutX="367.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Klasör No giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXTextField>
+                   <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXDatePicker>
+                   <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz.">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></JFXDatePicker>
+                   <JFXTextField fx:id="upload_aciklama" labelFloat="true" layoutX="540.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz.">
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding></JFXTextField>
+                  <JFXButton fx:id="guncelle" prefHeight="34.0" prefWidth="84.0" styleClass="changeButton" text="Güncelle">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

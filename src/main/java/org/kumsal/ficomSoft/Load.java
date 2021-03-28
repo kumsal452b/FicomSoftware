@@ -297,6 +297,21 @@ public class Load {
                                 .hideAfter(Duration.seconds(3))
                                 .position(Pos.BASELINE_LEFT)
                                 .showConfirm();
+                    }else {
+                        upload_aciklama.setText("");
+                        upload_klasorno.setText("");
+                        upload_ozelkodkarssiligi.setText("");
+                        upload_ozelkod.setText("");
+                        upload_spdkarsilik.setText("");
+                        upload_spdno.setText("");
+                        upload_birim.setText("");
+                        listview.getItems().clear();
+                        Notifications.create()
+                                .title("Bşarılı")
+                                .text("Kayıtlar arşive eklendi")
+                                .hideAfter(Duration.seconds(3))
+                                .position(Pos.BASELINE_LEFT)
+                                .showConfirm();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

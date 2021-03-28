@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -70,6 +71,7 @@ public class set {
     private int GlobalID=0;
     @FXML
     void initialize() throws SQLException {
+
         theusersList= FXCollections.observableArrayList();
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
         if (PrimaryController.type.equals("Admin")){

@@ -24,7 +24,8 @@
       <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz." />
       <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz." />
       <JFXTextField fx:id="upload_aciklama" layoutX="540.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz." />
-      <Button fx:id="upload_arsivekaydet" layoutX="367.0" layoutY="240.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Arşive Kaydet" textFill="#030303" />
+
+       <Button fx:id="upload_arsivekaydet" layoutX="367.0" layoutY="240.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Arşive Kaydet" textFill="#030303" />
       <Button fx:id="upload_yazdır" layoutX="491.0" layoutY="240.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Yazdır" textFill="#140c0c" />
       <TableView fx:id="table" fixedCellSize="0.0" layoutX="39.0" layoutY="240.0" prefHeight="291.0" prefWidth="641.0" styleClass="table-row-cell" stylesheets="@style.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="293.0">
         <columns>

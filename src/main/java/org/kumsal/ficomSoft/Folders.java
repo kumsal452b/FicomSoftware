@@ -221,7 +221,7 @@ public class Folders implements EventHandler<ActionEvent> {
                 });
                 JFXButton iptal=new JFXButton("Iptal");
                 iptal.setOnAction(event1 -> {
-
+                        dialog.close();
 
                 });
                 layout.setActions(evet,iptal);
