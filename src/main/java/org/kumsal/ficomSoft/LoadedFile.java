@@ -136,6 +136,8 @@ public class LoadedFile {
     ArrayList<JFXButton> degistirButtons=new ArrayList<>();
     ArrayList<Date> imhaDates=new ArrayList<>();
     int index=0;
+
+
     Duration duration = Duration.millis(2500);
     //Create new scale transition
     ScaleTransition scaleTransition = new ScaleTransition(duration, slidder);
@@ -335,6 +337,7 @@ public class LoadedFile {
             typeIDsID.add(resultSet.getInt(13));
             theFileModel.add(loadedFile);
             sira++;
+            totalLoged++;
         }
         FilteredList<LoadedFileModel> filteredList=new FilteredList<>(theFileModel,b -> true);
         ara.textProperty().addListener((observableValue, s, t1) -> {

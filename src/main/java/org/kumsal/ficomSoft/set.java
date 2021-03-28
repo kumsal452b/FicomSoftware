@@ -1,12 +1,13 @@
 package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
+
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
@@ -63,12 +65,29 @@ public class set {
 
     @FXML
     private Label rozetler;
+    @FXML
+    private JFXPasswordField eskisıfre;
+
+    @FXML
+    private JFXPasswordField yenisifre;
+
+    @FXML
+    private JFXButton sifredegistir;
+
+    @FXML
+    private JFXPasswordField yeniKullaniciAdi;
+
+    @FXML
+    private JFXButton kullaniciAdiDegistir;
 
     @FXML
     private CheckBox isAuth;
     MysqlDataSource dbsource= ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
     private int GlobalID=0;
+    ObservableList<LoadedFileModel> theFileModel;
+    int dailyLoged=0;
+    int totalLoged=0;
     @FXML
     void initialize() throws SQLException {
 
@@ -173,5 +192,36 @@ public class set {
 
             });
         }
+        PreparedStatement fileList=dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
+        fileList.setString(1,PrimaryController.username);
+        ResultSet resultSet=fileList.executeQuery();
+        LoadedFileModel loadedFile;
+        int sira=1;
+        JFXButton sil;
+        JFXButton degistir;
+        while (resultSet.next()){
+            loadedFile=new LoadedFileModel(
+                    String.valueOf(sira),
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9),
+                    resultSet.getString(10),
+                    null,
+                    null
+            );
+            theFileModel.add(loadedFile);
+            totalLoged++;
+        }
+        toplamdosya.setText(totalLoged+"");
+        kullanicitur.setText(PrimaryController.type);
+        
+
     }
+    public void isToday()
 }
