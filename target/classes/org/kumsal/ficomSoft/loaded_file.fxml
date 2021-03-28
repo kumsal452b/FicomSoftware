@@ -23,7 +23,7 @@
                         <Insets top="90.0" />
                      </VBox.margin>
                   </JFXTextField>
-                  <StackPane prefHeight="500.0" prefWidth="876.0">
+                  <StackPane fx:id="stakcpane" prefHeight="500.0" prefWidth="876.0">
                      <children>
                         <TableView fx:id="table" prefHeight="475.0" prefWidth="335.0">
                            <columns>

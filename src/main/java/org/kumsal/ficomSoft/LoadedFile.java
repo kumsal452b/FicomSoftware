@@ -1,9 +1,6 @@
 package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.mysql.cj.MysqlConnection;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.animation.Animation;
@@ -18,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -25,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Transform;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
@@ -212,6 +211,46 @@ public class LoadedFile {
                 sil=new JFXButton("Sil");
                 sil.getStyleClass().add("deleteButton");
                 sil.setOnAction(event -> {
+                    int currentIndex=silButtons.indexOf(event.getSource());
+                    JFXButton evet=new JFXButton("Evet");
+                    JFXDialog dialog=new JFXDialog(stakcpane,new Label("temel"), JFXDialog.DialogTransition.CENTER);
+                    JFXDialogLayout layout=new JFXDialogLayout();
+                    layout.setHeading(new Text("Dikkat"));
+                    layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
+                    evet.setOnAction(event1 -> {
+                        theFileModel.remove(currentIndex);
+                        silButtons.remove(currentIndex);
+                        degistirButtons.remove(currentIndex);
+                        try {
+                            PreparedStatement preparedStatement=dbSources.getConnection().prepareStatement(
+                                    "DELETE FROM `load_flle` WHERE `load_flle`.`LFID` = ?"
+                            );
+                            preparedStatement.setInt(1,fileID.get(index));
+                            preparedStatement.execute();
+                            fileID.remove(index);
+                            Notifications.create()
+                                    .title("Başarılı")
+                                    .text("Klasör silindi")
+                                    .hideAfter(Duration.seconds(3))
+                                    .position(Pos.BASELINE_LEFT)
+                                    .showConfirm();
+                            slidder.setVisible(false);
+
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+
+                        dialog.close();
+                    });
+                    JFXButton iptal=new JFXButton("Iptal");
+                    iptal.setOnAction(event1 -> {
+                        dialog.close();
+                        slidder.setVisible(false);
+
+                    });
+                    layout.setActions(evet,iptal);
+                    dialog.setContent(layout);
+                    dialog.show();
 
 
                 });
