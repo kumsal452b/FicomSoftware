@@ -89,7 +89,7 @@ public class set {
     int totalLoged=0;
     @FXML
     void initialize() throws SQLException {
-
+        theFileModel=FXCollections.observableArrayList();
         theusersList= FXCollections.observableArrayList();
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
         if (PrimaryController.type.equals("Admin")){
