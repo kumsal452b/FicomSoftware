@@ -227,99 +227,98 @@ public class Load {
             stage.show();
         });
         upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
-            try {
-                checkFields();
-
-                PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
-                        "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`,`prossTime`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
-                );
-                preparedStatement.setInt(1, destisNo.get(upload_destıs_no.getSelectionModel().getSelectedIndex()));
-                preparedStatement.setInt(2, Integer.valueOf(PrimaryController.ownTypeID));
-                preparedStatement.setString(3, upload_birim.getText());
-                preparedStatement.setString(4, upload_spdno.getText());
-                preparedStatement.setString(5, upload_spdkarsilik.getText());
-                preparedStatement.setString(6, upload_ozelkod.getText());
-                preparedStatement.setString(7, upload_ozelkodkarssiligi.getText());
-                preparedStatement.setString(8, upload_klasorno.getText());
-                preparedStatement.setString(9, upload_aciklama.getText());
-                LocalDate tarihSql = upload_tarih.getValue();
-                preparedStatement.setDate(10, Date.valueOf(tarihSql));
-                LocalDate imhaSql = upload_imha.getValue();
-                preparedStatement.setDate(11, Date.valueOf(imhaSql));
-                java.util.Date dt = new java.util.Date();
-                java.text.SimpleDateFormat sdf =
-                        new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String datetime = sdf.format(dt);
-                preparedStatement.setString(12, datetime);
-                preparedStatement.execute();
-                PreparedStatement ownType = dbSource.getConnection().prepareStatement("select * from load_flle where OTID=? and prossTime=?");
-                ownType.setInt(1, Integer.valueOf(PrimaryController.ownTypeID));
-                ownType.setString(2, datetime);
-                ResultSet resultSet = ownType.executeQuery();
-                String proccessId = "";
-                while (resultSet.next()) {
-                    proccessId = resultSet.getString("LFID");
-                }
+            if (checkFields()){
                 try {
-                    if (sourceFile.size() > 0) {
-                        String filename = "";
-                        String partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
-                        String fileSql = "INSERT INTO `file` (`FID`, `filepath`, `LFID`) VALUES ";
-                        int index = 0;
-                        for (File file : sourceFile) {
-                            Files.copy(file.toPath(), destFile.get(index).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            filename = destFile.get(index).getName();
-                            partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
-                            fileSql += partOfsql;
-                            if (index != sourceFile.size() - 1) {
-                                fileSql += ",";
-                            }
-                            index++;
-                        }
-                        index = 0;
-                        System.out.println(fileSql);
-                        Statement saveFile = dbSource.getConnection().createStatement();
-                        saveFile.execute(fileSql);
-                        fileSql = "";
-                        sourceFile.clear();
-                        destFile.clear();
-                        upload_aciklama.setText("");
-                        upload_klasorno.setText("");
-                        upload_ozelkodkarssiligi.setText("");
-                        upload_ozelkod.setText("");
-                        upload_spdkarsilik.setText("");
-                        upload_spdno.setText("");
-                        upload_birim.setText("");
-                        listview.getItems().clear();
-                        Notifications.create()
-                                .title("Bşarılı")
-                                .text("Kayıtlar arşive eklendi")
-                                .hideAfter(Duration.seconds(3))
-                                .position(Pos.BASELINE_LEFT)
-                                .showConfirm();
-                    }else {
-                        upload_aciklama.setText("");
-                        upload_klasorno.setText("");
-                        upload_ozelkodkarssiligi.setText("");
-                        upload_ozelkod.setText("");
-                        upload_spdkarsilik.setText("");
-                        upload_spdno.setText("");
-                        upload_birim.setText("");
-                        listview.getItems().clear();
-                        Notifications.create()
-                                .title("Bşarılı")
-                                .text("Kayıtlar arşive eklendi")
-                                .hideAfter(Duration.seconds(3))
-                                .position(Pos.BASELINE_LEFT)
-                                .showConfirm();
+                    PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
+                            "INSERT INTO `load_flle` (`LFID`, `DID`, `OTID`, `birim`, `spd_kod`, `spdkarsilik`, `ozel_kod`, `ozelkarsilik`, `klsorno`, `aciklama`, `tarih`, `imhatarihi`,`prossTime`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)"
+                    );
+                    preparedStatement.setInt(1, destisNo.get(upload_destıs_no.getSelectionModel().getSelectedIndex()));
+                    preparedStatement.setInt(2, Integer.valueOf(PrimaryController.ownTypeID));
+                    preparedStatement.setString(3, upload_birim.getText());
+                    preparedStatement.setString(4, upload_spdno.getText());
+                    preparedStatement.setString(5, upload_spdkarsilik.getText());
+                    preparedStatement.setString(6, upload_ozelkod.getText());
+                    preparedStatement.setString(7, upload_ozelkodkarssiligi.getText());
+                    preparedStatement.setString(8, upload_klasorno.getText());
+                    preparedStatement.setString(9, upload_aciklama.getText());
+                    LocalDate tarihSql = upload_tarih.getValue();
+                    preparedStatement.setDate(10, Date.valueOf(tarihSql));
+                    LocalDate imhaSql = upload_imha.getValue();
+                    preparedStatement.setDate(11, Date.valueOf(imhaSql));
+                    java.util.Date dt = new java.util.Date();
+                    java.text.SimpleDateFormat sdf =
+                            new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String datetime = sdf.format(dt);
+                    preparedStatement.setString(12, datetime);
+                    preparedStatement.execute();
+                    PreparedStatement ownType = dbSource.getConnection().prepareStatement("select * from load_flle where OTID=? and prossTime=?");
+                    ownType.setInt(1, Integer.valueOf(PrimaryController.ownTypeID));
+                    ownType.setString(2, datetime);
+                    ResultSet resultSet = ownType.executeQuery();
+                    String proccessId = "";
+                    while (resultSet.next()) {
+                        proccessId = resultSet.getString("LFID");
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    try {
+                        if (sourceFile.size() > 0) {
+                            String filename = "";
+                            String partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
+                            String fileSql = "INSERT INTO `file` (`FID`, `filepath`, `LFID`) VALUES ";
+                            int index = 0;
+                            for (File file : sourceFile) {
+                                Files.copy(file.toPath(), destFile.get(index).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                                filename = destFile.get(index).getName();
+                                partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
+                                fileSql += partOfsql;
+                                if (index != sourceFile.size() - 1) {
+                                    fileSql += ",";
+                                }
+                                index++;
+                            }
+                            index = 0;
+                            System.out.println(fileSql);
+                            Statement saveFile = dbSource.getConnection().createStatement();
+                            saveFile.execute(fileSql);
+                            fileSql = "";
+                            sourceFile.clear();
+                            destFile.clear();
+                            upload_aciklama.setText("");
+                            upload_klasorno.setText("");
+                            upload_ozelkodkarssiligi.setText("");
+                            upload_ozelkod.setText("");
+                            upload_spdkarsilik.setText("");
+                            upload_spdno.setText("");
+                            upload_birim.setText("");
+                            listview.getItems().clear();
+                            Notifications.create()
+                                    .title("Bşarılı")
+                                    .text("Kayıtlar arşive eklendi")
+                                    .hideAfter(Duration.seconds(3))
+                                    .position(Pos.BASELINE_LEFT)
+                                    .showConfirm();
+                        }
+                        else {
+                            upload_aciklama.setText("");
+                            upload_klasorno.setText("");
+                            upload_ozelkodkarssiligi.setText("");
+                            upload_ozelkod.setText("");
+                            upload_spdkarsilik.setText("");
+                            upload_spdno.setText("");
+                            upload_birim.setText("");
+                            listview.getItems().clear();
+                            Notifications.create()
+                                    .title("Bşarılı")
+                                    .text("Kayıtlar arşive eklendi")
+                                    .hideAfter(Duration.seconds(3))
+                                    .position(Pos.BASELINE_LEFT)
+                                    .showConfirm();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
-
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
 
         });
@@ -358,7 +357,7 @@ public class Load {
 
     }
 
-    private void checkFields() {
+    private boolean checkFields() {
         if (upload_imha.getValue() == null) {
             Notifications.create()
                     .title("Hata")
@@ -366,7 +365,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_tarih.getValue() == null) {
             Notifications.create()
@@ -375,7 +374,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_destıs_no.getSelectionModel().getSelectedIndex() == -1) {
             Notifications.create()
@@ -384,7 +383,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         String test = upload_birim.getText();
         if (upload_birim.getText().equals("")) {
@@ -394,7 +393,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_spdno.getText().equals("")) {
             Notifications.create()
@@ -403,7 +402,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_spdkarsilik.getText().equals("")) {
             Notifications.create()
@@ -412,7 +411,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_ozelkod.getText().equals("")) {
             Notifications.create()
@@ -421,7 +420,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_ozelkodkarssiligi.getText().equals("")) {
             Notifications.create()
@@ -430,7 +429,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_klasorno.getText().equals("")) {
             Notifications.create()
@@ -439,7 +438,7 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (upload_aciklama.getText().equals("")) {
             Notifications.create()
@@ -448,11 +447,12 @@ public class Load {
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BASELINE_LEFT)
                     .showError();
-            return;
+            return false;
         }
         if (!betweenDate(upload_tarih.getValue(),upload_imha.getValue())){
-            return;
+            return false;
         }
+        return true;
     }
 
     private List<Integer> destisNo = new ArrayList<>();

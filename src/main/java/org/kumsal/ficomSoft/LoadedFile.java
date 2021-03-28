@@ -213,48 +213,7 @@ public class LoadedFile {
                 sil=new JFXButton("Sil");
                 sil.getStyleClass().add("deleteButton");
                 sil.setOnAction(event -> {
-                    int currentIndex=silButtons.indexOf(event.getSource());
-                    JFXButton evet=new JFXButton("Evet");
-                    JFXDialog dialog=new JFXDialog(stakcpane,new Label("temel"), JFXDialog.DialogTransition.CENTER);
-                    JFXDialogLayout layout=new JFXDialogLayout();
-                    layout.setHeading(new Text("Dikkat"));
-                    layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
-                    evet.setOnAction(event1 -> {
-                        theFileModel.remove(currentIndex);
-                        silButtons.remove(currentIndex);
-                        degistirButtons.remove(currentIndex);
-                        try {
-                            PreparedStatement preparedStatement=dbSources.getConnection().prepareStatement(
-                                    "DELETE FROM `load_flle` WHERE `load_flle`.`LFID` = ?"
-                            );
-                            preparedStatement.setInt(1,fileID.get(index));
-                            preparedStatement.execute();
-                            fileID.remove(index);
-                            Notifications.create()
-                                    .title("Başarılı")
-                                    .text("Klasör silindi")
-                                    .hideAfter(Duration.seconds(3))
-                                    .position(Pos.BASELINE_LEFT)
-                                    .showConfirm();
-                            slidder.setVisible(false);
-
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        }
-
-                        dialog.close();
-                    });
-                    JFXButton iptal=new JFXButton("Iptal");
-                    iptal.setOnAction(event1 -> {
-                        dialog.close();
-                        slidder.setVisible(false);
-
-                    });
-                    layout.setActions(evet,iptal);
-                    dialog.setContent(layout);
-                    dialog.show();
-
-
+                    deleteElement(event);
                 });
                 degistir=new JFXButton("Degistr");
                 degistir.getStyleClass().add("changeButton");
@@ -283,7 +242,7 @@ public class LoadedFile {
                 sil=new JFXButton("Sil");
                 sil.getStyleClass().add("deleteButton");
                 sil.setOnAction(event -> {
-                    System.out.println(event.getSource().toString());;
+                    deleteElement(event);
                 });
                 degistir=new JFXButton("Degistr");
                 degistir.getStyleClass().add("changeButton");
@@ -360,6 +319,49 @@ public class LoadedFile {
         SortedList<LoadedFileModel> sortedData = new SortedList<>(filteredList);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
+    }
+
+    private void deleteElement(javafx.event.ActionEvent event) {
+        int currentIndex=silButtons.indexOf(event.getSource());
+        JFXButton evet=new JFXButton("Evet");
+        JFXDialog dialog=new JFXDialog(stakcpane,new Label("temel"), JFXDialog.DialogTransition.CENTER);
+        JFXDialogLayout layout=new JFXDialogLayout();
+        layout.setHeading(new Text("Dikkat"));
+        layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
+        evet.setOnAction(event1 -> {
+            theFileModel.remove(currentIndex);
+            silButtons.remove(currentIndex);
+            degistirButtons.remove(currentIndex);
+            try {
+                PreparedStatement preparedStatement=dbSources.getConnection().prepareStatement(
+                        "DELETE FROM `load_flle` WHERE `load_flle`.`LFID` = ?"
+                );
+                preparedStatement.setInt(1,fileID.get(index));
+                preparedStatement.execute();
+                fileID.remove(index);
+                Notifications.create()
+                        .title("Başarılı")
+                        .text("Klasör silindi")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.BASELINE_LEFT)
+                        .showConfirm();
+                slidder.setVisible(false);
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+            dialog.close();
+        });
+        JFXButton iptal=new JFXButton("Iptal");
+        iptal.setOnAction(event1 -> {
+            dialog.close();
+            slidder.setVisible(false);
+
+        });
+        layout.setActions(evet,iptal);
+        dialog.setContent(layout);
+        dialog.show();
     }
 
     private void changeStatement(javafx.event.ActionEvent event) {

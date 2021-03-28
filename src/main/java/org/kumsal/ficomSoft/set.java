@@ -1,15 +1,8 @@
 package org.kumsal.ficomSoft;
 
-import com.jfoenix.controls.*;
-
-import java.net.URL;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,10 +13,23 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
+
+import java.net.URL;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class set {
     @FXML
@@ -81,22 +87,24 @@ public class set {
 
     @FXML
     private CheckBox isAuth;
-    MysqlDataSource dbsource= ConnectorMysql.connect();
+    MysqlDataSource dbsource = ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
-    private int GlobalID=0;
+    private int GlobalID = 0;
     ObservableList<LoadedFileModel> theFileModel;
-    int dailyLoged=0;
-    int totalLoged=0;
+    int dailyLoged = 0;
+    int totalLoged = 0;
+    ArrayList<String> prossTime = new ArrayList<>();
+
     @FXML
-    void initialize() throws SQLException {
-        theFileModel=FXCollections.observableArrayList();
-        theusersList= FXCollections.observableArrayList();
+    void initialize() throws SQLException, ParseException {
+        theFileModel = FXCollections.observableArrayList();
+        theusersList = FXCollections.observableArrayList();
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
-        if (PrimaryController.type.equals("Admin")){
-            PreparedStatement statement=dbsource.getConnection().prepareStatement("select * from users");
-            ResultSet resultSet=statement.executeQuery();
-            while (resultSet.next()){
-                settingModel themodel=new settingModel(
+        if (PrimaryController.type.equals("Admin")) {
+            PreparedStatement statement = dbsource.getConnection().prepareStatement("select * from users");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                settingModel themodel = new settingModel(
                         resultSet.getString(4),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -113,10 +121,10 @@ public class set {
                 usernamegir.setText(t1.getUsername());
                 password.setText(t1.getPassword());
                 isAuth.setSelected(t1.isAuth());
-                GlobalID=t1.getId();
+                GlobalID = t1.getId();
             });
             gunceller.setOnAction(event -> {
-                PreparedStatement updateUers= null;
+                PreparedStatement updateUers = null;
                 if (ad.getText().equals("")) {
                     Notifications.create()
                             .title("Hata")
@@ -144,8 +152,8 @@ public class set {
                             .showError();
                     return;
                 }
-                for (settingModel themodel:theusersList){
-                    if (themodel.getUsername().equals(usernamegir.getText())){
+                for (settingModel themodel : theusersList) {
+                    if (themodel.getUsername().equals(usernamegir.getText())) {
                         Notifications.create()
                                 .title("Hata")
                                 .text("Aynı Kullanıcı adı zaten mevcut.")
@@ -166,12 +174,12 @@ public class set {
                 }
                 try {
                     updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? , `isAuth` =? WHERE `users`.`UID` = ?");
-                    updateUers.setString(1,ad.getText());
-                    updateUers.setString(2,soyad.getText());
-                    updateUers.setString(3,usernamegir.getText());
-                    updateUers.setString(4,password.getText());
-                    updateUers.setBoolean(5,isAuth.isSelected());
-                    updateUers.setInt(6,GlobalID);
+                    updateUers.setString(1, ad.getText());
+                    updateUers.setString(2, soyad.getText());
+                    updateUers.setString(3, usernamegir.getText());
+                    updateUers.setString(4, password.getText());
+                    updateUers.setBoolean(5, isAuth.isSelected());
+                    updateUers.setInt(6, GlobalID);
                     updateUers.execute();
                     Notifications.create()
                             .title("Başarılı")
@@ -191,15 +199,15 @@ public class set {
 
             });
         }
-        PreparedStatement fileList=dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
-        fileList.setString(1,PrimaryController.username);
-        ResultSet resultSet=fileList.executeQuery();
+        PreparedStatement fileList = dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
+        fileList.setString(1, PrimaryController.username);
+        ResultSet resultSet = fileList.executeQuery();
         LoadedFileModel loadedFile;
-        int sira=1;
+        int sira = 1;
         JFXButton sil;
         JFXButton degistir;
-        while (resultSet.next()){
-            loadedFile=new LoadedFileModel(
+        while (resultSet.next()) {
+            loadedFile = new LoadedFileModel(
                     String.valueOf(sira),
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -214,26 +222,35 @@ public class set {
                     null,
                     null
             );
+            prossTime.add(resultSet.getString(14));
             theFileModel.add(loadedFile);
             totalLoged++;
         }
-        toplamdosya.setText(totalLoged+"");
+        toplamdosya.setText(totalLoged + "");
         kullanicitur.setText(PrimaryController.type);
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-        for (LoadedFileModel model:theFileModel){
-            Date date=Date.valueOf(model.getYuktarihi());
-            if (isToday(date)){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        for (String model : prossTime) {
+            java.util.Date date11 = format.parse(model);
+            System.out.println(date11.toString());
+            LocalDateTime tume = date11.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            System.out.println(tume.toString());
+            DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String originalDate = tume.format(customFormatter);
+            Date date = Date.valueOf(originalDate);
+            if (isToday(date)) {
                 dailyLoged++;
             }
         }
-        gunlukdosya.setText(dailyLoged+"");
+        gunlukdosya.setText(dailyLoged + "");
     }
-    public boolean isToday(Date date){
-        LocalDate toDay=date.toLocalDate();
-        if (toDay.toString().equals(date.toLocalDate().toString())){
+
+    public boolean isToday(Date date) {
+        LocalDate toDay = LocalDate.now();
+        if (toDay.toString().equals(date.toLocalDate().toString())) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }

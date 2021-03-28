@@ -44,6 +44,12 @@ public class LoadedFileModel {
 
     private JFXButton desgistir;
 
+    private String prossTime;
+
+    public LoadedFileModel(String prossTime) {
+        this.prossTime = prossTime;
+    }
+
     public LoadedFileModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXButton sil, JFXButton desgistir) {
         this.sira = sira;
         this.destisno = destisno;
@@ -62,6 +68,14 @@ public class LoadedFileModel {
 
     public String getSira() {
         return sira;
+    }
+
+    public String getProssTime() {
+        return prossTime;
+    }
+
+    public void setProssTime(String prossTime) {
+        this.prossTime = prossTime;
     }
 
     public void setSira(String sira) {

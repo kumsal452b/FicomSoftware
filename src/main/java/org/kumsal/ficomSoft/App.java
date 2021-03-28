@@ -8,6 +8,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class App extends Application {
 
@@ -25,7 +32,7 @@ public class App extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         launch();
     }
 
