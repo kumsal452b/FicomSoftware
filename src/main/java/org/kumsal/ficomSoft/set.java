@@ -3,10 +3,9 @@ package org.kumsal.ficomSoft;
 import com.jfoenix.controls.*;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -220,8 +219,22 @@ public class set {
         }
         toplamdosya.setText(totalLoged+"");
         kullanicitur.setText(PrimaryController.type);
-        
-
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        for (LoadedFileModel model:theFileModel){
+            Date date=Date.valueOf(model.getYuktarihi());
+            if (isToday(date)){
+                dailyLoged++;
+            }
+        }
+        gunlukdosya.setText(dailyLoged+"");
     }
-    public void isToday()
+    public boolean isToday(Date date){
+        LocalDate toDay=date.toLocalDate();
+        if (toDay.toString().equals(date.toLocalDate().toString())){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
