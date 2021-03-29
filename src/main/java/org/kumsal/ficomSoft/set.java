@@ -358,28 +358,27 @@ public class set {
                 if (verifiyingUsername(yeniKullaniciAdi.getText())){
                     PreparedStatement updateUers = null;
                     try {
-                        if (isAdmin){
+                        if (PrimaryController.type.equals("Admin")){
                             updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `username` = ?  WHERE `admin`.`AID` = ?");
-                            updateUers.setString(1, yenisifre.getText());
+                            updateUers.setString(1, yeniKullaniciAdi.getText());
                             updateUers.setInt(2, currentID);
                             updateUers.execute();
-                            currentPassword = yenisifre.getText();
                             Notifications.create()
                                     .title("Başarılı")
-                                    .text("Şifreniz başarılı bir şekilde güncellendi.")
+                                    .text("Kullanıcı adı başarılı bir şekilde güncellendi.")
                                     .hideAfter(Duration.seconds(3))
                                     .position(Pos.CENTER_LEFT)
                                     .showConfirm();
 
                         }else{
                             updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `username` = ?  WHERE `users`.`UID` = ?");
-                            updateUers.setString(1, yenisifre.getText());
+                            updateUers.setString(1, yeniKullaniciAdi.getText());
                             updateUers.setInt(2, currentID);
                             updateUers.execute();
                             currentPassword = yenisifre.getText();
                             Notifications.create()
                                     .title("Başarılı")
-                                    .text("Şifreniz başarılı bir şekilde güncellendi.")
+                                    .text("Kullanıcı adı başarılı bir şekilde güncellendi.")
                                     .hideAfter(Duration.seconds(3))
                                     .position(Pos.CENTER_LEFT)
                                     .showConfirm();
@@ -433,7 +432,7 @@ public class set {
 
         if (currentPassword.equals(eskisıfre.getText())) {
             if (yenisifre.getText().equals(yenisifretekrar.getText())) {
-               if (isAdmin){
+               if (PrimaryController.type.equals("Admin")){
                    PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `password` = ?  WHERE `admin`.`AID` = ?");
                    updateUers.setString(1, yenisifre.getText());
                    updateUers.setInt(2, currentID);
