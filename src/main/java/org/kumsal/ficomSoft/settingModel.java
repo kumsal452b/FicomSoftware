@@ -21,6 +21,7 @@ public class settingModel {
         this.surname = surname;
         this.password = password;
         this.id=id;
+
     }
 
     public int getId() {
@@ -31,7 +32,7 @@ public class settingModel {
         this.id = id;
     }
 
-    public boolean isAuth() {
+    public boolean getIssAuth() {
         return isAuth;
     }
 

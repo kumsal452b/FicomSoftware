@@ -93,23 +93,25 @@ public class set {
     ObservableList<settingModel> theusersList;
     ObservableList<settingModel> adminAndList;
     private int GlobalID = 0;
-    private String currentusername="";
+    private String currentusername = "";
     ObservableList<LoadedFileModel> theFileModel;
     int dailyLoged = 0;
     int totalLoged = 0;
     ArrayList<String> prossTime = new ArrayList<>();
-    String currentPassword="";
+    String currentPassword = "";
 
     @FXML
     void initialize() throws SQLException, ParseException {
-        adminAndList=FXCollections.observableArrayList();
+        adminAndList = FXCollections.observableArrayList();
         theFileModel = FXCollections.observableArrayList();
         theusersList = FXCollections.observableArrayList();
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
         PreparedStatement statement = dbsource.getConnection().prepareStatement("select * from users");
         ResultSet resultSet = statement.executeQuery();
+        settingModel themodel;
+        settingModel themodel2;
         while (resultSet.next()) {
-            settingModel themodel = new settingModel(
+            themodel = new settingModel(
                     resultSet.getString(4),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -117,31 +119,30 @@ public class set {
                     resultSet.getBoolean(6),
                     resultSet.getInt(1)
             );
-            if (themodel.getUsername().equals(PrimaryController.username)){
-                currentPassword=themodel.getPassword();
-                GlobalID=themodel.getId();
-                currentusername=themodel.getUsername();
+            if (themodel.getUsername().equals(PrimaryController.username)) {
+                currentPassword = themodel.getPassword();
+                GlobalID = themodel.getId();
+                currentusername = themodel.getUsername();
             }
-            adminAndList.add(themodel);
         }
         PreparedStatement forAdmin = dbsource.getConnection().prepareStatement("select * from Admin");
-        resultSet=forAdmin.executeQuery();
-        while (resultSet.next()){
-            settingModel themodel = new settingModel(
+        resultSet = forAdmin.executeQuery();
+        while (resultSet.next()) {
+            themodel2 = new settingModel(
                     resultSet.getString(4),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getString(5),
                     resultSet.getInt(1)
             );
-            adminAndList.add(themodel);
+            adminAndList.add(themodel2);
         }
 
         if (PrimaryController.type.equals("Admin")) {
             PreparedStatement statement1 = dbsource.getConnection().prepareStatement("select * from users");
             ResultSet resultSet2 = statement1.executeQuery();
             while (resultSet2.next()) {
-                settingModel themodel = new settingModel(
+                themodel = new settingModel(
                         resultSet2.getString(4),
                         resultSet2.getString(2),
                         resultSet2.getString(3),
@@ -149,17 +150,19 @@ public class set {
                         resultSet2.getBoolean(6),
                         resultSet2.getInt(1)
                 );
-                if (!themodel.getUsername().equals(PrimaryController.username)){
+
+                if (!themodel.getUsername().equals(PrimaryController.username)) {
                     theusersList.add(themodel);
                 }
             }
             table.getItems().addAll(theusersList);
+            table.getItems().addAll(adminAndList);
             table.getSelectionModel().selectedItemProperty().addListener((observableValue, settingModel, t1) -> {
                 ad.setText(t1.getName());
                 soyad.setText(t1.getSurname());
                 usernamegir.setText(t1.getUsername());
                 password.setText(t1.getPassword());
-                isAuth.setSelected(t1.isAuth());
+                isAuth.setSelected(t1.getIssAuth());
                 GlobalID = t1.getId();
             });
             gunceller.setOnAction(event -> {
@@ -191,8 +194,8 @@ public class set {
                             .showError();
                     return;
                 }
-                for (settingModel themodel : theusersList) {
-                    if (themodel.getUsername().equals(usernamegir.getText())) {
+                for (settingModel themodelIn : theusersList) {
+                    if (themodelIn.getUsername().equals(usernamegir.getText())) {
                         Notifications.create()
                                 .title("Hata")
                                 .text("Aynı Kullanıcı adı zaten mevcut.")
@@ -286,9 +289,9 @@ public class set {
         gunlukdosya.setText(dailyLoged + "");
         sifredegistir.setOnAction(event -> {
             try {
-                if (!eskisıfre.getText().equals("") && !yenisifre.getText().equals("")&&!yenisifretekrar.getText().equals("")) {
+                if (!eskisıfre.getText().equals("") && !yenisifre.getText().equals("") && !yenisifretekrar.getText().equals("")) {
                     verifiyingUsers(currentPassword);
-                }else{
+                } else {
                     Notifications.create()
                             .title("Hata")
                             .text("Boş alanları doldurun")
@@ -299,7 +302,7 @@ public class set {
             } catch (SQLException throwables) {
                 Notifications.create()
                         .title("Hata")
-                        .text("Ölümcül hata meydana geldi. "+throwables.getErrorCode() +"\n"+throwables.getMessage())
+                        .text("Ölümcül hata meydana geldi. " + throwables.getErrorCode() + "\n" + throwables.getMessage())
                         .hideAfter(Duration.seconds(6))
                         .position(Pos.CENTER_LEFT)
                         .showError();
@@ -311,10 +314,11 @@ public class set {
 
         });
     }
-    public boolean verifiyingUsername(String username){
-        if (!username.equals(yeniKullaniciAdi)){
-            for (settingModel model:theusersList){
-                if (model.getUsername().equals(yeniKullaniciAdi)){
+
+    public boolean verifiyingUsername(String username) {
+        if (!username.equals(yeniKullaniciAdi)) {
+            for (settingModel model : theusersList) {
+                if (model.getUsername().equals(yeniKullaniciAdi)) {
                     Notifications.create()
                             .title("Hata")
                             .text("Bu kullanici adi başka bir kullanıcı tarafından kullanılıyor.")
@@ -326,7 +330,7 @@ public class set {
             }
             return true;
 
-        }else{
+        } else {
             Notifications.create()
                     .title("Hata")
                     .text("Girilen kullanıcı adı, mevcut kullanıcı adıyla aynı.")
@@ -336,15 +340,16 @@ public class set {
             return false;
         }
     }
+
     public boolean verifiyingUsers(String password) throws SQLException {
 
-        if (currentPassword.equals(eskisıfre.getText())){
-            if (yenisifre.getText().equals(yenisifretekrar.getText())){
+        if (currentPassword.equals(eskisıfre.getText())) {
+            if (yenisifre.getText().equals(yenisifretekrar.getText())) {
                 PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `password` = ?  WHERE `users`.`UID` = ?");
                 updateUers.setString(1, yenisifre.getText());
                 updateUers.setInt(2, GlobalID);
                 updateUers.execute();
-                currentPassword=yenisifre.getText();
+                currentPassword = yenisifre.getText();
                 Notifications.create()
                         .title("Başarılı")
                         .text("Şifreniz başarılı bir şekilde güncellendi.")
@@ -353,7 +358,7 @@ public class set {
                         .showConfirm();
                 return true;
 
-            }else {
+            } else {
                 Notifications.create()
                         .title("Hata")
                         .text("Yeni şifreniz, tekrar girilmek istenene şifre ile uyuşmuyor.")
@@ -362,7 +367,7 @@ public class set {
                         .showError();
                 return false;
             }
-        }else{
+        } else {
             Notifications.create()
                     .title("Hata")
                     .text("Eski şifreniz, yeni girilen şifre ile uyuşmuyor.")
@@ -373,6 +378,7 @@ public class set {
         }
 
     }
+
     public boolean isToday(Date date) {
         LocalDate toDay = LocalDate.now();
         if (toDay.toString().equals(date.toLocalDate().toString())) {
