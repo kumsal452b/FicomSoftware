@@ -172,7 +172,7 @@
                               </Label>
                               <JFXPasswordField fx:id="eskisıfre" focusColor="#e0e1e4" labelFloat="true" promptText="Eski şifre" unFocusColor="#b59c9c" />
                               <JFXPasswordField fx:id="yenisifre" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifre" unFocusColor="#d39f9f" />
-                              <JFXPasswordField fx:id="yenisifre" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifreyi tekrarla" unFocusColor="#d39f9f" />
+                              <JFXPasswordField fx:id="yenisifretekrar" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifreyi tekrarla" unFocusColor="#d39f9f" />
                               <JFXButton fx:id="sifredegistir" prefHeight="33.0" prefWidth="142.0" styleClass="buttonHomeFragment" text="Değiştir" textFill="WHITE" />
                            </children>
                            <padding>

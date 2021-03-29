@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class set {
+
+    public JFXPasswordField yenisifretekrar;
     @FXML
     private ResourceBundle resources;
 
@@ -94,25 +96,44 @@ public class set {
     int dailyLoged = 0;
     int totalLoged = 0;
     ArrayList<String> prossTime = new ArrayList<>();
-
+    String currentPassword="";
     @FXML
     void initialize() throws SQLException, ParseException {
         theFileModel = FXCollections.observableArrayList();
         theusersList = FXCollections.observableArrayList();
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
-        if (PrimaryController.type.equals("Admin")) {
-            PreparedStatement statement = dbsource.getConnection().prepareStatement("select * from users");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                settingModel themodel = new settingModel(
-                        resultSet.getString(4),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(5),
-                        resultSet.getBoolean(6),
-                        resultSet.getInt(1)
-                );
+        PreparedStatement statement = dbsource.getConnection().prepareStatement("select * from users");
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            settingModel themodel = new settingModel(
+                    resultSet.getString(4),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(5),
+                    resultSet.getBoolean(6),
+                    resultSet.getInt(1)
+            );
+            if (themodel.getUsername().equals(PrimaryController.username)){
+                currentPassword=themodel.getPassword();
+            }else{
                 theusersList.add(themodel);
+            }
+        }
+        if (PrimaryController.type.equals("Admin")) {
+            PreparedStatement statement1 = dbsource.getConnection().prepareStatement("select * from users");
+            ResultSet resultSet2 = statement1.executeQuery();
+            while (resultSet2.next()) {
+                settingModel themodel = new settingModel(
+                        resultSet2.getString(4),
+                        resultSet2.getString(2),
+                        resultSet2.getString(3),
+                        resultSet2.getString(5),
+                        resultSet2.getBoolean(6),
+                        resultSet2.getInt(1)
+                );
+                if (!themodel.getUsername().equals(PrimaryController.username)){
+                    theusersList.add(themodel);
+                }
             }
             table.getItems().addAll(theusersList);
             table.getSelectionModel().selectedItemProperty().addListener((observableValue, settingModel, t1) -> {
@@ -222,6 +243,7 @@ public class set {
                     null,
                     null
             );
+
             prossTime.add(resultSet.getString(14));
             theFileModel.add(loadedFile);
             totalLoged++;
@@ -244,8 +266,67 @@ public class set {
             }
         }
         gunlukdosya.setText(dailyLoged + "");
-    }
+        sifredegistir.setOnAction(event -> {
+            try {
+                if (!eskisıfre.getText().equals("") && !yenisifre.getText().equals("")&&!yenisifretekrar.getText().equals("")) {
+                    verifiyingUsers(currentPassword);
+                }else{
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Boş alanları doldurun")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.CENTER_LEFT)
+                            .showError();
+                }
+            } catch (SQLException throwables) {
+                Notifications.create()
+                        .title("Hata")
+                        .text("Ölümcül hata meydana geldi. "+throwables.getErrorCode() +"\n"+throwables.getMessage())
+                        .hideAfter(Duration.seconds(6))
+                        .position(Pos.CENTER_LEFT)
+                        .showError();
+                throwables.printStackTrace();
 
+            }
+        });
+    }
+    public boolean verifiyingUsers(String password) throws SQLException {
+
+        if (currentPassword.equals(yenisifre.getText())){
+            if (yenisifre.getText().equals(yenisifretekrar.getText())){
+                PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `password` = ?  WHERE `users`.`UID` = ?");
+                updateUers.setString(1, yenisifre.getText());
+                updateUers.setInt(2, GlobalID);
+                updateUers.execute();
+                currentPassword=yenisifre.getText();
+                Notifications.create()
+                        .title("Başarılı")
+                        .text("Şifreniz başarılı bir şekilde güncellendi.")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.CENTER_LEFT)
+                        .showConfirm();
+                return true;
+
+            }else {
+                Notifications.create()
+                        .title("Hata")
+                        .text("Yeni şifreniz, tekrar girilmek istenene şifre ile uyuşmuyor.")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.CENTER_LEFT)
+                        .showError();
+                return false;
+            }
+        }else{
+            Notifications.create()
+                    .title("Hata")
+                    .text("Eski şifreniz, yeni girilen şifre ile uyuşmuyor.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.CENTER_LEFT)
+                    .showError();
+            return false;
+        }
+
+    }
     public boolean isToday(Date date) {
         LocalDate toDay = LocalDate.now();
         if (toDay.toString().equals(date.toLocalDate().toString())) {
