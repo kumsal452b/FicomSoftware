@@ -115,8 +115,6 @@ public class set {
             );
             if (themodel.getUsername().equals(PrimaryController.username)){
                 currentPassword=themodel.getPassword();
-            }else{
-                theusersList.add(themodel);
             }
         }
         if (PrimaryController.type.equals("Admin")) {
@@ -222,29 +220,29 @@ public class set {
         }
         PreparedStatement fileList = dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
         fileList.setString(1, PrimaryController.username);
-        ResultSet resultSet = fileList.executeQuery();
+        ResultSet fıleResultsSet = fileList.executeQuery();
         LoadedFileModel loadedFile;
         int sira = 1;
         JFXButton sil;
         JFXButton degistir;
-        while (resultSet.next()) {
+        while (fıleResultsSet.next()) {
             loadedFile = new LoadedFileModel(
                     String.valueOf(sira),
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5),
-                    resultSet.getString(6),
-                    resultSet.getString(7),
-                    resultSet.getString(8),
-                    resultSet.getString(9),
-                    resultSet.getString(10),
+                    fıleResultsSet.getString(1),
+                    fıleResultsSet.getString(2),
+                    fıleResultsSet.getString(3),
+                    fıleResultsSet.getString(4),
+                    fıleResultsSet.getString(5),
+                    fıleResultsSet.getString(6),
+                    fıleResultsSet.getString(7),
+                    fıleResultsSet.getString(8),
+                    fıleResultsSet.getString(9),
+                    fıleResultsSet.getString(10),
                     null,
                     null
             );
 
-            prossTime.add(resultSet.getString(14));
+            prossTime.add(fıleResultsSet.getString(14));
             theFileModel.add(loadedFile);
             totalLoged++;
         }
@@ -292,7 +290,7 @@ public class set {
     }
     public boolean verifiyingUsers(String password) throws SQLException {
 
-        if (currentPassword.equals(yenisifre.getText())){
+        if (currentPassword.equals(eskisıfre.getText())){
             if (yenisifre.getText().equals(yenisifretekrar.getText())){
                 PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `password` = ?  WHERE `users`.`UID` = ?");
                 updateUers.setString(1, yenisifre.getText());
