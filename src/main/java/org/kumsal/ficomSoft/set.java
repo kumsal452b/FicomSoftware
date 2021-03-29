@@ -99,7 +99,8 @@ public class set {
     int totalLoged = 0;
     ArrayList<String> prossTime = new ArrayList<>();
     String currentPassword = "";
-
+    int currentID=0;
+    boolean isAdmin=false;
     @FXML
     void initialize() throws SQLException, ParseException {
         adminAndList = FXCollections.observableArrayList();
@@ -121,7 +122,7 @@ public class set {
             );
             if (themodel.getUsername().equals(PrimaryController.username)) {
                 currentPassword = themodel.getPassword();
-                GlobalID = themodel.getId();
+                currentID = themodel.getId();
                 currentusername = themodel.getUsername();
             }
         }
@@ -135,7 +136,11 @@ public class set {
                     resultSet.getString(5),
                     resultSet.getInt(1)
             );
-            adminAndList.add(themodel2);
+            if (!themodel2.getUsername().equals(PrimaryController.username)) {
+                adminAndList.add(themodel2);
+            }else{
+                currentID=themodel2.getId();
+            }
         }
 
         if (PrimaryController.type.equals("Admin")) {
@@ -158,12 +163,25 @@ public class set {
             table.getItems().addAll(theusersList);
             table.getItems().addAll(adminAndList);
             table.getSelectionModel().selectedItemProperty().addListener((observableValue, settingModel, t1) -> {
-                ad.setText(t1.getName());
-                soyad.setText(t1.getSurname());
-                usernamegir.setText(t1.getUsername());
-                password.setText(t1.getPassword());
-                isAuth.setSelected(t1.getIssAuth());
-                GlobalID = t1.getId();
+                if (theusersList.contains(t1)){
+                    ad.setText(t1.getName());
+                    soyad.setText(t1.getSurname());
+                    usernamegir.setText(t1.getUsername());
+                    password.setText(t1.getPassword());
+                    isAuth.setSelected(t1.getIssAuth());
+                    GlobalID = t1.getId();
+                    isAuth.setVisible(true);
+                    isAdmin=false;
+                }
+                if (adminAndList.contains(t1)){
+                    ad.setText(t1.getName());
+                    soyad.setText(t1.getSurname());
+                    usernamegir.setText(t1.getUsername());
+                    password.setText(t1.getPassword());
+                    isAuth.setVisible(false);
+                    GlobalID = t1.getId();
+                    isAdmin=true;
+                }
             });
             gunceller.setOnAction(event -> {
                 PreparedStatement updateUers = null;
@@ -214,30 +232,57 @@ public class set {
                             .showError();
                     return;
                 }
-                try {
-                    updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? , `isAuth` =? WHERE `users`.`UID` = ?");
-                    updateUers.setString(1, ad.getText());
-                    updateUers.setString(2, soyad.getText());
-                    updateUers.setString(3, usernamegir.getText());
-                    updateUers.setString(4, password.getText());
-                    updateUers.setBoolean(5, isAuth.isSelected());
-                    updateUers.setInt(6, GlobalID);
-                    updateUers.execute();
-                    Notifications.create()
-                            .title("Başarılı")
-                            .text("Kullanıcı başarılı bir şekilde güncellendi.")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showConfirm();
-                } catch (SQLException throwables) {
-                    Notifications.create()
-                            .title("Hata")
-                            .text("Güncelleme sırasında bir hata oluştu, lütden daha sonra tekrar deneyiniz..")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.BASELINE_LEFT)
-                            .showError();
-                    throwables.printStackTrace();
-                }
+               if (isAdmin){
+                   try {
+                       updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? WHERE `users`.`AID` = ?");
+                       updateUers.setString(1, ad.getText());
+                       updateUers.setString(2, soyad.getText());
+                       updateUers.setString(3, usernamegir.getText());
+                       updateUers.setString(4, password.getText());
+                       updateUers.setInt(5,GlobalID);
+                       updateUers.execute();
+                       Notifications.create()
+                               .title("Başarılı")
+                               .text("Kullanıcı başarılı bir şekilde güncellendi.")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.BASELINE_LEFT)
+                               .showConfirm();
+                   } catch (SQLException throwables) {
+                       Notifications.create()
+                               .title("Hata")
+                               .text("Güncelleme sırasında bir hata oluştu, lütden daha sonra tekrar deneyiniz..")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.BASELINE_LEFT)
+                               .showError();
+                       throwables.printStackTrace();
+                   }
+
+               }else{
+                   try {
+                       updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? , `isAuth` =? WHERE `users`.`UID` = ?");
+                       updateUers.setString(1, ad.getText());
+                       updateUers.setString(2, soyad.getText());
+                       updateUers.setString(3, usernamegir.getText());
+                       updateUers.setString(4, password.getText());
+                       updateUers.setBoolean(5, isAuth.isSelected());
+                       updateUers.setInt(6, GlobalID);
+                       updateUers.execute();
+                       Notifications.create()
+                               .title("Başarılı")
+                               .text("Kullanıcı başarılı bir şekilde güncellendi.")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.BASELINE_LEFT)
+                               .showConfirm();
+                   } catch (SQLException throwables) {
+                       Notifications.create()
+                               .title("Hata")
+                               .text("Güncelleme sırasında bir hata oluştu, lütden daha sonra tekrar deneyiniz..")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.BASELINE_LEFT)
+                               .showError();
+                       throwables.printStackTrace();
+                   }
+               }
 
             });
         }
@@ -246,8 +291,6 @@ public class set {
         ResultSet fıleResultsSet = fileList.executeQuery();
         LoadedFileModel loadedFile;
         int sira = 1;
-        JFXButton sil;
-        JFXButton degistir;
         while (fıleResultsSet.next()) {
             loadedFile = new LoadedFileModel(
                     String.valueOf(sira),
@@ -347,7 +390,7 @@ public class set {
             if (yenisifre.getText().equals(yenisifretekrar.getText())) {
                 PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `password` = ?  WHERE `users`.`UID` = ?");
                 updateUers.setString(1, yenisifre.getText());
-                updateUers.setInt(2, GlobalID);
+                updateUers.setInt(2, currentID);
                 updateUers.execute();
                 currentPassword = yenisifre.getText();
                 Notifications.create()
