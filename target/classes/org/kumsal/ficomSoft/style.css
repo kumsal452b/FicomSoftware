@@ -89,6 +89,12 @@
     -fx-border-style: groove;
     -fx-border-width: 1px;
 }
+.textBackground{
+    -fx-background-color: #005797;
+}
+.textBackground2{
+    -fx-background-color: #2f9906;
+}
 
 .paneForHome{
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));

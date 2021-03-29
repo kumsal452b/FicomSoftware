@@ -201,6 +201,7 @@ public class set {
                             countForUser++;
                         }
                         adminTotalLoged.setText("Toplam giriş: "+countForUser);
+                        adminDailyLoged.setText("Günlük giriş : "+countForDaily);
                         countForUser=0;
                         countForDaily=0;
                     } catch (SQLException | ParseException throwables) {
@@ -245,7 +246,7 @@ public class set {
                         adminDailyLoged.setText("Günlük giriş : "+countForDaily);
                         countForAdmin=0;
                         countForDaily=0;
-                    } catch (SQLException throwables) {
+                    } catch (SQLException | ParseException throwables) {
                         throwables.printStackTrace();
                     }
                     ad.setText(t1.getName());
