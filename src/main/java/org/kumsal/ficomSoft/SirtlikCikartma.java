@@ -238,9 +238,9 @@ public class SirtlikCikartma {
             }
         });
 
-        PreparedStatement fileList = dbSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.username=?");
-        fileList.setString(1, PrimaryController.username);
-
+        PreparedStatement fileList = dbSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+        fileList.setString(1, PrimaryController.type);
+        fileList.setInt(2,PrimaryController.ID);
         ResultSet resultSet = fileList.executeQuery();
         SirtlikModel loadedFile;
         int sira = 1;

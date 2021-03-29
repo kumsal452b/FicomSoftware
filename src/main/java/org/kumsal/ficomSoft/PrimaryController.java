@@ -126,6 +126,7 @@ public class PrimaryController {
     static public String datetime="";
     static public String ownTypeID="";
     static public Boolean isAuth=false;
+    static public int ID=0;
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
         for (int i = 0; i < sendLogedData.size(); i++) {
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
@@ -142,6 +143,7 @@ public class PrimaryController {
                     type = sendLogedData.get(i).getLoginby();
                     username=sendLogedData.get(i).getUsername();
                     name = sendLogedData.get(i).getName() + " " + sendLogedData.get(i).getSurname();
+                    ID=Integer.valueOf(sendLogedData.get(i).getId());
                     stage.setUserData(sendLogedData.get(i));
                     if (type.equals("User")){
                         isAuth=isAuthList.get(i);
