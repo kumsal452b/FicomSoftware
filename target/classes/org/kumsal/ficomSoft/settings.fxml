@@ -186,7 +186,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXPasswordField fx:id="yeniKullaniciAdi" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni Ad Giriniz" unFocusColor="#d39f9f" />
+                              <JFXTextField fx:id="yeniKullaniciAdi" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni Ad Giriniz" unFocusColor="#d39f9f" />
                               <JFXButton fx:id="kullaniciAdiDegistir" prefHeight="33.0" prefWidth="142.0" styleClass="buttonHomeFragment" text="Değiştir" textFill="WHITE" />
                            </children>
                            <padding>

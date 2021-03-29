@@ -15,6 +15,13 @@ public class settingModel {
         this.isAuth=isAuth;
         this.id=id;
     }
+    public settingModel(String username, String name, String surname, String password,int id) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.id=id;
+    }
 
     public int getId() {
         return id;

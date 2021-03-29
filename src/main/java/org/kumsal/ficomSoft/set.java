@@ -82,7 +82,7 @@ public class set {
     private JFXButton sifredegistir;
 
     @FXML
-    private JFXPasswordField yeniKullaniciAdi;
+    private JFXTextField yeniKullaniciAdi;
 
     @FXML
     private JFXButton kullaniciAdiDegistir;
@@ -91,14 +91,18 @@ public class set {
     private CheckBox isAuth;
     MysqlDataSource dbsource = ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
+    ObservableList<settingModel> adminAndList;
     private int GlobalID = 0;
+    private String currentusername="";
     ObservableList<LoadedFileModel> theFileModel;
     int dailyLoged = 0;
     int totalLoged = 0;
     ArrayList<String> prossTime = new ArrayList<>();
     String currentPassword="";
+
     @FXML
     void initialize() throws SQLException, ParseException {
+        adminAndList=FXCollections.observableArrayList();
         theFileModel = FXCollections.observableArrayList();
         theusersList = FXCollections.observableArrayList();
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -115,8 +119,24 @@ public class set {
             );
             if (themodel.getUsername().equals(PrimaryController.username)){
                 currentPassword=themodel.getPassword();
+                GlobalID=themodel.getId();
+                currentusername=themodel.getUsername();
             }
+            adminAndList.add(themodel);
         }
+        PreparedStatement forAdmin = dbsource.getConnection().prepareStatement("select * from Admin");
+        resultSet=forAdmin.executeQuery();
+        while (resultSet.next()){
+            settingModel themodel = new settingModel(
+                    resultSet.getString(4),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(5),
+                    resultSet.getInt(1)
+            );
+            adminAndList.add(themodel);
+        }
+
         if (PrimaryController.type.equals("Admin")) {
             PreparedStatement statement1 = dbsource.getConnection().prepareStatement("select * from users");
             ResultSet resultSet2 = statement1.executeQuery();
@@ -287,6 +307,34 @@ public class set {
 
             }
         });
+        kullaniciAdiDegistir.setOnAction(event -> {
+
+        });
+    }
+    public boolean verifiyingUsername(String username){
+        if (!username.equals(yeniKullaniciAdi)){
+            for (settingModel model:theusersList){
+                if (model.getUsername().equals(yeniKullaniciAdi)){
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Bu kullanici adi başka bir kullanıcı tarafından kullanılıyor.")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.CENTER_LEFT)
+                            .showError();
+                    return false;
+                }
+            }
+            return true;
+
+        }else{
+            Notifications.create()
+                    .title("Hata")
+                    .text("Girilen kullanıcı adı, mevcut kullanıcı adıyla aynı.")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.CENTER_LEFT)
+                    .showError();
+            return false;
+        }
     }
     public boolean verifiyingUsers(String password) throws SQLException {
 
