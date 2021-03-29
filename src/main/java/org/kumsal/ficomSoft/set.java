@@ -111,6 +111,7 @@ public class set {
     int currentID=0;
     int countForAdmin=0;
     int countForUser=0;
+    int countForDaily=0;
     boolean isAdmin=false;
 
     @FXML
@@ -178,16 +179,31 @@ public class set {
                 if (theusersList.contains(t1)){
                     try {
                         PreparedStatement fileList2 = dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID ,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID  WHERE own.ownname=? AND own.login_id=?");
-                        fileList2.setString(1, "Admin");
+                        fileList2.setString(1, "User");
                         fileList2.setInt(2,t1.getId());
-
                         ResultSet fıleResultsSet = fileList2.executeQuery();
                         LoadedFileModel loadedFile;
                         while (fıleResultsSet.next()) {
-                            countForAdmin++;
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            String model=fıleResultsSet.getString(14);
+                            java.util.Date date11 = format.parse(model);
+                            System.out.println(date11.toString());
+                            LocalDateTime tume = date11.toInstant()
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDateTime();
+                            System.out.println(tume.toString());
+                            DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                            String originalDate = tume.format(customFormatter);
+                            Date date = Date.valueOf(originalDate);
+                            if (isToday(date)) {
+                                countForDaily++;
+                            }
+                            countForUser++;
                         }
-                        
-                    } catch (SQLException throwables) {
+                        adminTotalLoged.setText("Toplam giriş: "+countForUser);
+                        countForUser=0;
+                        countForDaily=0;
+                    } catch (SQLException | ParseException throwables) {
                         throwables.printStackTrace();
                     }
 
@@ -201,6 +217,37 @@ public class set {
                     isAdmin=false;
                 }
                 if (adminAndList.contains(t1)){
+                    try {
+                        PreparedStatement fileList2 = dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID ,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID  WHERE own.ownname=? AND own.login_id=?");
+                        fileList2.setString(1, "Admin");
+                        fileList2.setInt(2,t1.getId());
+
+                        ResultSet fıleResultsSet = fileList2.executeQuery();
+                        LoadedFileModel loadedFile;
+                        while (fıleResultsSet.next()) {
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            String model=fıleResultsSet.getString(14);
+                            java.util.Date date11 = format.parse(model);
+                            System.out.println(date11.toString());
+                            LocalDateTime tume = date11.toInstant()
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDateTime();
+                            System.out.println(tume.toString());
+                            DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                            String originalDate = tume.format(customFormatter);
+                            Date date = Date.valueOf(originalDate);
+                            if (isToday(date)) {
+                                countForDaily++;
+                            }
+                            countForAdmin++;
+                        }
+                        adminTotalLoged.setText("Toplam giriş: "+countForAdmin);
+                        adminDailyLoged.setText("Günlük giriş : "+countForDaily);
+                        countForAdmin=0;
+                        countForDaily=0;
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                     ad.setText(t1.getName());
                     soyad.setText(t1.getSurname());
                     usernamegir.setText(t1.getUsername());
