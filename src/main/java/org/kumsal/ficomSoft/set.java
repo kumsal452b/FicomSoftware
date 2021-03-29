@@ -354,6 +354,51 @@ public class set {
             }
         });
         kullaniciAdiDegistir.setOnAction(event -> {
+            if (!yeniKullaniciAdi.getText().equals("")){
+                if (verifiyingUsername(yeniKullaniciAdi.getText())){
+                    PreparedStatement updateUers = null;
+                    try {
+                        if (isAdmin){
+                            updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `username` = ?  WHERE `admin`.`AID` = ?");
+                            updateUers.setString(1, yenisifre.getText());
+                            updateUers.setInt(2, currentID);
+                            updateUers.execute();
+                            currentPassword = yenisifre.getText();
+                            Notifications.create()
+                                    .title("Başarılı")
+                                    .text("Şifreniz başarılı bir şekilde güncellendi.")
+                                    .hideAfter(Duration.seconds(3))
+                                    .position(Pos.CENTER_LEFT)
+                                    .showConfirm();
+
+                        }else{
+                            updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `username` = ?  WHERE `users`.`UID` = ?");
+                            updateUers.setString(1, yenisifre.getText());
+                            updateUers.setInt(2, currentID);
+                            updateUers.execute();
+                            currentPassword = yenisifre.getText();
+                            Notifications.create()
+                                    .title("Başarılı")
+                                    .text("Şifreniz başarılı bir şekilde güncellendi.")
+                                    .hideAfter(Duration.seconds(3))
+                                    .position(Pos.CENTER_LEFT)
+                                    .showConfirm();
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+
+                }
+
+            }else{
+                Notifications.create()
+                        .title("Hata")
+                        .text("Boş alanları doldurunuz.")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.CENTER_LEFT)
+                        .showError();
+            }
 
         });
     }
@@ -388,18 +433,34 @@ public class set {
 
         if (currentPassword.equals(eskisıfre.getText())) {
             if (yenisifre.getText().equals(yenisifretekrar.getText())) {
-                PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `password` = ?  WHERE `users`.`UID` = ?");
-                updateUers.setString(1, yenisifre.getText());
-                updateUers.setInt(2, currentID);
-                updateUers.execute();
-                currentPassword = yenisifre.getText();
-                Notifications.create()
-                        .title("Başarılı")
-                        .text("Şifreniz başarılı bir şekilde güncellendi.")
-                        .hideAfter(Duration.seconds(3))
-                        .position(Pos.CENTER_LEFT)
-                        .showConfirm();
-                return true;
+               if (isAdmin){
+                   PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `password` = ?  WHERE `admin`.`AID` = ?");
+                   updateUers.setString(1, yenisifre.getText());
+                   updateUers.setInt(2, currentID);
+                   updateUers.execute();
+                   currentPassword = yenisifre.getText();
+                   Notifications.create()
+                           .title("Başarılı")
+                           .text("Şifreniz başarılı bir şekilde güncellendi.")
+                           .hideAfter(Duration.seconds(3))
+                           .position(Pos.CENTER_LEFT)
+                           .showConfirm();
+                   return true;
+
+               }else{
+                   PreparedStatement updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `password` = ?  WHERE `users`.`UID` = ?");
+                   updateUers.setString(1, yenisifre.getText());
+                   updateUers.setInt(2, currentID);
+                   updateUers.execute();
+                   currentPassword = yenisifre.getText();
+                   Notifications.create()
+                           .title("Başarılı")
+                           .text("Şifreniz başarılı bir şekilde güncellendi.")
+                           .hideAfter(Duration.seconds(3))
+                           .position(Pos.CENTER_LEFT)
+                           .showConfirm();
+                   return true;
+               }
 
             } else {
                 Notifications.create()
