@@ -234,7 +234,7 @@ public class set {
                 }
                if (isAdmin){
                    try {
-                       updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? WHERE `users`.`AID` = ?");
+                       updateUers = dbsource.getConnection().prepareStatement("UPDATE `admin` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? WHERE `admin`.`AID` = ?");
                        updateUers.setString(1, ad.getText());
                        updateUers.setString(2, soyad.getText());
                        updateUers.setString(3, usernamegir.getText());
