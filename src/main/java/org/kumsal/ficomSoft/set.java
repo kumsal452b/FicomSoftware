@@ -89,6 +89,14 @@ public class set {
 
     @FXML
     private CheckBox isAuth;
+
+
+    @FXML
+    private Label adminDailyLoged;
+
+    @FXML
+    private Label adminTotalLoged;
+
     MysqlDataSource dbsource = ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
     ObservableList<settingModel> adminAndList;
@@ -99,8 +107,12 @@ public class set {
     int totalLoged = 0;
     ArrayList<String> prossTime = new ArrayList<>();
     String currentPassword = "";
+
     int currentID=0;
+    int countForAdmin=0;
+    int countForUser=0;
     boolean isAdmin=false;
+
     @FXML
     void initialize() throws SQLException, ParseException {
         adminAndList = FXCollections.observableArrayList();
@@ -164,6 +176,21 @@ public class set {
             table.getItems().addAll(adminAndList);
             table.getSelectionModel().selectedItemProperty().addListener((observableValue, settingModel, t1) -> {
                 if (theusersList.contains(t1)){
+                    try {
+                        PreparedStatement fileList2 = dbsource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID ,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID  WHERE own.ownname=? AND own.login_id=?");
+                        fileList2.setString(1, "Admin");
+                        fileList2.setInt(2,t1.getId());
+
+                        ResultSet fıleResultsSet = fileList2.executeQuery();
+                        LoadedFileModel loadedFile;
+                        while (fıleResultsSet.next()) {
+                            countForAdmin++;
+                        }
+                        
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
                     ad.setText(t1.getName());
                     soyad.setText(t1.getSurname());
                     usernamegir.setText(t1.getUsername());

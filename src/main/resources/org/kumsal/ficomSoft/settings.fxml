@@ -65,7 +65,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </CheckBox>
-                              <Label contentDisplay="CENTER" prefHeight="37.0" prefWidth="214.0" styleClass="textBackground" text="Günlük giriş :" textAlignment="CENTER" textFill="#d3c2c2" wrapText="true">
+                              <Label fx:id="adminDailyLoged" contentDisplay="CENTER" prefHeight="37.0" prefWidth="214.0" styleClass="textBackground" text="Günlük giriş :" textAlignment="CENTER" textFill="#d3c2c2" wrapText="true">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="14.0" />
                                  </font>
@@ -73,7 +73,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label contentDisplay="CENTER" prefHeight="37.0" prefWidth="214.0" styleClass="textBackground2" text="Toplam giriş:" textAlignment="CENTER" textFill="#d3c2c2" wrapText="true">
+                              <Label fx:id="adminTotalLoged" contentDisplay="CENTER" prefHeight="37.0" prefWidth="214.0" styleClass="textBackground2" text="Toplam giriş:" textAlignment="CENTER" textFill="#d3c2c2" wrapText="true">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="14.0" />
                                  </font>
