@@ -25,7 +25,7 @@ public class SirtlikModel {
 
     private JFXCheckBox ısCheck;
 
-    public SirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String imhaT, String string, JFXCheckBox ischeck) {
+    public SirtlikModel(String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String imhaT, String pross, JFXCheckBox ischeck) {
         this.destisno = destisno;
         this.birimad = birimad;
         this.spdkod = spdkod;
@@ -34,10 +34,11 @@ public class SirtlikModel {
         this.ozelkarsilik = ozelkarsilik;
         this.klasno = klasno;
         this.ktarihi = ktarihi;
-        this.yuktarihi = yuktarihi;
+        this.yuktarihi =pross ;
         this.imhaTarihi=imhaT;
         this.ısCheck=ischeck;
     }
+
 
 
     private String yuktarihi;

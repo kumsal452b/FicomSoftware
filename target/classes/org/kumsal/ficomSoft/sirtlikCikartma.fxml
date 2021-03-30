@@ -26,7 +26,7 @@
             <TableColumn fx:id="ozelkarsilik" prefWidth="95.0" text="Öz. Kod Karş." />
             <TableColumn fx:id="klasno" prefWidth="89.0" text="Klasör No" />
             <TableColumn fx:id="ktarihi" prefWidth="63.0" text="K. Tarihi" />
-            <TableColumn fx:id="aciklama" prefWidth="108.0" text="Açıklama" />
+            <TableColumn fx:id="aciklama" prefWidth="108.0" text="İmha Tarihi" />
             <TableColumn fx:id="yuktarihi" prefWidth="90.0" text="Yüklenme tarihi" />
          </columns>
       </TableView>

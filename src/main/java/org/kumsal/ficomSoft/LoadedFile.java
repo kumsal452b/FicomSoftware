@@ -148,6 +148,7 @@ public class LoadedFile {
         sira.setCellValueFactory(new PropertyValueFactory<>("sira"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
         spdkod.setCellValueFactory(new PropertyValueFactory<>("spdkod"));
+        birimad.setCellValueFactory(new PropertyValueFactory<>("birimad"));
         spdkarsilik.setCellValueFactory(new PropertyValueFactory<>("spdkarsilik"));
         ozelkod.setCellValueFactory(new PropertyValueFactory<>("ozelkod"));
         ozelkarsilik.setCellValueFactory(new PropertyValueFactory<>("ozelkarsilik"));

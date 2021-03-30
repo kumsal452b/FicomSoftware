@@ -106,22 +106,25 @@ public class SirtlikCikartma {
     MysqlDataSource dbSource = ConnectorMysql.connect();
     ObservableList<SirtlikModel> modelObservableValue;
     public static ArrayList<sirtlikModel2> allDataSirtlik = new ArrayList<>();
-
+    public ArrayList<sirtlikModel2> allTempElement = new ArrayList<>();
     @FXML
     void initialize() throws SQLException {
         modelObservableValue = FXCollections.observableArrayList();
         onlyDate.setDisable(true);
         ısCheck.setCellValueFactory(new PropertyValueFactory<>("ısCheck"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
+        birimad.setCellValueFactory(new PropertyValueFactory<>("birimad"));
         spdkod.setCellValueFactory(new PropertyValueFactory<>("spdkod"));
         spdkarsilik.setCellValueFactory(new PropertyValueFactory<>("spdkarsilik"));
         ozelkod.setCellValueFactory(new PropertyValueFactory<>("ozelkod"));
         ozelkarsilik.setCellValueFactory(new PropertyValueFactory<>("ozelkarsilik"));
         klasno.setCellValueFactory(new PropertyValueFactory<>("klasno"));
         ktarihi.setCellValueFactory(new PropertyValueFactory<>("ktarihi"));
-        aciklama.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
+        aciklama.setCellValueFactory(new PropertyValueFactory<>("imhaTarihi"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
+        int count=0;
         yazdir.setOnMouseClicked(mouseEvent -> {
+            allTempElement.clear();
             for (SirtlikModel model : table.getItems()) {
                 if (model.getIsCheck().isSelected()) {
                     sirtlikModel2 theModel = new sirtlikModel2(
@@ -135,11 +138,14 @@ public class SirtlikCikartma {
                             model.getKtarihi(),
                             model.getImhaTarihi()
                     );
-                    allDataSirtlik.add(theModel);
+                    if (!allTempElement.contains(theModel))
+                        allTempElement.add(theModel);
                 }
 
             }
-            if (allDataSirtlik.size() > 0) {
+            allDataSirtlik.clear();
+            if (allTempElement.size() > 0) {
+                allDataSirtlik.addAll(allTempElement);
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("sirtlikYazdir.fxml"));
                 AnchorPane root = null;
@@ -156,6 +162,12 @@ public class SirtlikCikartma {
                 stage.initOwner(PrimaryController.stage);
                 stage.show();
             } else {
+                Notifications.create()
+                        .title("Hata")
+                        .text("Sırtlık seçilmedem işlem yürütülemez..")
+                        .hideAfter(Duration.seconds(3))
+                        .position(Pos.BASELINE_LEFT)
+                        .showError();
 
             }
         });
@@ -238,7 +250,7 @@ public class SirtlikCikartma {
             }
         });
 
-        PreparedStatement fileList = dbSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+        PreparedStatement fileList = dbSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.imhatarihi,a.prossTime FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
         fileList.setString(1, PrimaryController.type);
         fileList.setInt(2,PrimaryController.ID);
         ResultSet resultSet = fileList.executeQuery();
