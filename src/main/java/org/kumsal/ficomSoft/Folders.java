@@ -38,7 +38,7 @@ import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 import javax.swing.*;
 
-public class Folders implements EventHandler<ActionEvent> {
+public class Folders{
 
     @FXML
     private ResourceBundle resources;
@@ -115,7 +115,7 @@ public class Folders implements EventHandler<ActionEvent> {
         ekle.setOnMouseClicked(mouseEvent -> {
            if (isUpdate){
                if (!destisno_giriniz.getText().equals("") && destisno_giriniz.getText()!=null){
-                   SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+                   SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
                    SimpleDateFormat myFormatTime = new SimpleDateFormat("HH:mm:ss");
                    Date dt=new Date();
                    String date=myFormat.format(dt);
@@ -136,7 +136,7 @@ public class Folders implements EventHandler<ActionEvent> {
                        iptal.setVisible(false);
                        ekle.setText("Ekle");
                        isUpdate=false;
-                       
+                        destisno_giriniz.setText("");
 
                    } catch (SQLException throwables) {
                        Notifications.create()
@@ -159,7 +159,7 @@ public class Folders implements EventHandler<ActionEvent> {
                }
            }
            else {
-               SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+               SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
                SimpleDateFormat myFormatTime = new SimpleDateFormat("HH:mm:ss");
                Date dt=new Date();
                String date=myFormat.format(dt);
@@ -179,6 +179,7 @@ public class Folders implements EventHandler<ActionEvent> {
                                .hideAfter(Duration.seconds(3))
                                .position(Pos.BASELINE_LEFT)
                                .showConfirm();
+                       destisno_giriniz.setText("");
                    }else{
                        Notifications.create()
                                .title("Hata")
@@ -279,9 +280,9 @@ public class Folders implements EventHandler<ActionEvent> {
             });
             degistir.setOnAction(event -> {
                int indexOf= buttonsDegistir.indexOf(event.getSource());
-               foldersModel model=foldersModels1.get(index);
-               destisno.setText(model.getDestisno());
-               globalIndex=folderIDs.get(index);
+               foldersModel model=foldersModels1.get(indexOf);
+               destisno_giriniz.setText(model.getDestisno());
+               globalIndex=folderIDs.get(indexOf);
                isUpdate=true;
                ekle.setText("Güncelle");
                iptal.setVisible(true);

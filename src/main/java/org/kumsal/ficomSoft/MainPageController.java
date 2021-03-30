@@ -1,25 +1,38 @@
 package org.kumsal.ficomSoft;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.kairos.core.Activity;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainPageController extends Activity {
 
+    public JFXButton exit_app;
     @FXML
     private ResourceBundle resources;
 
@@ -55,6 +68,8 @@ public class MainPageController extends Activity {
     private AnchorPane mainPane;
 
     private String currentFragment = "";
+    @FXML
+    private StackPane stakpane;
 
     @FXML
     void main_page_currentFiles(ActionEvent event) throws IOException {
@@ -170,6 +185,33 @@ public class MainPageController extends Activity {
         if (PrimaryController.type.equals("User")){
             main_page_destroy.setVisible(false);
         }
+        exit_app.setOnAction(event -> {
+            ButtonType foo = new ButtonType("Evet", ButtonBar.ButtonData.OK_DONE);
+            ButtonType bar = new ButtonType("Hayir", ButtonBar.ButtonData.CANCEL_CLOSE);
+            Alert alert = new Alert(Alert.AlertType.WARNING,"Oturum kapatılacak. Onaylıyormusunuz?",foo, bar);
+            alert.setTitle("Uyarı");
+            alert.setHeaderText("Uyarı");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.orElse(bar) == foo) {
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("primary.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                // Step 6
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(true);
+                // Step 7
+                stage.show();
+            }
+        });
         settings.setOnAction(event -> {
             main_page_home.getStyleClass().remove("currentButton");
             main_page_folders.getStyleClass().remove("currentButton");

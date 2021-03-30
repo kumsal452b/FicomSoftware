@@ -24,6 +24,9 @@
             <JFXButton fx:id="main_page_print" mnemonicParsing="false" onAction="#onPrint" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Sırtlık Çıkartma" />
             <JFXButton fx:id="main_page_destroy" mnemonicParsing="false" onAction="#onDestroy" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="İmha Listesi" textFill="#392828" />
             <JFXButton fx:id="settings" prefHeight="50.0" prefWidth="225.0" styleClass="mainScreenPainRigth" text="Ayarlar" />
+            <JFXButton fx:id="exit_app" contentDisplay="CENTER" layoutX="14.0" layoutY="72.0" prefHeight="58.0" prefWidth="56.0" styleClass="button13" text=" ">
+               
+            </JFXButton>
          </children>
       </VBox>
       <AnchorPane fx:id="mainFragment" layoutX="224.0" prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" />
