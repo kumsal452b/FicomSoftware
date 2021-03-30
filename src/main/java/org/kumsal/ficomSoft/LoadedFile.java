@@ -240,6 +240,8 @@ public class LoadedFile {
         });
         isWannaAll.setOnAction(test -> {
             theFileModel.clear();
+            degistirButtons.clear();
+            silButtons.clear();
             if (isWannaAll.isSelected()){
                 PreparedStatement fileList= null;
                 try {
