@@ -3,22 +3,24 @@ package org.kumsal.ficomSoft.MySqlConector;
 import com.mysql.cj.MysqlConnection;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import com.mysql.jdbc.Driver;
+import org.kumsal.ficomSoft.PropertiesCache;
 
 import java.nio.channels.ConnectionPendingException;
 
 public class ConnectorMysql {
-    private String user = "hbstudent";
-    private String pass = "hbstudent";
-    private String jdbcUrl = "jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&serverTimezone=UTC";
-    private String driver = "com.mysql.cj.jdbc.Driver";
+
     public static MysqlDataSource connect(){
         MysqlDataSource nese = new MysqlDataSource();
-        String jdbcConnection="jdbc:mysql://localhost:3306/fıcomdb?useSSL=false&serverTimezone=GMT";
-        String user="root";
-        String password="";
+
+        String username= PropertiesCache.getInstance().getProperty("username");
+        String password=PropertiesCache.getInstance().getProperty("password");
+        String domain=PropertiesCache.getInstance().getProperty("domain");
+        String db=PropertiesCache.getInstance().getProperty("database");
+
+        String jdbcConnection="jdbc:mysql://"+domain+"/"+db+"?useSSL=false&serverTimezone=GMT";
         nese.setUrl(jdbcConnection);
         nese.setPassword(password);
-        nese.setUser(user);
+        nese.setUser(username);
         return nese;
     }
 }
