@@ -71,6 +71,10 @@
     -fx-background-color: linear-gradient(rgb(15, 222, 222), rgb(85, 136, 145));
     -fx-background-radius:0.0 20.0 0.0 20.0;
 }
+.buttonHomeFragmentCancel{
+    -fx-background-color: linear-gradient(rgb(212, 6, 6), rgb(79, 21, 37));
+    -fx-background-radius:0.0 20.0 0.0 20.0;
+}
 .tabPain{
     -fx-border-width: 0.0 0.0 4.0 0.0;
     -fx-border-color: #1c3734;

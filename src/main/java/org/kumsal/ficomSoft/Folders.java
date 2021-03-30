@@ -87,18 +87,10 @@ public class Folders implements EventHandler<ActionEvent> {
     ObservableList<foldersModel> foldersModels1;
     ArrayList<JFXButton> buttonsSil=new ArrayList<>();
     ArrayList<JFXButton> buttonsDegistir=new ArrayList<>();
-
-    @Override
-    public void handle(ActionEvent event) {
-        JFXButton theButton=(JFXButton) event.getSource();
-        if (theButton.getText().equals("Sil")){
-
-        }else{
-
-        }
-    }
-
+    ArrayList<Integer> folderIDs=new ArrayList<>();
     ArrayList<Integer> folderIndex=new ArrayList<>();
+    boolean isUpdate=false;
+    int globalIndex=0;
     @FXML
     void initialize() throws SQLException {
 
@@ -118,26 +110,23 @@ public class Folders implements EventHandler<ActionEvent> {
 
         updateList(resultSet, index);
         ekle.setOnMouseClicked(mouseEvent -> {
-            SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
-            SimpleDateFormat myFormatTime = new SimpleDateFormat("HH:mm:ss");
-            Date dt=new Date();
-            String date=myFormat.format(dt);
-            String time=myFormatTime.format(dt);
-
-
-            try {
+           if (isUpdate){
                if (!destisno_giriniz.getText().equals("") && destisno_giriniz.getText()!=null){
-                   PreparedStatement savedFolder=dbSource.getConnection().prepareStatement("INSERT INTO `destis` (`DID`, `destisno`, `kayitT`, `kayitS`) VALUES (NULL, ?, ?, ?)");
-                   savedFolder.setString(1,destisno_giriniz.getText());
-                   savedFolder.setString(2,date);
-                   savedFolder.setString(3,time);
-                   savedFolder.execute();
-                       Notifications.create()
-                               .title("Başarılı")
-                               .text("Klasör kaydedildi")
-                               .hideAfter(Duration.seconds(3))
-                               .position(Pos.BASELINE_LEFT)
-                               .showConfirm();
+                   SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+                   SimpleDateFormat myFormatTime = new SimpleDateFormat("HH:mm:ss");
+                   Date dt=new Date();
+                   String date=myFormat.format(dt);
+                   String time=myFormatTime.format(dt);
+                   try {
+                       PreparedStatement preparedStatement=dbSource.getConnection().prepareStatement("UPDATE `destis` SET `destisno`=? , `kayitT` = ?,`kayitS`=? WHERE `destis`.`DID` =?; ");
+                        preparedStatement.setString(1,destisno_giriniz.getText());
+                        preparedStatement.setString(2,date);
+                        preparedStatement.setString(3,time);
+                        preparedStatement.setString(4,);
+                   } catch (SQLException throwables) {
+                       throwables.printStackTrace();
+                   }
+
                }else{
                    Notifications.create()
                            .title("Hata")
@@ -146,9 +135,40 @@ public class Folders implements EventHandler<ActionEvent> {
                            .position(Pos.CENTER_LEFT)
                            .showError();
                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+           }
+           else {
+               SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+               SimpleDateFormat myFormatTime = new SimpleDateFormat("HH:mm:ss");
+               Date dt=new Date();
+               String date=myFormat.format(dt);
+               String time=myFormatTime.format(dt);
+
+
+               try {
+                   if (!destisno_giriniz.getText().equals("") && destisno_giriniz.getText()!=null){
+                       PreparedStatement savedFolder=dbSource.getConnection().prepareStatement("INSERT INTO `destis` (`DID`, `destisno`, `kayitT`, `kayitS`) VALUES (NULL, ?, ?, ?)");
+                       savedFolder.setString(1,destisno_giriniz.getText());
+                       savedFolder.setString(2,date);
+                       savedFolder.setString(3,time);
+                       savedFolder.execute();
+                       Notifications.create()
+                               .title("Başarılı")
+                               .text("Klasör kaydedildi")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.BASELINE_LEFT)
+                               .showConfirm();
+                   }else{
+                       Notifications.create()
+                               .title("Hata")
+                               .text("Destis no boş bırakılamaz.")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.CENTER_LEFT)
+                               .showError();
+                   }
+               } catch (SQLException throwables) {
+                   throwables.printStackTrace();
+               }
+           }
 
         });
         FilteredList<foldersModel> filteredList=new FilteredList<>(foldersModels1, b -> true);
@@ -229,7 +249,13 @@ public class Folders implements EventHandler<ActionEvent> {
                 dialog.show();
 
             });
-            degistir.setOnAction(this);
+            degistir.setOnAction(event -> {
+               int indexOf= buttonsDegistir.indexOf(event.getSource());
+               foldersModel model=foldersModels1.get(index);
+               destisno.setText(model.getDestisno());
+               globalIndex=folderIDs.get(index);
+
+            });
             folderIndex.add(resultSet.getInt(1));
             foldersModel foldersModel=new foldersModel(String.valueOf(theIndex),
                     resultSet.getString(2),
@@ -238,6 +264,7 @@ public class Folders implements EventHandler<ActionEvent> {
                     sil,
                     degistir
                     );
+            folderIDs.add(resultSet.getInt(1));
             foldersModels1.add(foldersModel);
             theIndex++;
         }
