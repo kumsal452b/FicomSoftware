@@ -27,11 +27,7 @@
                   <Font size="28.0" />
                </font>
             </Text>
-            <JFXButton contentDisplay="CENTER" layoutX="14.0" layoutY="72.0" prefHeight="58.0" prefWidth="56.0" styleClass="button13" text=" ">
-               <graphic>
-                  <FontAwesomeIconView fill="#ddd2d2" glyphName="ARROW_CIRCLE_ALT_LEFT" selectionEnd="12" selectionStart="1" size="30" />
-               </graphic>
-            </JFXButton>
+            <JFXButton contentDisplay="CENTER" layoutX="14.0" layoutY="72.0" prefHeight="58.0" prefWidth="56.0" styleClass="button13" text=" " />
             <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="146.0" prefHeight="58.0" prefWidth="56.0" styleClass="button14" text=" ">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
