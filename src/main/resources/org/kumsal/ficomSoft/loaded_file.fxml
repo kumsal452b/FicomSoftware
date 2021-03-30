@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -11,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.LoadedFile">
    <children>
@@ -20,16 +22,24 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="833.0">
                      <children>
-                        <JFXTextField fx:id="ara" labelFloat="true" prefHeight="25.0" prefWidth="526.0" promptText="Ara.">
+                        <JFXTextField fx:id="ara" labelFloat="true" prefHeight="25.0" prefWidth="385.0" promptText="Ara.">
                            <HBox.margin>
                               <Insets top="30.0" />
                            </HBox.margin>
                         </JFXTextField>
-                        <JFXButton fx:id="dvt" styleClass="changeButton" text="Detaylı Veri Tablosu">
+                        <JFXButton fx:id="dvt" prefHeight="25.0" prefWidth="151.0" styleClass="changeButton" text="Detaylı Veri Tablosu">
                            <HBox.margin>
-                              <Insets top="30.0" />
+                              <Insets left="4.0" top="30.0" />
                            </HBox.margin>
                         </JFXButton>
+                        <JFXCheckBox fx:id="isWannaAll" checkedColor="#5a5e5c" prefHeight="18.0" prefWidth="315.0" styleClass="textBackground" text="Girilen tüm verieri görmek istiyorum. (Sadece yöneticiler)" textFill="WHITE" unCheckedColor="WHITE" wrapText="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="4.0" top="30.0" />
+                           </HBox.margin>
+                        </JFXCheckBox>
                      </children>
                   </HBox>
                   <StackPane fx:id="stakcpane" prefHeight="500.0" prefWidth="876.0">
