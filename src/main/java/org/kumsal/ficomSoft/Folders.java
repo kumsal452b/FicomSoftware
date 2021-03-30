@@ -83,6 +83,9 @@ public class Folders implements EventHandler<ActionEvent> {
     @FXML
     private StackPane stacpane;
 
+    @FXML
+    private JFXButton iptal;
+
     MysqlDataSource dbSource= ConnectorMysql.connect();
     ObservableList<foldersModel> foldersModels1;
     ArrayList<JFXButton> buttonsSil=new ArrayList<>();
@@ -122,9 +125,28 @@ public class Folders implements EventHandler<ActionEvent> {
                         preparedStatement.setString(1,destisno_giriniz.getText());
                         preparedStatement.setString(2,date);
                         preparedStatement.setString(3,time);
-                        preparedStatement.setString(4,);
+                        preparedStatement.setInt(4,globalIndex);
+                        preparedStatement.execute();
+                       Notifications.create()
+                               .title("Başarılı")
+                               .text("Destis no güncellendi.")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.CENTER_LEFT)
+                               .showConfirm();
+                       iptal.setVisible(false);
+                       ekle.setText("Ekle");
+                       isUpdate=false;
+                       
+
                    } catch (SQLException throwables) {
+                       Notifications.create()
+                               .title("Hata")
+                               .text("Bilinmeyen bir hatameydana geldi.")
+                               .hideAfter(Duration.seconds(3))
+                               .position(Pos.CENTER_LEFT)
+                               .showError();
                        throwables.printStackTrace();
+
                    }
 
                }else{
@@ -193,6 +215,12 @@ public class Folders implements EventHandler<ActionEvent> {
         SortedList<foldersModel> sortedData = new SortedList<>(filteredList);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
+        iptal.setOnAction(event ->{
+            ekle.setText("Ekle");
+            isUpdate=false;
+            iptal.setVisible(false);
+            destisno_giriniz.setText("");
+        });
     }
 
     private void updateList(ResultSet resultSet, int index) throws SQLException {
@@ -254,7 +282,9 @@ public class Folders implements EventHandler<ActionEvent> {
                foldersModel model=foldersModels1.get(index);
                destisno.setText(model.getDestisno());
                globalIndex=folderIDs.get(index);
-
+               isUpdate=true;
+               ekle.setText("Güncelle");
+               iptal.setVisible(true);
             });
             folderIndex.add(resultSet.getInt(1));
             foldersModel foldersModel=new foldersModel(String.valueOf(theIndex),
