@@ -18,14 +18,23 @@
          <children>
             <VBox prefHeight="600.0" prefWidth="876.0">
                <children>
-                  <JFXTextField fx:id="ara" labelFloat="true" prefHeight="25.0" prefWidth="156.0" promptText="Bir şeyler arayın...">
-                     <VBox.margin>
-                        <Insets top="90.0" />
-                     </VBox.margin>
-                  </JFXTextField>
+                  <HBox prefHeight="100.0" prefWidth="833.0">
+                     <children>
+                        <JFXTextField fx:id="ara" labelFloat="true" prefHeight="25.0" prefWidth="526.0" promptText="Ara.">
+                           <HBox.margin>
+                              <Insets top="30.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="dvt" styleClass="changeButton" text="Detaylı Veri Tablosu">
+                           <HBox.margin>
+                              <Insets top="30.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                   <StackPane fx:id="stakcpane" prefHeight="500.0" prefWidth="876.0">
                      <children>
-                        <TableView fx:id="table" prefHeight="475.0" prefWidth="335.0">
+                        <TableView fx:id="table" prefHeight="407.0" prefWidth="870.0">
                            <columns>
                               <TableColumn fx:id="sira" prefWidth="51.0" text="#" />
                               <TableColumn fx:id="destisno" prefWidth="52.0" text="Destis No" />

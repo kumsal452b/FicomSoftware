@@ -44,7 +44,7 @@ public class printScreen {
     @FXML
     private Button iptal;
 
-    private void printImage(BufferedImage image) throws InterruptedException {
+    private void printImage() throws InterruptedException {
         PrinterJob printJob = PrinterJob.createPrinterJob();
         PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.HARDWARE_MINIMUM);
         printJob.getJobSettings().setPageLayout(layout);
@@ -93,30 +93,11 @@ public class printScreen {
             recycler.getItems().add(theModel);
         }
         yazdir.setOnMouseClicked(mouseEvent -> {
-            SnapshotParameters snapshotParameters = new SnapshotParameters();
-//            snapshotParameters.setFill(C)
-            URL url = null;
-            try {
-                url = new File("src/main/resources/org/kumsal/ficomSoft/image/image1.jpg").toURI().toURL();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
-            WritableImage writableImage = recycler.snapshot(new SnapshotParameters(), null);
-            WritableImage image = recycler.snapshot(new SnapshotParameters(), null);
-            File file = new File("nodeImage.png");
 
             try {
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                printImage();
+            } catch (InterruptedException ignored) {
 
-                Image imageToPrint = new Image(file.toURI().toString());
-                ImageView imageView = new ImageView(imageToPrint);
-                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageToPrint, null);
-
-
-                printImage(bufferedImage);
-            } catch (IOException | InterruptedException ex) {
-                System.out.println(ex.toString());
             }
         });
 

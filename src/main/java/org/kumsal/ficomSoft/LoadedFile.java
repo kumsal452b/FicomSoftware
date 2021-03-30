@@ -118,8 +118,12 @@ public class LoadedFile {
 
     @FXML
     private JFXButton guncelle;
+
+    @FXML
+    private JFXButton dvt;
     MysqlDataSource dataSource = ConnectorMysql.connect();
     ObservableList<LoadedFileModel> theFileModel;
+    MysqlDataSource dbSources= ConnectorMysql.connect();
 
 
     @SuppressWarnings("unchecked")
@@ -128,7 +132,6 @@ public class LoadedFile {
                 .focusModelProperty().get().focusedCellProperty().get();
         table.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
-    MysqlDataSource dbSources= ConnectorMysql.connect();
     ArrayList<Integer> destisNo=new ArrayList<>();
     ArrayList<Integer> fileID=new ArrayList<>();
     ArrayList<Integer> typeIDsID=new ArrayList<>();
@@ -164,6 +167,9 @@ public class LoadedFile {
         scaleTransition.setByY(1.5);
 
 
+        dvt.setOnAction(event -> {
+            
+        });
         Statement forDestis = dbSources.getConnection().createStatement();
         forDestis.execute("select * from destis");
 

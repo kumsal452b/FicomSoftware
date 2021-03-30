@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.kumsal.ficomSoft.TreeTable"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="496.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.TreeTable">
+   <children>
+      <TreeTableView fx:id="table" layoutX="8.0" layoutY="7.0" prefHeight="478.0" prefWidth="701.0">
+        <columns>
+          <TreeTableColumn fx:id="destisno" prefWidth="75.0" text="Destis No" />
+          <TreeTableColumn fx:id="birim" prefWidth="75.0" text="Birim" />
+            <TreeTableColumn fx:id="spdkod" prefWidth="75.0" text="SPD Kod" />
+            <TreeTableColumn fx:id="spdkarsilik" prefWidth="75.0" text="SPD Karşılık" />
+            <TreeTableColumn fx:id="klasorno" prefWidth="75.0" text="Klasör No" />
+            <TreeTableColumn fx:id="yukleme" prefWidth="88.0" text="Yükleme Tarhi" />
+            <TreeTableColumn fx:id="imha" prefWidth="88.0" text="İmha Tarihi" />
+        </columns>
+      </TreeTableView>
+   </children>
 </AnchorPane>
