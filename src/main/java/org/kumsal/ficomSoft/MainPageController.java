@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kairos.core.Activity;
@@ -195,6 +196,7 @@ public class MainPageController extends Activity {
             if (result.orElse(bar) == foo) {
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
+
                 stage.close();
                 Parent root = null;
                 try {
@@ -205,9 +207,13 @@ public class MainPageController extends Activity {
 
 
                 // Step 6
+
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(true);
+                stage.setResizable(false);
+                stage.setHeight(530);
+                stage.setWidth(1000);
                 // Step 7
                 stage.show();
             }
