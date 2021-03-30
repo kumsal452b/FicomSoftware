@@ -9,7 +9,7 @@
    <children>
       <TreeTableView fx:id="table" layoutX="8.0" layoutY="7.0" prefHeight="478.0" prefWidth="701.0">
         <columns>
-          <TreeTableColumn fx:id="destisno" prefWidth="686.0" text="Destis No" />
+          <TreeTableColumn fx:id="destisno" prefWidth="686.0" text="Girilen veriler" />
         </columns>
       </TreeTableView>
    </children>

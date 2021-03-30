@@ -185,7 +185,7 @@ public class LoadedFile {
             }
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(PrimaryController.stage);
