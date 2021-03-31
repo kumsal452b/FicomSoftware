@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -19,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
@@ -203,6 +206,7 @@ public class Load {
                     new JFXDatePicker(),
                     new JFXDatePicker());
             table.getItems().add(themodel);
+            models.add(themodel);
         });
         table.getItems().addAll(models);
         String pattern = "yyyy-MM-dd";
@@ -337,10 +341,20 @@ public class Load {
         item2.setOnAction(event -> {
             int indis = table.getSelectionModel().getSelectedIndex();
             models.remove(indis);
+            table.getItems().remove(indis);
         });
         contextMenu2.getItems().add(item2);
+        table.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent t) {
+                if(t.getButton() == MouseButton.SECONDARY) {
+                    contextMenu2.show(table, t.getScreenX(), t.getScreenY());
+                }
+            }
+        });
         listview.setContextMenu(contextMenu2);
-        
+
         listview.setContextMenu(contextMenu);
         listview.setExpanded(true);
         file.setOnMouseClicked(mouseEvent -> {

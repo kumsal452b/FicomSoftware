@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -27,9 +28,11 @@ import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.*;
@@ -45,6 +48,10 @@ public class PrimaryController {
 
     @FXML
     public ImageView prim_imageView;
+
+    public JFXButton exit;
+    public JFXButton twitter;
+    public JFXButton facebook;
 
 
     @FXML
@@ -238,6 +245,41 @@ public class PrimaryController {
     @FXML
     void initialize() throws MalformedURLException, URISyntaxException, InterruptedException {
 
+        exit.setOnAction(event -> {
+            System.exit(0);
+        });
+        facebook.setOnAction(event -> {
+            URI uri = null;
+            try {
+                uri=new URI("https://www.facebook.com/ficom.ismet.3");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+            if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    desktop.browse(uri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        twitter.setOnAction(event -> {
+            URI uri = null;
+            try {
+                uri=new URI("https://www.twitter.com/BilisimFicom");
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+            if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    desktop.browse(uri);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         login_username.getValidators().add(validator);
         login_password.getValidators().add(validator);
