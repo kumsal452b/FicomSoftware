@@ -201,20 +201,19 @@ public class PrimaryController {
                     System.err.println(String.format("Error: %s", e.getMessage()));
                 }
             }
-
             if (isEnd) {
                 if (i == sendLogedData.size() - 1) {
-                    showError("Password or Username was wrong");
+                    showError("Kullanıcı adı veya şifreniz hatalı.");
                 }
             }
         }
         if (sendLogedData.size() == 0) {
-            showError("Password or Username");
+            showError("Kullanıcı adı veya şifreyi doğrulayamadık");
         }
     }
 
     private void showError(String s) {
-        validator.setMessage("Password or  ");
+        validator.setMessage(s);
         login_password.validate();
         login_username.validate();
     }
@@ -232,7 +231,6 @@ public class PrimaryController {
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (s.length() > 0) {
                     login_username.resetValidation();
-                    System.out.println("selam");
                 }
             }
         });
@@ -241,7 +239,7 @@ public class PrimaryController {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 if (s.length() > 0) {
-                    login_username.resetValidation();
+                    login_password.resetValidation();
                 }
             }
         });
