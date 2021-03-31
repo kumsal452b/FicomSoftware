@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.AdapterModelClass.LoginModel;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
@@ -78,57 +80,61 @@ public class PrimaryController {
     void login(ActionEvent event) throws SQLException {
         PropertiesCache cache=PropertiesCache.isIsBreakDb();
         if (!cache.isBreak){
-            dbSource = ConnectorMysql.connect();
-            ResultSet resultSet;
-            String query = "select * from admin";
-            String query2 = "select * from users";
+           if (!login_username.getText().equals("") && !login_password.getText().equals("")){
+               dbSource = ConnectorMysql.connect();
+               ResultSet resultSet;
+               String query = "select * from admin";
+               String query2 = "select * from users";
 
-            ArrayList<LoginModel> theLoggedAdmin = new ArrayList<>();
-            ArrayList<LoginModel> theLoggedUsers = new ArrayList<>();
+               ArrayList<LoginModel> theLoggedAdmin = new ArrayList<>();
+               ArrayList<LoginModel> theLoggedUsers = new ArrayList<>();
 
-            try{
-                Statement forAdmin = dbSource.getConnection().createStatement();
-                Statement forusers = dbSource.getConnection().createStatement();
+               try{
+                   Statement forAdmin = dbSource.getConnection().createStatement();
+                   Statement forusers = dbSource.getConnection().createStatement();
 
-                forusers.execute(query2);
-                forAdmin.execute(query);
+                   forusers.execute(query2);
+                   forAdmin.execute(query);
 
-                resultSet = forAdmin.getResultSet();
-                while (resultSet.next()) {
-                    LoginModel theModel = new LoginModel("Admin",
-                            resultSet.getString("ad"),
-                            resultSet.getString("soyad"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getString("AID"));
-                    theLoggedAdmin.add(theModel);
-                }
-                resultSet = forusers.getResultSet();
-                while (resultSet.next()) {
-                    LoginModel theModel = new LoginModel("User",
-                            resultSet.getString("ad"),
-                            resultSet.getString("soyad"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password"),
-                            resultSet.getString("UID"));
-                    theLoggedUsers.add(theModel);
-                    isAuthList.add(resultSet.getBoolean(6));
-                }
-                String theUsername = login_username.getText();
-                String thePassword = login_password.getText();
-                String loginBy = "";
+                   resultSet = forAdmin.getResultSet();
+                   while (resultSet.next()) {
+                       LoginModel theModel = new LoginModel("Admin",
+                               resultSet.getString("ad"),
+                               resultSet.getString("soyad"),
+                               resultSet.getString("username"),
+                               resultSet.getString("password"),
+                               resultSet.getString("AID"));
+                       theLoggedAdmin.add(theModel);
+                   }
+                   resultSet = forusers.getResultSet();
+                   while (resultSet.next()) {
+                       LoginModel theModel = new LoginModel("User",
+                               resultSet.getString("ad"),
+                               resultSet.getString("soyad"),
+                               resultSet.getString("username"),
+                               resultSet.getString("password"),
+                               resultSet.getString("UID"));
+                       theLoggedUsers.add(theModel);
+                       isAuthList.add(resultSet.getBoolean(6));
+                   }
+                   String theUsername = login_username.getText();
+                   String thePassword = login_password.getText();
+                   String loginBy = "";
 
-                loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
-                loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-                ButtonType foo = new ButtonType("Tamam", ButtonBar.ButtonData.OK_DONE);
-                Alert alert = new Alert(Alert.AlertType.WARNING,"Uzak sunucu hatası \n"+e.getMessage(),foo);
-                alert.setTitle("Uyarı");
-                alert.setHeaderText("Uyarı");
-                alert.show();
-            }
-
+                   loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
+                   loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
+               }catch (Exception e){
+                   System.out.println(e.getMessage());
+                   ButtonType foo = new ButtonType("Tamam", ButtonBar.ButtonData.OK_DONE);
+                   Alert alert = new Alert(Alert.AlertType.WARNING,"Uzak sunucu hatası \n"+e.getMessage(),foo);
+                   alert.setTitle("Uyarı");
+                   alert.setHeaderText("Uyarı");
+                   alert.show();
+               }
+           }
+           else {
+            showError("Alanları doldurmak zorunludur.");
+           }
         }else{
             ButtonType foo = new ButtonType("Tamam", ButtonBar.ButtonData.OK_DONE);
             Alert alert = new Alert(Alert.AlertType.WARNING,"Uzak sumucu bağlantısı hasarlı. Lütfen uygulamayı tekrar yükleyiniz veya uza" +
@@ -203,7 +209,12 @@ public class PrimaryController {
             }
             if (isEnd) {
                 if (i == sendLogedData.size() - 1) {
-                    showError("Kullanıcı adı veya şifreniz hatalı.");
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Kullanıcı veya şifreniz hatalıdır..")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.CENTER_LEFT)
+                            .showError();
                 }
             }
         }
