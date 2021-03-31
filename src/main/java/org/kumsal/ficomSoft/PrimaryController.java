@@ -71,11 +71,14 @@ public class PrimaryController {
     private JFXButton login_screen_button;
 
     RequiredFieldValidator validator = new RequiredFieldValidator();
-    MysqlDataSource dbSource = ConnectorMysql.connect();
+
+    MysqlDataSource dbSource=null;
     ArrayList<Boolean> isAuthList=new ArrayList<>();
     @FXML
     void login(ActionEvent event) throws SQLException {
-        if (!PropertiesCache.isIsBreakDb().isBreak){
+        PropertiesCache cache=PropertiesCache.isIsBreakDb();
+        if (!cache.isBreak){
+            dbSource = ConnectorMysql.connect();
             ResultSet resultSet;
             String query = "select * from admin";
             String query2 = "select * from users";
@@ -83,46 +86,56 @@ public class PrimaryController {
             ArrayList<LoginModel> theLoggedAdmin = new ArrayList<>();
             ArrayList<LoginModel> theLoggedUsers = new ArrayList<>();
 
-            Statement forAdmin = dbSource.getConnection().createStatement();
-            Statement forusers = dbSource.getConnection().createStatement();
+            try{
+                Statement forAdmin = dbSource.getConnection().createStatement();
+                Statement forusers = dbSource.getConnection().createStatement();
 
-            forusers.execute(query2);
-            forAdmin.execute(query);
+                forusers.execute(query2);
+                forAdmin.execute(query);
 
-            resultSet = forAdmin.getResultSet();
-            while (resultSet.next()) {
-                LoginModel theModel = new LoginModel("Admin",
-                        resultSet.getString("ad"),
-                        resultSet.getString("soyad"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("AID"));
-                theLoggedAdmin.add(theModel);
+                resultSet = forAdmin.getResultSet();
+                while (resultSet.next()) {
+                    LoginModel theModel = new LoginModel("Admin",
+                            resultSet.getString("ad"),
+                            resultSet.getString("soyad"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("AID"));
+                    theLoggedAdmin.add(theModel);
+                }
+                resultSet = forusers.getResultSet();
+                while (resultSet.next()) {
+                    LoginModel theModel = new LoginModel("User",
+                            resultSet.getString("ad"),
+                            resultSet.getString("soyad"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("UID"));
+                    theLoggedUsers.add(theModel);
+                    isAuthList.add(resultSet.getBoolean(6));
+                }
+                String theUsername = login_username.getText();
+                String thePassword = login_password.getText();
+                String loginBy = "";
+
+                loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
+                loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                ButtonType foo = new ButtonType("Tamam", ButtonBar.ButtonData.OK_DONE);
+                Alert alert = new Alert(Alert.AlertType.WARNING,"Uzak sunucu hatası \n"+e.getMessage(),foo);
+                alert.setTitle("Uyarı");
+                alert.setHeaderText("Uyarı");
+                alert.show();
             }
-            resultSet = forusers.getResultSet();
-            while (resultSet.next()) {
-                LoginModel theModel = new LoginModel("User",
-                        resultSet.getString("ad"),
-                        resultSet.getString("soyad"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("UID"));
-                theLoggedUsers.add(theModel);
-                isAuthList.add(resultSet.getBoolean(6));
-            }
-            String theUsername = login_username.getText();
-            String thePassword = login_password.getText();
-            String loginBy = "";
-
-            loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
-            loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
 
         }else{
-            ButtonType foo = new ButtonType("Evet", ButtonBar.ButtonData.OK_DONE);
+            ButtonType foo = new ButtonType("Tamam", ButtonBar.ButtonData.OK_DONE);
             Alert alert = new Alert(Alert.AlertType.WARNING,"Uzak sumucu bağlantısı hasarlı. Lütfen uygulamayı tekrar yükleyiniz veya uza" +
                     "k sunucu ayarlarını kontrol ediniz.",foo);
             alert.setTitle("Uyarı");
             alert.setHeaderText("Uyarı");
+            alert.show();
         }
     }
 

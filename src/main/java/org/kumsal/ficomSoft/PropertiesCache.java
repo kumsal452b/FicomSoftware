@@ -1,5 +1,8 @@
 package org.kumsal.ficomSoft;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
+import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,28 +21,26 @@ public class PropertiesCache
         InputStream in = this.getClass().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
         URL url=null;
         try {
-            File file=new File("src/main/resources/org/kumsal/ficomSoft/files/config.prperties");
+            File file=new File("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
             if (!file.exists()){
-                isIsBreakDb().isBreak=true;
+                isBreak=true;
             }
             url = file.toURI().toURL();
 
         } catch (MalformedURLException e) {
-            isIsBreakDb().isBreak=true;
+            isBreak=true;
             e.printStackTrace();
         }
         try {
             InputStream test = url.openStream();
-            System.out.println(test);
             configProp.load(test);
         } catch (IOException e) {
-            isIsBreakDb().isBreak=true;
-            e.printStackTrace();
+            isBreak=true;
         }
     }
     public static PropertiesCache isIsBreakDb(){
         if (cache==null){
-            cache=new PropertiesCache();
+        cache=new PropertiesCache();
         }
         return cache;
     }
