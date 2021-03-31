@@ -175,10 +175,10 @@ public class Load {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 32; i++) {
+                for (int i = 0; i < 11; i++) {
                     JFXTextField sayi = new JFXTextField();
                     sayi.setPrefHeight(25);
-                    load_model themodel = new load_model(String.valueOf(i),
+                    load_model themodel = new load_model(String.valueOf(i+1),
                             sayi,
                             new JFXTextField(),
                             new JFXTextField(),
@@ -332,6 +332,15 @@ public class Load {
         });
         contextMenu.getItems().add(item);
 
+        ContextMenu contextMenu2 = new ContextMenu();
+        MenuItem item2 = new MenuItem("Sil");
+        item2.setOnAction(event -> {
+            int indis = table.getSelectionModel().getSelectedIndex();
+            models.remove(indis);
+        });
+        contextMenu2.getItems().add(item2);
+        listview.setContextMenu(contextMenu2);
+        
         listview.setContextMenu(contextMenu);
         listview.setExpanded(true);
         file.setOnMouseClicked(mouseEvent -> {

@@ -85,7 +85,7 @@ public class printScreen {
         for (int i = 0; i < Load.theModels.size(); i++) {
             printer_model theModel = Load.theModels.get(i);
             partOfList.add(theModel);
-            if ((i%14==0 && i!=0)|| i==Load.theModels.size()-1){
+            if ((i%11==0 && i!=0)|| i==Load.theModels.size()-1){
                 allOfList.add(partOfList);
                 partOfList=new ArrayList<>();
             }

@@ -16,32 +16,32 @@
          <children>
             <RecyclerView fx:id="recycler" layoutX="28.0" layoutY="23.0" prefHeight="591.0" prefWidth="565.0" />
             <Line endX="564.0" endY="1.0" layoutX="86.0" layoutY="21.0" startX="-86.0" />
-            <Label layoutX="10.0" layoutY="2.0" text="Sıra">
+            <Label layoutX="30.0" layoutY="2.0" text="Sıra">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="65.0" layoutY="2.0" text="Sayı">
+            <Label layoutX="85.0" layoutY="2.0" text="Sayı">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="129.0" layoutY="2.0" text="Konu">
+            <Label layoutX="159.0" layoutY="2.0" text="Konu">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="204.0" layoutY="2.0" text="S. Adedı">
+            <Label layoutX="230.0" layoutY="2.0" text="S. Adedı">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="258.0" layoutY="2.0" text="Tarih">
+            <Label layoutX="288.0" layoutY="2.0" text="Tarih">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="360.0" layoutY="2.0" text="Evrak Tarihi">
+            <Label layoutX="390.0" layoutY="2.0" text="Evrak Tarihi">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
