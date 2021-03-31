@@ -1,24 +1,47 @@
 package org.kumsal.ficomSoft;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.Set;
 
 public class PropertiesCache
 {
     private final Properties configProp = new Properties();
-
-    private PropertiesCache()
-    {
+    public boolean isBreak=false;
+    private static PropertiesCache cache=null;
+    private PropertiesCache(){
         //Private constructor to restrict new instances
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
-        System.out.println("Reading all properties from the file");
+        InputStream in = this.getClass().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
+        URL url=null;
         try {
-            configProp.load(in);
-        } catch (IOException e) {
+            File file=new File("src/main/resources/org/kumsal/ficomSoft/files/config.prperties");
+            if (!file.exists()){
+                isIsBreakDb().isBreak=true;
+            }
+            url = file.toURI().toURL();
+
+        } catch (MalformedURLException e) {
+            isIsBreakDb().isBreak=true;
             e.printStackTrace();
         }
+        try {
+            InputStream test = url.openStream();
+            System.out.println(test);
+            configProp.load(test);
+        } catch (IOException e) {
+            isIsBreakDb().isBreak=true;
+            e.printStackTrace();
+        }
+    }
+    public static PropertiesCache isIsBreakDb(){
+        if (cache==null){
+            cache=new PropertiesCache();
+        }
+        return cache;
     }
 
     //Bill Pugh Solution for singleton pattern

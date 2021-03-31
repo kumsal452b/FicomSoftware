@@ -16,8 +16,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -36,6 +35,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PrimaryController {
@@ -75,48 +75,55 @@ public class PrimaryController {
     ArrayList<Boolean> isAuthList=new ArrayList<>();
     @FXML
     void login(ActionEvent event) throws SQLException {
-        ResultSet resultSet;
-        String query = "select * from admin";
-        String query2 = "select * from users";
+        if (!PropertiesCache.isIsBreakDb().isBreak){
+            ResultSet resultSet;
+            String query = "select * from admin";
+            String query2 = "select * from users";
 
-        ArrayList<LoginModel> theLoggedAdmin = new ArrayList<>();
-        ArrayList<LoginModel> theLoggedUsers = new ArrayList<>();
+            ArrayList<LoginModel> theLoggedAdmin = new ArrayList<>();
+            ArrayList<LoginModel> theLoggedUsers = new ArrayList<>();
 
-        Statement forAdmin = dbSource.getConnection().createStatement();
-        Statement forusers = dbSource.getConnection().createStatement();
+            Statement forAdmin = dbSource.getConnection().createStatement();
+            Statement forusers = dbSource.getConnection().createStatement();
 
-        forusers.execute(query2);
-        forAdmin.execute(query);
+            forusers.execute(query2);
+            forAdmin.execute(query);
 
-        resultSet = forAdmin.getResultSet();
-        while (resultSet.next()) {
-            LoginModel theModel = new LoginModel("Admin",
-                    resultSet.getString("ad"),
-                    resultSet.getString("soyad"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getString("AID"));
-            theLoggedAdmin.add(theModel);
+            resultSet = forAdmin.getResultSet();
+            while (resultSet.next()) {
+                LoginModel theModel = new LoginModel("Admin",
+                        resultSet.getString("ad"),
+                        resultSet.getString("soyad"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("AID"));
+                theLoggedAdmin.add(theModel);
+            }
+            resultSet = forusers.getResultSet();
+            while (resultSet.next()) {
+                LoginModel theModel = new LoginModel("User",
+                        resultSet.getString("ad"),
+                        resultSet.getString("soyad"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("UID"));
+                theLoggedUsers.add(theModel);
+                isAuthList.add(resultSet.getBoolean(6));
+            }
+            String theUsername = login_username.getText();
+            String thePassword = login_password.getText();
+            String loginBy = "";
+
+            loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
+            loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
+
+        }else{
+            ButtonType foo = new ButtonType("Evet", ButtonBar.ButtonData.OK_DONE);
+            Alert alert = new Alert(Alert.AlertType.WARNING,"Uzak sumucu bağlantısı hasarlı. Lütfen uygulamayı tekrar yükleyiniz veya uza" +
+                    "k sunucu ayarlarını kontrol ediniz.",foo);
+            alert.setTitle("Uyarı");
+            alert.setHeaderText("Uyarı");
         }
-        resultSet = forusers.getResultSet();
-        while (resultSet.next()) {
-            LoginModel theModel = new LoginModel("User",
-                    resultSet.getString("ad"),
-                    resultSet.getString("soyad"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getString("UID"));
-            theLoggedUsers.add(theModel);
-            isAuthList.add(resultSet.getBoolean(6));
-        }
-        String theUsername = login_username.getText();
-        String thePassword = login_password.getText();
-        String loginBy = "";
-
-        loggedSetings(event, theLoggedAdmin, theUsername, thePassword, false);
-        loggedSetings(event, theLoggedUsers, theUsername, thePassword, true);
-
-
     }
 
     static public String type = "";
