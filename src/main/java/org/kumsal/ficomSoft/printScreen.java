@@ -46,7 +46,7 @@ public class printScreen {
 
     private void printImage() throws InterruptedException {
         PrinterJob printJob = PrinterJob.createPrinterJob();
-        PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.HARDWARE_MINIMUM);
+        PageLayout layout = printJob.getPrinter().createPageLayout(javafx.print.Paper.A4, PageOrientation.PORTRAIT, 0,15,0,0);
         printJob.getJobSettings().setPageLayout(layout);
         boolean accept=printJob.showPrintDialog(pane.getScene().getWindow());
         boolean success=false;

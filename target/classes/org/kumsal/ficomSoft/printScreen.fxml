@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import org.kairos.layouts.RecyclerView?>
 
-<AnchorPane prefHeight="700.0" prefWidth="650.0" styleClass="painMainScreen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
+<AnchorPane prefHeight="700.0" prefWidth="697.0" styleClass="painMainScreen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.printScreen">
    <children>
-      <Pane fx:id="pane" layoutX="9.0" layoutY="27.0" prefHeight="614.0" prefWidth="650.0" styleClass="onlyForWhitePane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
+      <Pane fx:id="pane" layoutX="9.0" layoutY="27.0" prefHeight="614.0" prefWidth="701.0" styleClass="onlyForWhitePane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
          <children>
-            <RecyclerView fx:id="recycler" layoutY="23.0" prefHeight="591.0" prefWidth="650.0" />
+            <RecyclerView fx:id="recycler" layoutX="28.0" layoutY="23.0" prefHeight="591.0" prefWidth="565.0" />
             <Line endX="564.0" endY="1.0" layoutX="86.0" layoutY="21.0" startX="-86.0" />
             <Label layoutX="10.0" layoutY="2.0" text="Sıra">
                <font>

@@ -204,17 +204,15 @@ public class MainPageController extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-                // Step 6
-
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(true);
                 stage.setResizable(false);
                 stage.setHeight(530);
                 stage.setWidth(1000);
-                // Step 7
+                stage.setMinHeight(530);
+                stage.setMinWidth(1000);
+                stage.setMaximized(false);
                 stage.show();
             }
         });

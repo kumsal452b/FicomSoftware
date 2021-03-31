@@ -200,8 +200,13 @@ public class PrimaryController {
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.setResizable(true);
+                    stage.setWidth(1200);
+                    stage.setHeight(630);
+                    stage.setMinHeight(630);
+                    stage.setMinWidth(1200);
                     // Step 7
                     stage.show();
+                    isEnd=false;
                     return;
                 } catch (IOException | SQLException e) {
                     System.err.println(String.format("Error: %s", e.getMessage()));
