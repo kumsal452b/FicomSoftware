@@ -166,8 +166,10 @@ public class PrimaryController {
     static public Boolean isAuth=false;
     static public int ID=0;
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
+        boolean isClosed=true;
         for (int i = 0; i < sendLogedData.size(); i++) {
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
+                isClosed=false;
                 Node node = (Node) event.getSource();
                 // Step 3
 
@@ -219,19 +221,22 @@ public class PrimaryController {
                     // Step 7
                     stage.show();
                     isEnd=false;
-                    return;
+                    break;
                 } catch (IOException | SQLException e) {
                     System.err.println(String.format("Error: %s", e.getMessage()));
                 }
             }
-            if (isEnd) {
-                if (i == sendLogedData.size() - 1) {
-                    Notifications.create()
-                            .title("Hata")
-                            .text("Kullanıcı veya şifreniz hatalıdır..")
-                            .hideAfter(Duration.seconds(3))
-                            .position(Pos.CENTER_LEFT)
-                            .showError();
+            if (isClosed){
+                if (isEnd) {
+                    if (i == sendLogedData.size() - 1) {
+//                        Notifications.create()
+//                                .title("Hata")
+//                                .text("Kullanıcı veya şifreniz hatalıdır..")
+//                                .hideAfter(Duration.seconds(3))
+//                                .position(Pos.CENTER_LEFT)
+//                                .showError();
+                        showError("sdfasdfsad");
+                    }
                 }
             }
         }
