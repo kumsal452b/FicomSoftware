@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -85,6 +86,10 @@ public class PrimaryController {
     ArrayList<Boolean> isAuthList=new ArrayList<>();
     @FXML
     void login(ActionEvent event) throws SQLException {
+        prepareLogin(event);
+    }
+
+    private void prepareLogin(ActionEvent event) {
         PropertiesCache cache=PropertiesCache.isIsBreakDb();
         if (!cache.isBreak){
            if (!login_username.getText().equals("") && !login_password.getText().equals("")){
@@ -280,7 +285,6 @@ public class PrimaryController {
                 }
             }
         });
-
         login_username.getValidators().add(validator);
         login_password.getValidators().add(validator);
 
@@ -299,6 +303,11 @@ public class PrimaryController {
                 if (s.length() > 0) {
                     login_password.resetValidation();
                 }
+            }
+        });
+        login_password.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode()== KeyCode.ENTER){
+                login_screen_button.fire();
             }
         });
 

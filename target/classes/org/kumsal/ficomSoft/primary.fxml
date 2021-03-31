@@ -18,8 +18,8 @@
    <children>
       <Pane layoutX="515.0" layoutY="-3.0" prefHeight="500.0" prefWidth="500.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXPasswordField fx:id="login_password" focusColor="#1c1e25" labelFloat="true" layoutX="182.0" layoutY="271.0" prefHeight="25.0" prefWidth="183.0" promptText="Password" unFocusColor="#4d3636" />
             <JFXTextField fx:id="login_username" labelFloat="true" layoutX="182.0" layoutY="204.0" prefHeight="25.0" prefWidth="183.0" promptText="Username" viewOrder="1.0" />
+            <JFXPasswordField fx:id="login_password" focusColor="#1c1e25" labelFloat="true" layoutX="182.0" layoutY="271.0" prefHeight="25.0" prefWidth="183.0" promptText="Password" unFocusColor="#4d3636" />
             <JFXButton fx:id="login_screen_button" contentDisplay="RIGHT" layoutX="265.0" layoutY="359.0" onAction="#login" prefHeight="30.0" prefWidth="100.0" styleClass="button12" text="Login" textFill="#322323">
                <graphic>
                   <FontAwesomeIconView glyphName="ARROW_RIGHT" size="17" wrappingWidth="17.14285659790039" />
