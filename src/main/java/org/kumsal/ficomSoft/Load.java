@@ -196,17 +196,37 @@ public class Load {
         ekle.setOnMouseClicked(mouseEvent -> {
 //            theModels.clear();
 //            dowload();
-            JFXTextField sayi = new JFXTextField();
-            sayi.setPrefHeight(25);
-            load_model themodel = new load_model(String.valueOf(table.getItems().size()),
-                    sayi,
-                    new JFXTextField(),
-                    new JFXTextField(),
-                    new JFXDatePicker(),
-                    new JFXDatePicker(),
-                    new JFXDatePicker());
-            table.getItems().add(themodel);
-            models.add(themodel);
+            int consept=table.getItems().size();
+            int sira=0;
+            if (consept==0){
+                sira=0;
+                JFXTextField sayi = new JFXTextField();
+                sayi.setPrefHeight(25);
+                load_model themodel = new load_model(String.valueOf(sira),
+                        sayi,
+                        new JFXTextField(),
+                        new JFXTextField(),
+                        new JFXDatePicker(),
+                        new JFXDatePicker(),
+                        new JFXDatePicker());
+                table.getItems().add(themodel);
+                models.add(themodel);
+            }else{
+                 load_model model=table.getItems().get(consept-1);
+                 sira=Integer.valueOf(model.getCount());
+                sira=+1;
+                JFXTextField sayi = new JFXTextField();
+                sayi.setPrefHeight(25);
+                load_model themodel = new load_model(String.valueOf(sira),
+                        sayi,
+                        new JFXTextField(),
+                        new JFXTextField(),
+                        new JFXDatePicker(),
+                        new JFXDatePicker(),
+                        new JFXDatePicker());
+                table.getItems().add(themodel);
+                models.add(themodel);
+            }
         });
         table.getItems().addAll(models);
         String pattern = "yyyy-MM-dd";
@@ -342,6 +362,11 @@ public class Load {
             int indis = table.getSelectionModel().getSelectedIndex();
             models.remove(indis);
             table.getItems().remove(indis);
+            for(int i=indis; i<table.getItems().size(); i++){
+                load_model model=table.getItems().get(i);
+                model.setCount(String.valueOf(Integer.valueOf(model.getCount())-1));
+                table.getItems().set(i,model);
+            }
         });
         contextMenu2.getItems().add(item2);
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
