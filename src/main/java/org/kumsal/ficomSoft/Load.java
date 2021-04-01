@@ -199,7 +199,7 @@ public class Load {
             int consept=table.getItems().size();
             int sira=0;
             if (consept==0){
-                sira=0;
+                sira=1;
                 JFXTextField sayi = new JFXTextField();
                 sayi.setPrefHeight(25);
                 load_model themodel = new load_model(String.valueOf(sira),
@@ -214,7 +214,7 @@ public class Load {
             }else{
                  load_model model=table.getItems().get(consept-1);
                  sira=Integer.valueOf(model.getCount());
-                sira=+1;
+                sira+=1;
                 JFXTextField sayi = new JFXTextField();
                 sayi.setPrefHeight(25);
                 load_model themodel = new load_model(String.valueOf(sira),
