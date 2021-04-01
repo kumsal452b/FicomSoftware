@@ -6,6 +6,8 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,10 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +30,7 @@ import javafx.scene.transform.Transform;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
@@ -131,6 +131,13 @@ public class LoadedFile {
 
 
     @FXML
+    private TreeTableView<String> table1;
+
+    @FXML
+    private TreeTableColumn<String,String> destisno1;
+
+
+    @FXML
     private JFXCheckBox isWannaAll;
     MysqlDataSource dataSource = ConnectorMysql.connect();
     ObservableList<LoadedFileModel> theFileModel;
@@ -151,6 +158,14 @@ public class LoadedFile {
     ArrayList<Date> imhaDates=new ArrayList<>();
     int index=0;
 
+    TreeItem<String> birim1=new TreeItem<>("Birim");
+    TreeItem<String> destisno11=new TreeItem<>("Destis No");
+    TreeItem<String> imaheTarhihi1=new TreeItem<>("Imha Tarihi");
+    TreeItem<String> yukleme=new TreeItem<>("Yukleme Tarihi");
+    TreeItem<String> spdkod1=new TreeItem<>("SPD Kodu");
+    TreeItem<String> ozel=new TreeItem<>("Özel Kod");
+    TreeItem<String> ozelkarsilik1=new TreeItem<>("Özel Kod karşılığı");
+    TreeItem<String> root=new TreeItem<>("Veri Kümesi");
 
     Duration duration = Duration.millis(2500);
     //Create new scale transition
@@ -675,6 +690,59 @@ public class LoadedFile {
         table.setItems(sortedData);
     }
 
+    private void treeLoad() throws SQLException {
+        destisno1.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<String, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<String, String> stringStringCellDataFeatures) {
+                return new SimpleStringProperty(stringStringCellDataFeatures.getValue().getValue());
+            }
+        });
+        PreparedStatement fileList=dbSources.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+        fileList.setString(1,PrimaryController.type);
+        fileList.setInt(2,PrimaryController.ID);
+        ResultSet resultSet=fileList.executeQuery();
+        while (resultSet.next()){
+            LoadedFileModel loadedFile= null;
+            try {
+                loadedFile = new LoadedFileModel(
+                        null,
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        null,
+                        null);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            TreeItem<String> birimChild=new TreeItem<>(loadedFile.getBirimad());
+            birim1.getChildren().add(birimChild);
+            TreeItem<String> destisnoChild=new TreeItem<>(loadedFile.getDestisno());
+            destisno1.getChildren().add(destisnoChild);
+            TreeItem<String> imhaChild=new TreeItem<>(loadedFile.getKtarihi());
+            imaheTarhihi.getChildren().add(imhaChild);
+            TreeItem<String> yuklemeChild=new TreeItem<>(loadedFile.getYuktarihi());
+            yukleme.getChildren().add(yuklemeChild);
+            TreeItem<String> spdChild=new TreeItem<>(loadedFile.getSpdkod());
+            spdkod1.getChildren().add(spdChild);
+
+            TreeItem<String> ozelChild=new TreeItem<>(loadedFile.getOzelkod());
+            ozel.getChildren().add(ozelChild);
+
+            TreeItem<String> ozelKarChild=new TreeItem<>(loadedFile.getOzelkarsilik());
+            ozelkarsilik.getChildren().add(ozelKarChild);
+
+        }
+        root.getChildren().addAll(birim,destisno1,imaheTarhihi,yukleme,spdkod,ozel,ozelkarsilik);
+        table.setRoot(root);
+        root.setExpanded(true);
+    }
     private void deleteElement(javafx.event.ActionEvent event) {
         int currentIndex=silButtons.indexOf(event.getSource());
         JFXButton evet=new JFXButton("Evet");
