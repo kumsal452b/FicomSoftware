@@ -38,13 +38,13 @@ public class TreeTable {
 
     ObservableList<LoadedFileModel> theFileModel;
     MysqlDataSource dbSources= ConnectorMysql.connect();
-    TreeItem<String> birim=new TreeItem<>("Birim");
-    TreeItem<String> destisno1=new TreeItem<>("Destis No");
-    TreeItem<String> imaheTarhihi=new TreeItem<>("Imha Tarihi");
-    TreeItem<String> yukleme=new TreeItem<>("Yukleme Tarihi");
-    TreeItem<String> spdkod=new TreeItem<>("SPD Kodu");
+    TreeItem<String> birimForTree=new TreeItem<>("Birim");
+    TreeItem<String> destisnoForTree=new TreeItem<>("Destis No");
+    TreeItem<String> imhaForTree=new TreeItem<>("Imha Tarihi");
+    TreeItem<String> yuklemeForTree=new TreeItem<>("Yukleme Tarihi");
+    TreeItem<String> spdForTree=new TreeItem<>("SPD Kodu");
     TreeItem<String> ozel=new TreeItem<>("Özel Kod");
-    TreeItem<String> ozelkarsilik=new TreeItem<>("Özel Kod karşılığı");
+    TreeItem<String> ozelkarsilikForTree=new TreeItem<>("Özel Kod karşılığı");
     TreeItem<String> root=new TreeItem<>("Veri Kümesi");
     @FXML
     void initialize() throws SQLException {
@@ -56,7 +56,7 @@ public class TreeTable {
                 return new SimpleStringProperty(stringStringCellDataFeatures.getValue().getValue());
             }
         });
-        PreparedStatement fileList=dbSources.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+        PreparedStatement fileList=dbSources.getConnection().prepareStatement("SELECT de.destisno,a.birimForTree,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilikForTree,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
         fileList.setString(1,PrimaryController.type);
         fileList.setInt(2,PrimaryController.ID);
         ResultSet resultSet=fileList.executeQuery();
@@ -75,25 +75,25 @@ public class TreeTable {
                         resultSet.getString(10),
                         null,
                         null);
-            TreeItem<String> birimChild=new TreeItem<>(loadedFile.getBirimad());
-            birim.getChildren().add(birimChild);
+            TreeItem<String> birimForTreeChild=new TreeItem<>(loadedFile.getBirimad());
+            birimForTree.getChildren().add(birimForTreeChild);
             TreeItem<String> destisnoChild=new TreeItem<>(loadedFile.getDestisno());
-            destisno1.getChildren().add(destisnoChild);
+            destisnoForTree.getChildren().add(destisnoChild);
             TreeItem<String> imhaChild=new TreeItem<>(loadedFile.getKtarihi());
-            imaheTarhihi.getChildren().add(imhaChild);
-            TreeItem<String> yuklemeChild=new TreeItem<>(loadedFile.getYuktarihi());
-            yukleme.getChildren().add(yuklemeChild);
+            imhaForTree.getChildren().add(imhaChild);
+            TreeItem<String> yuklemeForTreeChild=new TreeItem<>(loadedFile.getYuktarihi());
+            yuklemeForTree.getChildren().add(yuklemeForTreeChild);
             TreeItem<String> spdChild=new TreeItem<>(loadedFile.getSpdkod());
-            spdkod.getChildren().add(spdChild);
+            spdForTree.getChildren().add(spdChild);
 
             TreeItem<String> ozelChild=new TreeItem<>(loadedFile.getOzelkod());
             ozel.getChildren().add(ozelChild);
 
             TreeItem<String> ozelKarChild=new TreeItem<>(loadedFile.getOzelkarsilik());
-            ozelkarsilik.getChildren().add(ozelKarChild);
+            ozelkarsilikForTree.getChildren().add(ozelKarChild);
 
         }
-        root.getChildren().addAll(birim,destisno1,imaheTarhihi,yukleme,spdkod,ozel,ozelkarsilik);
+        root.getChildren().addAll(birimForTree,destisnoForTree,imhaForTree,yuklemeForTree,spdForTree,ozel,ozelkarsilikForTree);
         table.setRoot(root);
         root.setExpanded(true);
     }
