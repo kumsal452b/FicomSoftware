@@ -67,11 +67,11 @@
                   </StackPane>
                </children>
             </VBox>
-            <VBox fx:id="vboxtree" prefHeight="566.0" prefWidth="106.0" styleClass="buttonHomeFragment" stylesheets="@style.css">
+            <VBox fx:id="vboxtree" prefHeight="600.0" prefWidth="122.0" styleClass="buttonHomeFragment" stylesheets="@style.css">
                <children>
-                  <TreeTableView fx:id="table1" prefHeight="499.0" prefWidth="101.0" styleClass="table-view">
+                  <TreeTableView fx:id="table1" prefHeight="499.0" prefWidth="111.0">
                     <columns>
-                      <TreeTableColumn fx:id="destisno1" prefWidth="116.0" styleClass="table-row-cell" text="Veri Ağacı" />
+                      <TreeTableColumn fx:id="destisno1" prefWidth="116.0" text="Veri Ağacı" />
                     </columns>
                      <VBox.margin>
                         <Insets top="100.0" />

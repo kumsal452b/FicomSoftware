@@ -9,6 +9,7 @@ import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -738,6 +739,12 @@ public class LoadedFile {
         root.getChildren().addAll(birimForTree,destisnoForTree,imhaForTree,yuklemeForTree,spdForTree,ozel,ozelkarsilikForTree);
         table1.setRoot(root);
         root.setExpanded(true);
+        root.getChildren().addListener(new ListChangeListener<TreeItem<String>>() {
+            @Override
+            public void onChanged(Change<? extends TreeItem<String>> change) {
+
+            }
+        });
     }
     private void deleteElement(javafx.event.ActionEvent event) {
         int currentIndex=silButtons.indexOf(event.getSource());

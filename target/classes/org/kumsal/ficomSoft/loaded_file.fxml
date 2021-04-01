@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -68,19 +67,17 @@
                   </StackPane>
                </children>
             </VBox>
-            <VBox fx:id="vboxtree" prefHeight="571.0" prefWidth="115.0" stylesheets="@style.css">
+            <VBox fx:id="vboxtree" prefHeight="566.0" prefWidth="106.0" styleClass="buttonHomeFragment" stylesheets="@style.css">
                <children>
-                  <TreeTableView fx:id="table1" prefHeight="500.0" prefWidth="105.0">
+                  <TreeTableView fx:id="table1" prefHeight="499.0" prefWidth="101.0" styleClass="table-view">
                     <columns>
-                      <TreeTableColumn fx:id="destisno1" prefWidth="116.0" text="Veri Ağacı" />
+                      <TreeTableColumn fx:id="destisno1" prefWidth="116.0" styleClass="table-row-cell" text="Veri Ağacı" />
                     </columns>
+                     <VBox.margin>
+                        <Insets top="100.0" />
+                     </VBox.margin>
                   </TreeTableView>
                </children>
-               <styleClass>
-                  <String fx:value="table-view" />
-                  <String fx:value="table-cell" />
-                  <String fx:value="table-row-cell" />
-               </styleClass>
             </VBox>
             <VBox fx:id="slidder" prefHeight="600.0" prefWidth="111.0">
                <children>
