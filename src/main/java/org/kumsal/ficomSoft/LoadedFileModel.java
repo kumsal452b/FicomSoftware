@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 
+import java.util.ArrayList;
+
 public class LoadedFileModel {
 
     private String sira;
@@ -44,6 +46,8 @@ public class LoadedFileModel {
 
     private JFXButton desgistir;
 
+    private JFXButton goster;
+
     private String prossTime;
 
     public LoadedFileModel(String prossTime) {
@@ -64,6 +68,18 @@ public class LoadedFileModel {
         this.yuktarihi = yuktarihi;
         this.sil = sil;
         this.desgistir = desgistir;
+    }
+
+    public LoadedFileModel(JFXButton goster) {
+        this.goster = goster;
+    }
+
+    public JFXButton getGoster() {
+        return goster;
+    }
+
+    public void setGoster(JFXButton goster) {
+        this.goster = goster;
     }
 
     public String getSira() {

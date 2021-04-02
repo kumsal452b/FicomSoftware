@@ -50,6 +50,9 @@ public class LoadedFile {
     public StackPane stakcpane;
 
     @FXML
+    public JFXButton iptal;
+
+    @FXML
     private TableView<LoadedFileModel> table;
 
     @FXML
@@ -89,7 +92,7 @@ public class LoadedFile {
     private TableColumn<LoadedFileModel, JFXButton> sil;
 
     @FXML
-    private TableColumn<LoadedFileModel, JFXButton> desgistir;
+    private TableColumn<LoadedFileModel, ArrayList<JFXButton>> desgistir;
 
     @FXML
     private JFXTextField ara;
@@ -133,55 +136,51 @@ public class LoadedFile {
     @FXML
     private JFXButton dvt;
 
-
     @FXML
     private TreeTableView<String> table1;
 
     @FXML
-    private TreeTableColumn<String,String> destisno1;
-
+    private TreeTableColumn<String, String> destisno1;
 
     @FXML
     private JFXCheckBox isWannaAll;
     MysqlDataSource dataSource = ConnectorMysql.connect();
     ObservableList<LoadedFileModel> theFileModel;
-    MysqlDataSource dbSources= ConnectorMysql.connect();
+    MysqlDataSource dbSources = ConnectorMysql.connect();
 
+    ArrayList<Integer> destisNo = new ArrayList<>();
+    ArrayList<Integer> fileID = new ArrayList<>();
+    ArrayList<Integer> typeIDsID = new ArrayList<>();
+    ArrayList<JFXButton> silButtons = new ArrayList<>();
+    ArrayList<JFXButton> degistirButtons = new ArrayList<>();
+    ArrayList<Date> imhaDates = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
-    private void editFocusedCell() {
-        final TablePosition< LoadedFileModel, String > focusedCell = table
-                .focusModelProperty().get().focusedCellProperty().get();
-        table.edit(focusedCell.getRow(), focusedCell.getTableColumn());
-    }
-    ArrayList<Integer> destisNo=new ArrayList<>();
-    ArrayList<Integer> fileID=new ArrayList<>();
-    ArrayList<Integer> typeIDsID=new ArrayList<>();
-    ArrayList<JFXButton> silButtons=new ArrayList<>();
-    ArrayList<JFXButton> degistirButtons=new ArrayList<>();
-    ArrayList<Date> imhaDates=new ArrayList<>();
-    int index=0;
+    int index = 0;
 
-    TreeItem<String> birimForTree=new TreeItem<>("Birim");
-    TreeItem<String> destisnoForTree=new TreeItem<>("Destis No");
-    TreeItem<String> imhaForTree=new TreeItem<>("Imha Tarihi");
-    TreeItem<String> yuklemeForTree=new TreeItem<>("Yukleme Tarihi");
-    TreeItem<String> spdForTree=new TreeItem<>("SPD Kodu");
-    TreeItem<String> ozel=new TreeItem<>("Özel Kod");
-    TreeItem<String> ozelkarsilikForTree=new TreeItem<>("Özel Kod karşılığı");
-    TreeItem<String> root=new TreeItem<>("Veri Kümesi");
+    TreeItem<String> birimForTree = new TreeItem<>("Birim");
+    TreeItem<String> destisnoForTree = new TreeItem<>("Destis No");
+    TreeItem<String> imhaForTree = new TreeItem<>("Imha Tarihi");
+    TreeItem<String> yuklemeForTree = new TreeItem<>("Yukleme Tarihi");
+    TreeItem<String> spdForTree = new TreeItem<>("SPD Kodu");
+    TreeItem<String> ozel = new TreeItem<>("Özel Kod");
+    TreeItem<String> ozelkarsilikForTree = new TreeItem<>("Özel Kod karşılığı");
+    TreeItem<String> root = new TreeItem<>("Veri Kümesi");
 
     Duration duration = Duration.millis(2500);
     //Create new scale transition
     ScaleTransition scaleTransition = new ScaleTransition(duration, slidder);
+
     @FXML
     void initialize() throws SQLException {
-        if (PrimaryController.type.equals("User")){
+        if (PrimaryController.type.equals("User")) {
             isWannaAll.setDisable(true);
         }
         treeLoad();
+        iptal.setOnAction(actionEvent -> {
+            slidder.setVisible(false);
+        });
         slidder.setVisible(false);
-        theFileModel= FXCollections.observableArrayList();
+        theFileModel = FXCollections.observableArrayList();
         sira.setCellValueFactory(new PropertyValueFactory<>("sira"));
         destisno.setCellValueFactory(new PropertyValueFactory<>("destisno"));
         spdkod.setCellValueFactory(new PropertyValueFactory<>("spdkod"));
@@ -228,62 +227,39 @@ public class LoadedFile {
             destisNo.add(resultSet1.getInt("DID"));
         }
 
-        table.setEditable(true);
-        table.getSelectionModel().cellSelectionEnabledProperty().set(true);
-        table.setEditable(true);
-        // allows the individual cells to be selected
-        table.getSelectionModel().cellSelectionEnabledProperty().set(true);
-        // when character or numbers pressed it will start edit in editable
-        // fields
-        table.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey()) {
-                editFocusedCell();
-            } else if (keyEvent.getCode() == KeyCode.RIGHT ||
-                    keyEvent.getCode() == KeyCode.TAB) {
-                table.getSelectionModel().selectNext();
-                keyEvent.consume();
-            } else if (keyEvent.getCode() == KeyCode.LEFT) {
-                // work around due to
-                // TableView.getSelectionModel().selectPrevious() due to a bug
-                // stopping it from working on
-                // the first column in the last row of the table
-//            selectPrevious();
-//            event.consume();
-            }
-
-        });
+//
         guncelle.setOnAction(event -> {
             update();
         });
-        isWannaAll.selectedProperty().addListener((observableValue, aBoolean, t1) -> {
 
-        });
         isWannaAll.setOnAction(test -> {
             theFileModel.clear();
             degistirButtons.clear();
             silButtons.clear();
-            if (isWannaAll.isSelected()){
-                PreparedStatement fileList= null;
+            if (isWannaAll.isSelected()) {
+                PreparedStatement fileList = null;
                 try {
                     fileList = dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID");
-                    ResultSet resultSet=fileList.executeQuery();
+                    ResultSet resultSet = fileList.executeQuery();
                     LoadedFileModel loadedFile;
-                    int sira=1;
+                    int sira = 1;
                     JFXButton sil;
                     JFXButton degistir;
-                    while (true){
+                    JFXButton goster;
+                    while (true) {
                         try {
                             if (!resultSet.next()) break;
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        if (PrimaryController.type.equals("Admin")){
-                            sil=new JFXButton("Sil");
+                        if (PrimaryController.type.equals("Admin")) {
+                            sil = new JFXButton("Sil");
                             sil.getStyleClass().add("deleteButton");
                             sil.setOnAction(event -> {
                                 deleteElement(event);
                             });
-                            degistir=new JFXButton("Degistr");
+
+                            degistir = new JFXButton("Degistr");
                             degistir.getStyleClass().add("changeButton");
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
@@ -291,7 +267,9 @@ public class LoadedFile {
                             });
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
-                            loadedFile=new LoadedFileModel(
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("deleteButton");
+                            loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
@@ -306,13 +284,14 @@ public class LoadedFile {
                                     sil,
                                     degistir
                             );
-                        }else if (PrimaryController.isAuth){
-                            sil=new JFXButton("Sil");
+                        }
+                        else if (PrimaryController.isAuth) {
+                            sil = new JFXButton("Sil");
                             sil.getStyleClass().add("deleteButton");
                             sil.setOnAction(event -> {
                                 deleteElement(event);
                             });
-                            degistir=new JFXButton("Degistr");
+                            degistir = new JFXButton("Degistr");
                             degistir.getStyleClass().add("changeButton");
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
@@ -320,7 +299,9 @@ public class LoadedFile {
 
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
-                            loadedFile=new LoadedFileModel(
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("deleteButton");
+                            loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
@@ -337,13 +318,15 @@ public class LoadedFile {
                             );
                         }
                         else {
-                            degistir=new JFXButton("Degistr");
+                            degistir = new JFXButton("Degistr");
                             degistir.getStyleClass().add("changeButton");
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
                             });
                             degistirButtons.add(degistir);
-                            loadedFile=new LoadedFileModel(
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("deleteButton");
+                            loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
@@ -358,7 +341,7 @@ public class LoadedFile {
                                     null,
                                     degistir);
                         }
-
+                        loadedFile.setGoster(goster);
                         imhaDates.add(resultSet.getDate(11));
                         fileID.add(resultSet.getInt(12));
                         typeIDsID.add(resultSet.getInt(13));
@@ -369,32 +352,35 @@ public class LoadedFile {
                     throwables.printStackTrace();
                 }
 
-            }else{
+            } else {
                 try {
-                    PreparedStatement fileList=dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
-                    fileList.setString(1,PrimaryController.type);
-                    fileList.setInt(2,PrimaryController.ID);
-                    ResultSet resultSet=fileList.executeQuery();
+                    PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+                    fileList.setString(1, PrimaryController.type);
+                    fileList.setInt(2, PrimaryController.ID);
+                    ResultSet resultSet = fileList.executeQuery();
                     LoadedFileModel loadedFile;
-                    int sira=1;
+                    int sira = 1;
                     JFXButton sil;
                     JFXButton degistir;
-                    while (resultSet.next()){
-                        if (PrimaryController.type.equals("Admin")){
-                            sil=new JFXButton("Sil");
+                    JFXButton goster;
+                    while (resultSet.next()) {
+                        if (PrimaryController.type.equals("Admin")) {
+                            sil = new JFXButton("Sil");
                             sil.getStyleClass().add("deleteButton");
                             sil.setOnAction(event -> {
                                 deleteElement(event);
                             });
-                            degistir=new JFXButton("Degistr");
+                            degistir = new JFXButton("Degistr");
                             degistir.getStyleClass().add("changeButton");
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
 
                             });
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("deleteButton");
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
-                            loadedFile=new LoadedFileModel(
+                            loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
@@ -409,21 +395,23 @@ public class LoadedFile {
                                     sil,
                                     degistir
                             );
-                        }else if (PrimaryController.isAuth){
-                            sil=new JFXButton("Sil");
+                        } else if (PrimaryController.isAuth) {
+                            sil = new JFXButton("Sil");
                             sil.getStyleClass().add("deleteButton");
                             sil.setOnAction(event -> {
                                 deleteElement(event);
                             });
-                            degistir=new JFXButton("Degistr");
+                            degistir = new JFXButton("Degistr");
                             degistir.getStyleClass().add("changeButton");
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
                             });
 
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("deleteButton");
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
-                            loadedFile=new LoadedFileModel(
+                            loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
@@ -438,15 +426,16 @@ public class LoadedFile {
                                     sil,
                                     degistir
                             );
-                        }
-                        else {
-                            degistir=new JFXButton("Degistr");
+                        } else {
+                            degistir = new JFXButton("Degistr");
                             degistir.getStyleClass().add("changeButton");
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
                             });
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("deleteButton");
                             degistirButtons.add(degistir);
-                            loadedFile=new LoadedFileModel(
+                            loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
@@ -461,7 +450,7 @@ public class LoadedFile {
                                     null,
                                     degistir);
                         }
-
+                        loadedFile.setGoster(goster);
                         imhaDates.add(resultSet.getDate(11));
                         fileID.add(resultSet.getInt(12));
                         typeIDsID.add(resultSet.getInt(13));
@@ -475,215 +464,132 @@ public class LoadedFile {
 
             }
         });
-        if (isWannaAll.isSelected()){
-            PreparedStatement fileList=dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID");
-            ResultSet resultSet=fileList.executeQuery();
-            LoadedFileModel loadedFile;
-            int sira=1;
-            JFXButton sil;
-            JFXButton degistir;
-            while (resultSet.next()){
-                if (PrimaryController.type.equals("Admin")){
-                    sil=new JFXButton("Sil");
-                    sil.getStyleClass().add("deleteButton");
-                    sil.setOnAction(event -> {
-                        deleteElement(event);
-                    });
-                    degistir=new JFXButton("Degistr");
-                    degistir.getStyleClass().add("changeButton");
-                    degistir.setOnAction(event -> {
-                        changeStatement(event);
 
-                    });
-                    silButtons.add(sil);
-                    degistirButtons.add(degistir);
-                    loadedFile=new LoadedFileModel(
-                            String.valueOf(sira),
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            sil,
-                            degistir
-                    );
-                }else if (PrimaryController.isAuth){
-                    sil=new JFXButton("Sil");
-                    sil.getStyleClass().add("deleteButton");
-                    sil.setOnAction(event -> {
-                        deleteElement(event);
-                    });
-                    degistir=new JFXButton("Degistr");
-                    degistir.getStyleClass().add("changeButton");
-                    degistir.setOnAction(event -> {
-                        changeStatement(event);
-                    });
+        PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+        fileList.setString(1, PrimaryController.type);
+        fileList.setInt(2, PrimaryController.ID);
+        ResultSet resultSet = fileList.executeQuery();
+        LoadedFileModel loadedFile;
+        int sira = 1;
+        JFXButton sil;
+        JFXButton degistir;
+        JFXButton goster;
+        ArrayList<JFXButton> buttonsList = new ArrayList<>();
+        while (resultSet.next()) {
+            if (PrimaryController.type.equals("Admin")) {
+                sil = new JFXButton("Sil");
+                goster = new JFXButton("Göster");
+                sil.getStyleClass().add("deleteButton");
+                sil.setOnAction(event -> {
+                    deleteElement(event);
+                });
+                degistir = new JFXButton("Degistr");
+                degistir.getStyleClass().add("changeButton");
+                degistir.setOnAction(event -> {
+                    changeStatement(event);
 
-                    silButtons.add(sil);
-                    degistirButtons.add(degistir);
-                    loadedFile=new LoadedFileModel(
-                            String.valueOf(sira),
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            sil,
-                            degistir
-                    );
-                }
-                else {
-                    degistir=new JFXButton("Degistr");
-                    degistir.getStyleClass().add("changeButton");
-                    degistir.setOnAction(event -> {
-                        changeStatement(event);
-                    });
-                    degistirButtons.add(degistir);
-                    loadedFile=new LoadedFileModel(
-                            String.valueOf(sira),
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            null,
-                            degistir);
-                }
+                });
+                silButtons.add(sil);
+                degistirButtons.add(degistir);
+                buttonsList.add(degistir);
+                buttonsList.add(goster);
+                goster=new JFXButton("Göster");
+                goster.getStyleClass().add("changeButton");
+                loadedFile = new LoadedFileModel(
+                        String.valueOf(sira),
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        sil,
+                        degistir
+                );
+            } else if (PrimaryController.isAuth) {
+                sil = new JFXButton("Sil");
+                goster=new JFXButton("Göster");
+                sil.getStyleClass().add("deleteButton");
+                sil.setOnAction(event -> {
+                    deleteElement(event);
+                });
+                degistir = new JFXButton("Degistr");
+                degistir.getStyleClass().add("changeButton");
+                degistir.setOnAction(event -> {
+                    changeStatement(event);
+                });
 
-                imhaDates.add(resultSet.getDate(11));
-                fileID.add(resultSet.getInt(12));
-                typeIDsID.add(resultSet.getInt(13));
-                theFileModel.add(loadedFile);
-                sira++;
+                silButtons.add(sil);
+                degistirButtons.add(degistir);
+                buttonsList.add(degistir);
+                buttonsList.add(goster);
+                goster=new JFXButton("Göster");
+                goster.getStyleClass().add("changeButton");
+                loadedFile = new LoadedFileModel(
+                        String.valueOf(sira),
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        sil,
+                        degistir
+                );
+            } else {
+                degistir = new JFXButton("Degistr");
+                degistir.getStyleClass().add("changeButton");
+                degistir.setOnAction(event -> {
+                    changeStatement(event);
+                });
+                degistirButtons.add(degistir);
+                goster=new JFXButton("Göster");
+                goster.getStyleClass().add("changeButton");
+                loadedFile = new LoadedFileModel(
+                        String.valueOf(sira),
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        null,
+                        degistir);
             }
 
-        }else{
-            PreparedStatement fileList=dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
-            fileList.setString(1,PrimaryController.type);
-            fileList.setInt(2,PrimaryController.ID);
-            ResultSet resultSet=fileList.executeQuery();
-            LoadedFileModel loadedFile;
-            int sira=1;
-            JFXButton sil;
-            JFXButton degistir;
-            while (resultSet.next()){
-                if (PrimaryController.type.equals("Admin")){
-                    sil=new JFXButton("Sil");
-                    sil.getStyleClass().add("deleteButton");
-                    sil.setOnAction(event -> {
-                        deleteElement(event);
-                    });
-                    degistir=new JFXButton("Degistr");
-                    degistir.getStyleClass().add("changeButton");
-                    degistir.setOnAction(event -> {
-                        changeStatement(event);
-
-                    });
-                    silButtons.add(sil);
-                    degistirButtons.add(degistir);
-                    loadedFile=new LoadedFileModel(
-                            String.valueOf(sira),
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            sil,
-                            degistir
-                    );
-                }else if (PrimaryController.isAuth){
-                    sil=new JFXButton("Sil");
-                    sil.getStyleClass().add("deleteButton");
-                    sil.setOnAction(event -> {
-                        deleteElement(event);
-                    });
-                    degistir=new JFXButton("Degistr");
-                    degistir.getStyleClass().add("changeButton");
-                    degistir.setOnAction(event -> {
-                        changeStatement(event);
-                    });
-
-                    silButtons.add(sil);
-                    degistirButtons.add(degistir);
-                    loadedFile=new LoadedFileModel(
-                            String.valueOf(sira),
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            sil,
-                            degistir
-                    );
-                }
-                else {
-                    degistir=new JFXButton("Degistr");
-                    degistir.getStyleClass().add("changeButton");
-                    degistir.setOnAction(event -> {
-                        changeStatement(event);
-                    });
-                    degistirButtons.add(degistir);
-                    loadedFile=new LoadedFileModel(
-                            String.valueOf(sira),
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8),
-                            resultSet.getString(9),
-                            resultSet.getString(10),
-                            null,
-                            degistir);
-                }
-
-                imhaDates.add(resultSet.getDate(11));
-                fileID.add(resultSet.getInt(12));
-                typeIDsID.add(resultSet.getInt(13));
-                theFileModel.add(loadedFile);
-                sira++;
-            }
+            loadedFile.setGoster(goster);
+            imhaDates.add(resultSet.getDate(11));
+            fileID.add(resultSet.getInt(12));
+            typeIDsID.add(resultSet.getInt(13));
+            theFileModel.add(loadedFile);
+            sira++;
         }
-        FilteredList<LoadedFileModel> filteredList=new FilteredList<>(theFileModel,b -> true);
+
+
+        FilteredList<LoadedFileModel> filteredList = new FilteredList<>(theFileModel, b -> true);
         ara.textProperty().addListener((observableValue, s, t1) -> {
-            filteredList.setPredicate(loadedFileModel->{
-                if (t1==null || t1.isEmpty()){
+            filteredList.setPredicate(loadedFileModel -> {
+                if (t1 == null || t1.isEmpty()) {
                     return true;
                 }
                 String lowerCaseFilter = t1.toLowerCase();
-                if (loadedFileModel.getAciklama().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+                if (loadedFileModel.getAciklama().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true; // Filter matches first name.
                 } else if (loadedFileModel.getBirimad().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true; // Filter matches last name.
-                }
-                else if (String.valueOf(loadedFileModel.getYuktarihi()).indexOf(lowerCaseFilter)!=-1)
+                } else if (String.valueOf(loadedFileModel.getYuktarihi()).indexOf(lowerCaseFilter) != -1)
                     return true;
                 else
                     return false; // Does not match.
@@ -702,12 +608,12 @@ public class LoadedFile {
                 return new SimpleStringProperty(stringStringCellDataFeatures.getValue().getValue());
             }
         });
-        PreparedStatement fileList=dbSources.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
-        fileList.setString(1,PrimaryController.type);
-        fileList.setInt(2,PrimaryController.ID);
-        ResultSet resultSet=fileList.executeQuery();
-        while (resultSet.next()){
-            LoadedFileModel loadedFile=new LoadedFileModel(
+        PreparedStatement fileList = dbSources.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
+        fileList.setString(1, PrimaryController.type);
+        fileList.setInt(2, PrimaryController.ID);
+        ResultSet resultSet = fileList.executeQuery();
+        while (resultSet.next()) {
+            LoadedFileModel loadedFile = new LoadedFileModel(
                     null,
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -721,63 +627,88 @@ public class LoadedFile {
                     resultSet.getString(10),
                     null,
                     null);
-            TreeItem<String> birimForTreeChild=new TreeItem<>(loadedFile.getBirimad());
+            TreeItem<String> birimForTreeChild = new TreeItem<>(loadedFile.getBirimad());
             birimForTree.getChildren().add(birimForTreeChild);
-            TreeItem<String> destisnoChild=new TreeItem<>(loadedFile.getDestisno());
+            TreeItem<String> destisnoChild = new TreeItem<>(loadedFile.getDestisno());
             destisnoForTree.getChildren().add(destisnoChild);
-            TreeItem<String> imhaChild=new TreeItem<>(loadedFile.getKtarihi());
+            TreeItem<String> imhaChild = new TreeItem<>(loadedFile.getKtarihi());
             imhaForTree.getChildren().add(imhaChild);
-            TreeItem<String> yuklemeForTreeChild=new TreeItem<>(loadedFile.getYuktarihi());
+            TreeItem<String> yuklemeForTreeChild = new TreeItem<>(loadedFile.getYuktarihi());
             yuklemeForTree.getChildren().add(yuklemeForTreeChild);
-            TreeItem<String> spdChild=new TreeItem<>(loadedFile.getSpdkod());
+            TreeItem<String> spdChild = new TreeItem<>(loadedFile.getSpdkod());
             spdForTree.getChildren().add(spdChild);
 
-            TreeItem<String> ozelChild=new TreeItem<>(loadedFile.getOzelkod());
+            TreeItem<String> ozelChild = new TreeItem<>(loadedFile.getOzelkod());
             ozel.getChildren().add(ozelChild);
 
-            TreeItem<String> ozelKarChild=new TreeItem<>(loadedFile.getOzelkarsilik());
+            TreeItem<String> ozelKarChild = new TreeItem<>(loadedFile.getOzelkarsilik());
             ozelkarsilikForTree.getChildren().add(ozelKarChild);
 
         }
-        root.getChildren().addAll(birimForTree,destisnoForTree,imhaForTree,yuklemeForTree,spdForTree,ozel,ozelkarsilikForTree);
+        root.getChildren().addAll(birimForTree, destisnoForTree, imhaForTree, yuklemeForTree, spdForTree, ozel, ozelkarsilikForTree);
         table1.setRoot(root);
         root.setExpanded(true);
-        root.getChildren().addListener(new ListChangeListener<TreeItem<String>>() {
-            @Override
-            public void onChanged(Change<? extends TreeItem<String>> change) {
-
-            }
-        });
         table1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
             @Override
             public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
-               if (t1.getParent().equals("Özel Kod karşılığı")){
-                   int index=t1.getParent().getChildren().indexOf(t1.getValue());
-                   System.out.println(index);
-               }
-                if (t1.getParent().equals("Özel Kod")){
-
+                if (t1.getParent().getValue().equals("Özel Kod karşılığı")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
                 }
-                if (t1.getParent().equals("SPD Kodu")){
-
+                if (t1.getParent().getValue().equals("Özel Kod")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
                 }
-                if (t1.getParent().equals("Yukleme Tarihi")){
-
+                if (t1.getParent().getValue().equals("SPD Kodu")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
                 }
-                if (t1.getParent().equals("Imha Tarihi")){
-
+                if (t1.getParent().getValue().equals("Yukleme Tarihi")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
                 }
-                if (t1.getParent().equals("Birim")){
-
+                if (t1.getParent().getValue().equals("Imha Tarihi")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
+                }
+                if (t1.getParent().getValue().equals("Birim")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
+                }
+                if (t1.getParent().getValue().equals("Destis No")) {
+                    int index = t1.getParent().getChildren().indexOf(t1);
+                    table.getSelectionModel().select(index);
+                    table.requestFocus();
+                    table.getSelectionModel().select(index);
+                    table.getFocusModel().focus(index);
                 }
             }
         });
     }
+
     private void deleteElement(javafx.event.ActionEvent event) {
-        int currentIndex=silButtons.indexOf(event.getSource());
-        JFXButton evet=new JFXButton("Evet");
-        JFXDialog dialog=new JFXDialog(stakcpane,new Label("temel"), JFXDialog.DialogTransition.CENTER);
-        JFXDialogLayout layout=new JFXDialogLayout();
+        int currentIndex = silButtons.indexOf(event.getSource());
+        JFXButton evet = new JFXButton("Evet");
+        JFXDialog dialog = new JFXDialog(stakcpane, new Label("temel"), JFXDialog.DialogTransition.CENTER);
+        JFXDialogLayout layout = new JFXDialogLayout();
         layout.setHeading(new Text("Dikkat"));
         layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
         evet.setOnAction(event1 -> {
@@ -785,10 +716,10 @@ public class LoadedFile {
             silButtons.remove(currentIndex);
             degistirButtons.remove(currentIndex);
             try {
-                PreparedStatement preparedStatement=dbSources.getConnection().prepareStatement(
+                PreparedStatement preparedStatement = dbSources.getConnection().prepareStatement(
                         "DELETE FROM `load_flle` WHERE `load_flle`.`LFID` = ?"
                 );
-                preparedStatement.setInt(1,fileID.get(index));
+                preparedStatement.setInt(1, fileID.get(index));
                 preparedStatement.execute();
                 fileID.remove(index);
                 Notifications.create()
@@ -805,20 +736,20 @@ public class LoadedFile {
 
             dialog.close();
         });
-        JFXButton iptal=new JFXButton("Iptal");
+        JFXButton iptal = new JFXButton("Iptal");
         iptal.setOnAction(event1 -> {
             dialog.close();
             slidder.setVisible(false);
 
         });
-        layout.setActions(evet,iptal);
+        layout.setActions(evet, iptal);
         dialog.setContent(layout);
         dialog.show();
     }
 
     private void changeStatement(javafx.event.ActionEvent event) {
-        index=degistirButtons.indexOf(event.getSource());
-        LoadedFileModel model=table.getItems().get(index);
+        index = degistirButtons.indexOf(event.getSource());
+        LoadedFileModel model = table.getItems().get(index);
         upload_destıs_no.getSelectionModel().select(upload_destıs_no.getItems().indexOf(model.getDestisno()));
         upload_birim.setText(model.getBirimad());
         upload_spdno.setText(model.getSpdkod());
@@ -828,7 +759,7 @@ public class LoadedFile {
         upload_ozelkod.setText(model.getOzelkod());
         upload_ozelkodkarssiligi.setText(model.getOzelkarsilik());
         upload_spdkarsilik.setText(model.getSpdkarsilik());
-        Date date= Date.valueOf(model.getYuktarihi());
+        Date date = Date.valueOf(model.getYuktarihi());
         upload_tarih.setValue(date.toLocalDate());
         slidder.setVisible(true);
         scaleTransition.play();
@@ -836,7 +767,7 @@ public class LoadedFile {
 
     private void update() {
         try {
-            PreparedStatement updateFıle=dbSources.getConnection().prepareStatement("UPDATE `load_flle` SET " +
+            PreparedStatement updateFıle = dbSources.getConnection().prepareStatement("UPDATE `load_flle` SET " +
                     "`DID` =?,`OTID`=?, `birim` =?, `spd_kod` =?, `spdkarsilik` =?, `ozel_kod` =?, " +
                     "`ozelkarsilik` =?, `klsorno` =?, `aciklama` =?, `tarih` =?, " +
                     "`imhatarihi` =?, `prossTime` =? WHERE `load_flle`.`LFID` = ?");
@@ -858,7 +789,7 @@ public class LoadedFile {
                     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String datetime = sdf.format(dt);
             updateFıle.setString(12, datetime);
-            updateFıle.setInt(13,fileID.get(index));
+            updateFıle.setInt(13, fileID.get(index));
             updateFıle.execute();
             slidder.setVisible(false);
             Notifications.create()
