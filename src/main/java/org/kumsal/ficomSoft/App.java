@@ -35,9 +35,7 @@ public class App extends Application {
 
 
     public static void main(String[] args) throws ParseException, IOException {
-//        launch();
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(new File("src/main/resources/org/kumsal/ficomSoft/files/Stage 1 - W.W. Jackobs - The Monkeys Paw.pdf"));
-    }
+        launch();
+           }
 
 }

@@ -196,12 +196,13 @@ public class LoadedFile {
                 if(!Desktop.isDesktopSupported()){
                     Notifications.create()
                             .title("Hata")
-                            .text("Dosya Açılamadı. Lütfen 'Dosya gezgininde aç' seçeneiğini deneyin..")
+                            .text("Dosya Açılamadı. Lütfen 'Dosya gezgininde aç' seçeneğini deneyin..")
                             .hideAfter(Duration.seconds(3))
                             .position(Pos.BASELINE_LEFT)
                             .showError();
                     return;
                 }
+
                 Desktop desktop = Desktop.getDesktop();
                 if(file.exists()) {
                     try {
@@ -209,11 +210,20 @@ public class LoadedFile {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else {
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Dosya bulunamadı..")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
                 }
             }
         });
         MenuItem tarayici=new CheckMenuItem("Dosya gezgininde aç");
         ContextMenu contextMenu=new ContextMenu(sil1,git,tarayici);
+        charmlist.setContextMenu(contextMenu);
 
         if (PrimaryController.type.equals("User")) {
             isWannaAll.setDisable(true);
