@@ -18,7 +18,7 @@ public class PropertiesCache
     private static PropertiesCache cache=null;
     private PropertiesCache(){
         //Private constructor to restrict new instances
-        InputStream in = this.getClass().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
+        InputStream in = this.getClass().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/config/config.properties");
         URL url=null;
         try {
             File file=new File("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
