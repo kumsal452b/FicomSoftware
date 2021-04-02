@@ -158,6 +158,8 @@ public class LoadedFile {
     ArrayList<Integer> typeIDsID = new ArrayList<>();
     ArrayList<JFXButton> silButtons = new ArrayList<>();
     ArrayList<JFXButton> degistirButtons = new ArrayList<>();
+    ArrayList<JFXButton> goruntuButtons = new ArrayList<>();
+
     ArrayList<Date> imhaDates = new ArrayList<>();
 
     int index = 0;
@@ -230,6 +232,7 @@ public class LoadedFile {
             theFileModel.clear();
             degistirButtons.clear();
             silButtons.clear();
+            goruntuButtons.clear();
             if (isWannaAll.isSelected()) {
                 PreparedStatement fileList = null;
                 try {
@@ -259,8 +262,14 @@ public class LoadedFile {
                                 changeStatement(event);
 
                             });
+                            goster=new JFXButton("Göster");
+                            goster.getStyleClass().add("changeButton");
+                            goster.setOnAction(actionEvent -> {
+
+                            });
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
+                            goruntuButtons.add(goster);
                             goster=new JFXButton("Göster");
                             goster.getStyleClass().add("deleteButton");
                             loadedFile = new LoadedFileModel(
@@ -290,9 +299,15 @@ public class LoadedFile {
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
                             });
+                            goster = new JFXButton("Göster");
+                            goster.getStyleClass().add("changeButton");
+                            goster.setOnAction(event -> {
+
+                            });
 
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
+                            goruntuButtons.add(goster);
                             goster=new JFXButton("Göster");
                             goster.getStyleClass().add("deleteButton");
                             loadedFile = new LoadedFileModel(
@@ -317,7 +332,13 @@ public class LoadedFile {
                             degistir.setOnAction(event -> {
                                 changeStatement(event);
                             });
+                            goster = new JFXButton("Göster");
+                            goster.getStyleClass().add("changeButton");
+                            goster.setOnAction(event -> {
+
+                            });
                             degistirButtons.add(degistir);
+                            goruntuButtons.add(goster);
                             goster=new JFXButton("Göster");
                             goster.getStyleClass().add("deleteButton");
                             loadedFile = new LoadedFileModel(
@@ -371,9 +392,13 @@ public class LoadedFile {
 
                             });
                             goster=new JFXButton("Göster");
-                            goster.getStyleClass().add("deleteButton");
+                            goster.getStyleClass().add("changeButton");
+                            goster.setOnAction(actionEvent -> {
+
+                            });
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
+                            goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
@@ -402,9 +427,13 @@ public class LoadedFile {
                             });
 
                             goster=new JFXButton("Göster");
-                            goster.getStyleClass().add("deleteButton");
+                            goster.getStyleClass().add("changeButton");
+                            goster.setOnAction(event -> {
+
+                            });
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
+                            goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
@@ -427,8 +456,12 @@ public class LoadedFile {
                                 changeStatement(event);
                             });
                             goster=new JFXButton("Göster");
-                            goster.getStyleClass().add("deleteButton");
+                            goster.getStyleClass().add("changeButton");
+                            goster.setOnAction(event -> {
+
+                            });
                             degistirButtons.add(degistir);
+                            goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
@@ -473,6 +506,10 @@ public class LoadedFile {
             if (PrimaryController.type.equals("Admin")) {
                 sil = new JFXButton("Sil");
                 goster = new JFXButton("Göster");
+                goster.getStyleClass().add("changeButton");
+                goster.setOnAction(event -> {
+
+                });
                 sil.getStyleClass().add("deleteButton");
                 sil.setOnAction(event -> {
                     deleteElement(event);
@@ -485,6 +522,7 @@ public class LoadedFile {
                 });
                 silButtons.add(sil);
                 degistirButtons.add(degistir);
+                goruntuButtons.add(goster);
                 buttonsList.add(degistir);
                 buttonsList.add(goster);
                 goster=new JFXButton("Göster");
@@ -507,6 +545,10 @@ public class LoadedFile {
             } else if (PrimaryController.isAuth) {
                 sil = new JFXButton("Sil");
                 goster=new JFXButton("Göster");
+                goster.getStyleClass().add("changeButton");
+                goster.setOnAction(event -> {
+
+                });
                 sil.getStyleClass().add("deleteButton");
                 sil.setOnAction(event -> {
                     deleteElement(event);
@@ -519,6 +561,8 @@ public class LoadedFile {
 
                 silButtons.add(sil);
                 degistirButtons.add(degistir);
+                goruntuButtons.add(goster);
+                
                 buttonsList.add(degistir);
                 buttonsList.add(goster);
                 goster=new JFXButton("Göster");
