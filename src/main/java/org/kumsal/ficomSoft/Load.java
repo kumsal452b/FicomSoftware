@@ -168,6 +168,11 @@ public class Load {
     List<File> destFile = new ArrayList<>();
     List<File> sourceFile = new ArrayList<>();
     MysqlDataSource dbSource = ConnectorMysql.connect();
+    private String clearSomeCharacter(String data){
+        String text=data;
+        text=text.replace("'","");
+        return text;
+    }
 
     @FXML
     void initialize() throws SQLException {
@@ -291,7 +296,7 @@ public class Load {
                             int index = 0;
                             for (File file : sourceFile) {
                                 Files.copy(file.toPath(), destFile.get(index).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                                filename = destFile.get(index).getName();
+                                filename = clearSomeCharacter(destFile.get(index).getName());
                                 partOfsql = "(NULL, '" + filename + "', '" + proccessId + "')";
                                 fileSql += partOfsql;
                                 if (index != sourceFile.size() - 1) {

@@ -802,9 +802,5 @@ public class LoadedFile {
             throwables.printStackTrace();
         }
     }
-    private String clearSomeCharacter(String data){
-        String text=data;
-        text=text.replace("'","");
-        return text;
-    }
+
 }
