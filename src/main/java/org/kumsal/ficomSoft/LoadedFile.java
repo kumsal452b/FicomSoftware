@@ -27,6 +27,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -149,6 +150,10 @@ public class LoadedFile {
 
     @FXML
     private JFXCheckBox isWannaAll;
+
+    @FXML
+    private HBox vboxFile;
+
     MysqlDataSource dataSource = ConnectorMysql.connect();
     ObservableList<LoadedFileModel> theFileModel;
     MysqlDataSource dbSources = ConnectorMysql.connect();
@@ -179,6 +184,7 @@ public class LoadedFile {
 
     @FXML
     void initialize() throws SQLException {
+        
 
 
         if (PrimaryController.type.equals("User")) {
@@ -211,7 +217,7 @@ public class LoadedFile {
 
 
         dvt.setOnAction(event -> {
-            charmlist.setPrefHeight(100);
+            vboxFile.setPrefHeight(0);
         });
         Statement forDestis = dbSources.getConnection().createStatement();
         forDestis.execute("select * from destis");
@@ -830,7 +836,8 @@ public class LoadedFile {
     }
 
     private void previewStatement(ActionEvent event) throws SQLException {
-        charmlist.setPrefHeight(150);
+        charmlist.getItems().clear();
+        vboxFile.setPrefHeight(150);
         index = goruntuButtons.indexOf(event.getSource());
         LoadedFileModel model = table.getItems().get(index);
         PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT  fi.filepath FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID INNER JOIN file fi ON fi.LFID=a.LFID WHERE own.ownname=? AND own.login_id=? AND a.LFID=?");
