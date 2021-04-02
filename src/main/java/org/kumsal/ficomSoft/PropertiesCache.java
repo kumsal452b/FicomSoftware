@@ -21,7 +21,7 @@ public class PropertiesCache
         InputStream in = this.getClass().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/config/config.properties");
         URL url=null;
         try {
-            File file=new File("src/main/resources/org/kumsal/ficomSoft/files/config.properties");
+            File file=new File("src/main/resources/org/kumsal/ficomSoft/config/config.properties");
             if (!file.exists()){
                 isBreak=true;
             }

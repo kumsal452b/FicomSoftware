@@ -315,8 +315,6 @@ public class LoadedFile {
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("deleteButton");
                             loadedFile = new LoadedFileModel(
                                     String.valueOf(sira),
                                     resultSet.getString(1),
@@ -552,9 +550,6 @@ public class LoadedFile {
                 degistirButtons.add(degistir);
                 goruntuButtons.add(goster);
                 buttonsList.add(degistir);
-                buttonsList.add(goster);
-                goster = new JFXButton("Göster");
-                goster.getStyleClass().add("changeButton");
                 loadedFile = new LoadedFileModel(
                         String.valueOf(sira),
                         resultSet.getString(1),
@@ -597,8 +592,6 @@ public class LoadedFile {
 
                 buttonsList.add(degistir);
                 buttonsList.add(goster);
-                goster = new JFXButton("Göster");
-                goster.getStyleClass().add("changeButton");
                 loadedFile = new LoadedFileModel(
                         String.valueOf(sira),
                         resultSet.getString(1),
@@ -840,7 +833,7 @@ public class LoadedFile {
         charmlist.setPrefHeight(150);
         index = goruntuButtons.indexOf(event.getSource());
         LoadedFileModel model = table.getItems().get(index);
-        PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT  fi.filepath FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=? AND a.LFID=?");
+        PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT  fi.filepath FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID INNER JOIN file fi ON fi.LFID=a.LFID WHERE own.ownname=? AND own.login_id=? AND a.LFID=?");
         fileList.setString(1, PrimaryController.type);
         fileList.setInt(2, PrimaryController.ID);
         fileList.setInt(3, fileID.get(index));
