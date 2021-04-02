@@ -52,6 +52,9 @@ public class LoadedFile {
     @FXML
     public JFXButton iptal;
 
+    public JFXListView charmlist;
+
+
     @FXML
     private TableView<LoadedFileModel> table;
 
@@ -88,11 +91,13 @@ public class LoadedFile {
     @FXML
     private TableColumn<LoadedFileModel, String> yuktarihi;
 
+    public TableColumn<LoadedFileModel, JFXButton> goster;
+
     @FXML
     private TableColumn<LoadedFileModel, JFXButton> sil;
 
     @FXML
-    private TableColumn<LoadedFileModel, ArrayList<JFXButton>> desgistir;
+    private TableColumn<LoadedFileModel, JFXButton> desgistir;
 
     @FXML
     private JFXTextField ara;
@@ -172,6 +177,8 @@ public class LoadedFile {
 
     @FXML
     void initialize() throws SQLException {
+
+
         if (PrimaryController.type.equals("User")) {
             isWannaAll.setDisable(true);
         }
@@ -194,6 +201,7 @@ public class LoadedFile {
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
         sil.setCellValueFactory(new PropertyValueFactory<>("sil"));
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
+        goster.setCellValueFactory(new PropertyValueFactory<>("goster"));
 
         scaleTransition.setByX(1.5);
         //Set how much Y should
@@ -201,21 +209,7 @@ public class LoadedFile {
 
 
         dvt.setOnAction(event -> {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("treeTable.fxml"));
-            AnchorPane root = null;
-            try {
-                root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(PrimaryController.stage);
-            stage.show();
+           charmlist.setPrefHeight(100);
         });
         Statement forDestis = dbSources.getConnection().createStatement();
         forDestis.execute("select * from destis");
@@ -807,5 +801,10 @@ public class LoadedFile {
                     .showError();
             throwables.printStackTrace();
         }
+    }
+    private String clearSomeCharacter(String data){
+        String text=data;
+        text=text.replace("'","");
+        return text;
     }
 }
