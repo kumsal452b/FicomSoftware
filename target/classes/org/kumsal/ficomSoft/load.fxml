@@ -9,21 +9,43 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="main_pane" prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.Load">
    <children>
       <Button fx:id="file" layoutX="47.0" layoutY="18.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="161.0" styleClass="buttonHomeFragment" text="Dosya seç..." textFill="WHITE" />
       <Pane layoutX="4.0" layoutY="110.0" prefHeight="13.0" prefWidth="788.0" styleClass="tabPain" />
       <JFXComboBox fx:id="upload_destıs_no" layoutX="39.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Destis No Seçiniz" />
-      <JFXTextField fx:id="upload_birim" layoutX="201.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Birim giriniz." />
-      <JFXTextField fx:id="upload_spdno" layoutX="367.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Kodu giriniz." />
-      <JFXTextField fx:id="upload_spdkarsilik" layoutX="540.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Karşılığı giriniz." />
-      <JFXTextField fx:id="upload_ozelkod" layoutX="39.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kodu giriniz." />
-      <JFXTextField fx:id="upload_ozelkodkarssiligi" layoutX="201.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kod karşılığı" />
-      <JFXTextField fx:id="upload_klasorno" layoutX="367.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Klasör No giriniz." />
+      <JFXTextField fx:id="upload_birim" layoutX="201.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Birim giriniz.">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="upload_spdno" layoutX="367.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Kodu giriniz.">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="upload_spdkarsilik" layoutX="540.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Karşılığı giriniz.">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="upload_ozelkod" layoutX="39.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kodu giriniz.">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="upload_ozelkodkarssiligi" layoutX="201.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kod karşılığı">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
+      <JFXTextField fx:id="upload_klasorno" layoutX="367.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Klasör No giriniz.">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
       <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz." />
       <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz." />
-      <JFXTextField fx:id="upload_aciklama" layoutX="540.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz." />
+      <JFXTextField fx:id="upload_aciklama" layoutX="540.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz.">
+         <font>
+            <Font size="14.0" />
+         </font></JFXTextField>
 
        <Button fx:id="upload_arsivekaydet" layoutX="367.0" layoutY="240.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Arşive Kaydet" textFill="#030303" />
       <Button fx:id="upload_yazdır" layoutX="491.0" layoutY="240.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="109.0" styleClass="buttonHomeFragment" text="Yazdır" textFill="#140c0c" />

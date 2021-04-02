@@ -34,7 +34,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <JFXButton fx:id="yazdir" layoutX="835.0" layoutY="103.0" prefHeight="28.0" prefWidth="88.0" text="Yazdr">
+      <JFXButton fx:id="yazdir" layoutX="835.0" layoutY="103.0" prefHeight="28.0" prefWidth="88.0" styleClass="changeButton" text="Yazdr">
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>

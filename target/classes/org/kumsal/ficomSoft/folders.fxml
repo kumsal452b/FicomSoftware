@@ -21,13 +21,22 @@
                     <VBox.margin>
                         <Insets top="90.0" />
                     </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
                 </JFXTextField>
             <HBox prefHeight="500.0" prefWidth="200.0">
                <children>
                   <Pane fx:id="adminPanel" prefHeight="485.0" prefWidth="920.0">
                      <children>
-                        <JFXTextField fx:id="destisno_giriniz" labelFloat="true" layoutX="108.0" layoutY="121.0" prefHeight="25.0" prefWidth="211.0" promptText="Destis no giriniz." />
-                        <JFXButton fx:id="ekle" layoutX="108.0" layoutY="179.0" prefHeight="25.0" prefWidth="211.0" styleClass="buttonHomeFragment" stylesheets="@style.css" text="Ekle" textFill="WHITE" />
+                        <JFXTextField fx:id="destisno_giriniz" labelFloat="true" layoutX="108.0" layoutY="121.0" prefHeight="25.0" prefWidth="211.0" promptText="Destis no giriniz.">
+                           <font>
+                              <Font size="14.0" />
+                           </font></JFXTextField>
+                        <JFXButton fx:id="ekle" layoutX="108.0" layoutY="179.0" prefHeight="25.0" prefWidth="211.0" styleClass="buttonHomeFragment" stylesheets="@style.css" text="Ekle" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font></JFXButton>
                         <Label layoutX="14.0" layoutY="14.0" text="Klasör Ekleyin" textFill="WHITE">
                            <font>
                               <Font size="16.0" />

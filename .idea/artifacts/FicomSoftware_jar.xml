@@ -59,6 +59,10 @@
       <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:16" />
       <element id="library" level="project" name="Maven: org.openjfx:javafx-swing:16" />
       <element id="library" level="project" name="Maven: org.openjfx:javafx-swing:win:16" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:12" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:12" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:12" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:12" />
     </root>
   </artifact>
 </component>

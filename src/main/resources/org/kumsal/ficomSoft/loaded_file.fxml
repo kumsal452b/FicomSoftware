@@ -29,6 +29,9 @@
                            <HBox.margin>
                               <Insets top="30.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                         </JFXTextField>
                         <JFXCheckBox fx:id="isWannaAll" checkedColor="#5a5e5c" prefHeight="18.0" prefWidth="315.0" styleClass="textBackground" text="Girilen tüm verieri görmek istiyorum. (Sadece yöneticiler)" textFill="WHITE" unCheckedColor="WHITE" wrapText="true">
                            <font>
@@ -40,7 +43,7 @@
                         </JFXCheckBox>
                      </children>
                   </HBox>
-                  <HBox fx:id="vboxFile" prefHeight="150.0" prefWidth="762.0">
+                  <HBox fx:id="vboxFile" minHeight="0.0" prefHeight="0.0" prefWidth="762.0">
                      <children>
                         <JFXButton fx:id="dvt" minHeight="0.0" minWidth="0.0" prefHeight="98.0" prefWidth="68.0" styleClass="deleteButton" text="X">
                            <font>
@@ -50,7 +53,7 @@
                         <JFXListView fx:id="charmlist" prefHeight="98.0" prefWidth="695.0" />
                      </children>
                   </HBox>
-                  <StackPane fx:id="stakcpane" prefHeight="500.0" prefWidth="808.0">
+                  <StackPane fx:id="stakcpane" prefHeight="484.0" prefWidth="762.0">
                      <children>
                         <TableView fx:id="table" prefHeight="481.0" prefWidth="762.0">
                            <columns>
@@ -95,27 +98,45 @@
                    <JFXTextField fx:id="upload_birim" labelFloat="true" layoutX="201.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Birim giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXTextField>
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                    <JFXTextField fx:id="upload_spdno" labelFloat="true" layoutX="367.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Kodu giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXTextField>
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                    <JFXTextField fx:id="upload_spdkarsilik" labelFloat="true" layoutX="540.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="SPD Karşılığı giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXTextField>
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                    <JFXTextField fx:id="upload_ozelkod" labelFloat="true" layoutX="39.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kodu giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXTextField>
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                    <JFXTextField fx:id="upload_ozelkodkarssiligi" labelFloat="true" layoutX="201.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Özel kod karşılığı">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXTextField>
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                    <JFXTextField fx:id="upload_klasorno" layoutX="367.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Klasör No giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXTextField>
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                    <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
@@ -127,7 +148,10 @@
                    <JFXTextField fx:id="upload_aciklama" labelFloat="true" layoutX="540.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz.">
                      <padding>
                         <Insets top="20.0" />
-                     </padding></JFXTextField>
+                     </padding>
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXTextField>
                   <JFXButton fx:id="guncelle" prefHeight="34.0" prefWidth="101.0" styleClass="changeButton" text="Güncelle">
                      <VBox.margin>
                         <Insets top="20.0" />

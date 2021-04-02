@@ -169,6 +169,7 @@ public class LoadedFile {
     ArrayList<JFXButton> degistirButtons = new ArrayList<>();
     ArrayList<JFXButton> goruntuButtons = new ArrayList<>();
     ArrayList<Integer> fileIDs = new ArrayList<>();
+    ArrayList<Integer> loadedFileIDs = new ArrayList<>();
     ArrayList<Date> imhaDates = new ArrayList<>();
 
     int index = 0;
@@ -188,8 +189,38 @@ public class LoadedFile {
 
     @FXML
     void initialize() throws SQLException {
-        MenuItem sil1=new CheckMenuItem("Sil");
-        MenuItem git=new CheckMenuItem("Aç");
+        MenuItem sil1=new MenuItem("Sil");
+        sil1.setOnAction(actionEvent -> {
+            if (charmlist.getSelectionModel().getSelectedIndex()!=-1){
+                try {
+                    PreparedStatement preparedStatement=dbSources.getConnection().prepareStatement(
+                            "DELETE FROM `file` WHERE `file`.`FID` = ?"
+                    );
+                    preparedStatement.setInt(1,loadedFileIDs.get(charmlist.getSelectionModel().getSelectedIndex()));
+                    preparedStatement.execute();
+                    loadedFileIDs.remove(charmlist.getSelectionModel().getSelectedIndex());
+                    charmlist.getItems().remove(charmlist.getSelectionModel().getSelectedIndex());
+
+                    Notifications.create()
+                            .title("Uyarı")
+                            .text("Dosya silindi")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showConfirm();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Bilinmeyen hata meydana geldi.. \n"+throwables.getMessage())
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                }
+
+            }
+        });
+        MenuItem git=new MenuItem("Aç");
         git.setOnAction(actionEvent -> {
             if (charmlist.getSelectionModel().getSelectedIndex()!=-1){
                 File file = new File("src/main/resources/org/kumsal/ficomSoft/files/"+charmlist.getItems().get(charmlist.getSelectionModel().getSelectedIndex()));
@@ -221,7 +252,21 @@ public class LoadedFile {
                 }
             }
         });
-        MenuItem tarayici=new CheckMenuItem("Dosya gezgininde aç");
+        MenuItem tarayici=new MenuItem("Dosya gezgininde aç");
+        tarayici.setOnAction(actionEvent -> {
+//            try {
+//                Runtime.getRuntime().exec("explorer.exe /select," + "src/main/resources/org/kumsal/ficomSoft/files");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            File file = new File ("src/main/resources/org/kumsal/ficomSoft/files");
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         ContextMenu contextMenu=new ContextMenu(sil1,git,tarayici);
         charmlist.setContextMenu(contextMenu);
 
@@ -878,7 +923,7 @@ public class LoadedFile {
         vboxFile.setPrefHeight(150);
         index = goruntuButtons.indexOf(event.getSource());
         LoadedFileModel model = table.getItems().get(index);
-        PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT  fi.filepath FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID INNER JOIN file fi ON fi.LFID=a.LFID WHERE own.ownname=? AND own.login_id=? AND a.LFID=?");
+        PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT  fi.filepath,fi.FID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID INNER JOIN file fi ON fi.LFID=a.LFID WHERE own.ownname=? AND own.login_id=? AND a.LFID=?");
         fileList.setString(1, PrimaryController.type);
         fileList.setInt(2, PrimaryController.ID);
         fileList.setInt(3, fileID.get(index));
@@ -886,6 +931,7 @@ public class LoadedFile {
         ResultSet resultSet = fileList.executeQuery();
         while (resultSet.next()) {
             charmlist.getItems().add(resultSet.getString(1));
+            loadedFileIDs.add(resultSet.getInt(2));
         }
     }
 

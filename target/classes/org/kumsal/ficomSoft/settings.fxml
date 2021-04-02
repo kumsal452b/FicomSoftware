@@ -41,25 +41,37 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXTextField fx:id="usernamegir" />
+                              <JFXTextField fx:id="usernamegir">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXTextField>
                               <Label text="Ad" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXTextField fx:id="ad" />
+                              <JFXTextField fx:id="ad">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXTextField>
                               <Label text="Soyad" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXTextField fx:id="soyad" />
+                              <JFXTextField fx:id="soyad">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXTextField>
                               <Label text="Password" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXTextField fx:id="password" />
+                              <JFXTextField fx:id="password">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXTextField>
                               <CheckBox fx:id="isAuth" mnemonicParsing="false" text="Silme yetkisi" textFill="#f8ecec">
                                  <VBox.margin>
                                     <Insets top="10.0" />
@@ -85,6 +97,9 @@
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                               </JFXButton>
                            </children>
                            <padding>
@@ -189,10 +204,22 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXPasswordField fx:id="eskisıfre" focusColor="#e0e1e4" labelFloat="true" promptText="Eski şifre" unFocusColor="#b59c9c" />
-                              <JFXPasswordField fx:id="yenisifre" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifre" unFocusColor="#d39f9f" />
-                              <JFXPasswordField fx:id="yenisifretekrar" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifreyi tekrarla" unFocusColor="#d39f9f" />
-                              <JFXButton fx:id="sifredegistir" prefHeight="33.0" prefWidth="142.0" styleClass="buttonHomeFragment" text="Değiştir" textFill="WHITE" />
+                              <JFXPasswordField fx:id="eskisıfre" focusColor="#e0e1e4" labelFloat="true" promptText="Eski şifre" unFocusColor="#b59c9c">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXPasswordField>
+                              <JFXPasswordField fx:id="yenisifre" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifre" unFocusColor="#d39f9f">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXPasswordField>
+                              <JFXPasswordField fx:id="yenisifretekrar" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni şifreyi tekrarla" unFocusColor="#d39f9f">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXPasswordField>
+                              <JFXButton fx:id="sifredegistir" prefHeight="33.0" prefWidth="142.0" styleClass="buttonHomeFragment" text="Değiştir" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXButton>
                            </children>
                            <padding>
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
@@ -205,8 +232,14 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <JFXTextField fx:id="yeniKullaniciAdi" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni Ad Giriniz" unFocusColor="#d39f9f" />
-                              <JFXButton fx:id="kullaniciAdiDegistir" prefHeight="33.0" prefWidth="142.0" styleClass="buttonHomeFragment" text="Değiştir" textFill="WHITE" />
+                              <JFXTextField fx:id="yeniKullaniciAdi" focusColor="#d5d8e1" labelFloat="true" promptText="Yeni Ad Giriniz" unFocusColor="#d39f9f">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXTextField>
+                              <JFXButton fx:id="kullaniciAdiDegistir" prefHeight="33.0" prefWidth="142.0" styleClass="buttonHomeFragment" text="Değiştir" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></JFXButton>
                            </children>
                            <padding>
                               <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
