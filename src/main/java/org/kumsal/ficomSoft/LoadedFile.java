@@ -837,6 +837,7 @@ public class LoadedFile {
     }
 
     private void previewStatement(ActionEvent event) throws SQLException {
+        charmlist.setPrefHeight(150);
         index = goruntuButtons.indexOf(event.getSource());
         LoadedFileModel model = table.getItems().get(index);
         PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT  fi.filepath FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=? AND a.LFID=?");
