@@ -7,6 +7,7 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -15,6 +16,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
@@ -37,6 +39,7 @@ import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -743,6 +746,30 @@ public class LoadedFile {
             @Override
             public void onChanged(Change<? extends TreeItem<String>> change) {
 
+            }
+        });
+        table1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> t1) {
+               if (t1.getParent().equals("Özel Kod karşılığı")){
+                   int index=t1.getParent().getChildren().indexOf(t1.getValue());
+                   System.out.println(index);
+               }
+                if (t1.getParent().equals("Özel Kod")){
+
+                }
+                if (t1.getParent().equals("SPD Kodu")){
+
+                }
+                if (t1.getParent().equals("Yukleme Tarihi")){
+
+                }
+                if (t1.getParent().equals("Imha Tarihi")){
+
+                }
+                if (t1.getParent().equals("Birim")){
+
+                }
             }
         });
     }
