@@ -389,12 +389,12 @@ public class Load {
         listview.setExpanded(true);
         file.setOnMouseClicked(mouseEvent -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("PDF", "*.pdf")
-            );
+//            fileChooser.getExtensionFilters().addAll(
+//                    new FileChooser.ExtensionFilter
+//            );
             files = fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
             for (File file : files) {
-                tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + file.getName());
+                tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + clearSomeCharacter(file.getName()));
                 destFile.add(tempFile);
                 listview.getItems().add(file.getName());
 
@@ -574,55 +574,5 @@ public class Load {
         }
     }
 
-    public void printImage(Node node) {
-
-        Printer printer = Printer.getDefaultPrinter();
-        PageLayout pageLayout = printer.getDefaultPageLayout();
-        System.out.println("PageLayout: " + pageLayout);
-
-        // Printable area
-        double pWidth = pageLayout.getPrintableWidth();
-        double pHeight = pageLayout.getPrintableHeight();
-        System.out.println("Printable area is " + pWidth + " width and "
-                + pHeight + " height.");
-
-        // Node's (Image) dimensions
-        double nWidth = node.getBoundsInParent().getWidth();
-        double nHeight = node.getBoundsInParent().getHeight();
-        System.out.println("Node's dimensions are " + nWidth + " width and "
-                + nHeight + " height");
-
-        // How much space is left? Or is the image to big?
-        double widthLeft = pWidth - nWidth;
-        double heightLeft = pHeight - nHeight;
-        System.out.println("Width left: " + widthLeft
-                + " height left: " + heightLeft);
-
-        // scale the image to fit the page in width, height or both
-        double scale = 0;
-
-        if (widthLeft < heightLeft) {
-            scale = pWidth / nWidth;
-        } else {
-            scale = pHeight / nHeight;
-        }
-
-        // preserve ratio (both values are the same)
-        node.getTransforms().add(new Scale(scale, scale));
-
-        // after scale you can check the size fit in the printable area
-        double newWidth = node.getBoundsInParent().getWidth();
-        double newHeight = node.getBoundsInParent().getHeight();
-        System.out.println("New Node's dimensions: " + newWidth
-                + " width " + newHeight + " height");
-
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job != null) {
-            boolean success = job.printPage(node);
-            if (success) {
-                job.endJob();
-            }
-        }
-    }
 }
 

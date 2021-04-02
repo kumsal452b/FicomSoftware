@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,8 +34,10 @@ public class App extends Application {
     }
 
 
-    public static void main(String[] args) throws ParseException {
-        launch();
+    public static void main(String[] args) throws ParseException, IOException {
+//        launch();
+        Desktop desktop = Desktop.getDesktop();
+        desktop.open(new File("src/main/resources/org/kumsal/ficomSoft/files/Stage 1 - W.W. Jackobs - The Monkeys Paw.pdf"));
     }
 
 }

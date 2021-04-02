@@ -24,6 +24,8 @@ import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -40,7 +42,9 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -184,8 +188,32 @@ public class LoadedFile {
 
     @FXML
     void initialize() throws SQLException {
-        
-
+        MenuItem sil1=new CheckMenuItem("Sil");
+        MenuItem git=new CheckMenuItem("Aç");
+        git.setOnAction(actionEvent -> {
+            if (charmlist.getSelectionModel().getSelectedIndex()!=-1){
+                File file = new File("src/main/resources/org/kumsal/ficomSoft/files/"+charmlist.getItems().get(charmlist.getSelectionModel().getSelectedIndex()));
+                if(!Desktop.isDesktopSupported()){
+                    Notifications.create()
+                            .title("Hata")
+                            .text("Dosya Açılamadı. Lütfen 'Dosya gezgininde aç' seçeneiğini deneyin..")
+                            .hideAfter(Duration.seconds(3))
+                            .position(Pos.BASELINE_LEFT)
+                            .showError();
+                    return;
+                }
+                Desktop desktop = Desktop.getDesktop();
+                if(file.exists()) {
+                    try {
+                        desktop.open(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        MenuItem tarayici=new CheckMenuItem("Dosya gezgininde aç");
+        ContextMenu contextMenu=new ContextMenu(sil1,git,tarayici);
 
         if (PrimaryController.type.equals("User")) {
             isWannaAll.setDisable(true);
