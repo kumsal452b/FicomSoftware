@@ -31,7 +31,7 @@ public class sirtlikHorizontalAdapter extends RecyclerView.Adapter<sirtlikHorizo
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        fxmlLoader.setLocation(url);
+        fxmlLoader.setLocation(getClass().getResource("sirtlikHorizontalSingle.fxml"));
         return new testHolder(fxmlLoader);
     }
 

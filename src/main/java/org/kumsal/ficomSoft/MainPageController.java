@@ -24,6 +24,7 @@ import org.controlsfx.control.Notifications;
 import org.kairos.core.Activity;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -73,7 +74,7 @@ public class MainPageController extends Activity {
     private StackPane stakpane;
 
     @FXML
-    void main_page_currentFiles(ActionEvent event) throws IOException {
+    void main_page_currentFiles(ActionEvent event) {
         main_page_home.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().add("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
@@ -81,8 +82,11 @@ public class MainPageController extends Activity {
         main_page_load.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
         settings.getStyleClass().remove("currentButton");
-        close("Loaded_file.fxml");
-        currentFragment = "Loaded_file.fxml";
+        try{
+            close("loaded_file.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         access = true;
     }
 
@@ -117,8 +121,7 @@ public class MainPageController extends Activity {
         main_page_current.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().remove("currentButton");
         settings.getStyleClass().remove("currentButton");
-        close("Load.fxml");
-        currentFragment = "Load.fxml";
+        close("load.fxml");
         access = true;
     }
 
@@ -135,12 +138,14 @@ public class MainPageController extends Activity {
             @Override
             public void handle(ActionEvent event) {
                 if (access) {
-                    AnchorPane pane = null;
+                    Parent pane = null;
                     try {
-                        pane = FXMLLoader.load(getClass().getResource(name));
+                        FXMLLoader loader=new FXMLLoader();
+                        pane = loader.load(getClass().getResourceAsStream(name));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    mainFragment.getChildren().clear();
                     mainFragment.getChildren().add(pane);
                     transition.setNode(pane);
                     transition.setFromValue(0.0);
@@ -233,12 +238,9 @@ public class MainPageController extends Activity {
             access = true;
         });
         mainPane.widthProperty().addListener((observableValue, number, t1) -> {
-            System.out.println("t1"+mainPane.getWidth());
-            int calculate = (t1.intValue()* 224) / 1200;
-            System.out.println("calc " + calculate);
-            if (calculate != 0) {
-                mainFragment.setLayoutX(calculate);
-            }
+            mainFragment.setPrefWidth(mainFragment.getWidth()+(t1.intValue()-1200));
+            System.out.println(t1.intValue());
+            System.out.println(number.intValue());
         });
         mainPane.heightProperty().addListener((observableValue, number, t1) -> {
             int calculate = (number.intValue() * 10) / 600;
@@ -250,20 +252,20 @@ public class MainPageController extends Activity {
         mainFragment.getChildren().add(pane);
         main_page_home.getStyleClass().add("currentButton");
         main_page_home.setOnMouseClicked(mouseEvent -> {
-            main_page_load.getStyleClass().remove("currentButton");
             main_page_home.getStyleClass().add("currentButton");
+            main_page_current.getStyleClass().remove("currentButton");
             main_page_print.getStyleClass().remove("currentButton");
             main_page_destroy.getStyleClass().remove("currentButton");
-            main_page_current.getStyleClass().remove("currentButton");
+            main_page_load.getStyleClass().remove("currentButton");
             main_page_folders.getStyleClass().remove("currentButton");
-            try {
-                close("Home.fxml");
-                currentFragment = ("Home.fxml");
-                access = true;
+            settings.getStyleClass().remove("currentButton");
+            try{
+                close("home.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            access = true;
         });
+
     }
 }

@@ -97,6 +97,10 @@ public class set {
     @FXML
     private Label adminTotalLoged;
 
+
+    @FXML
+    private CheckBox notusername;
+
     MysqlDataSource dbsource = ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
     ObservableList<settingModel> adminAndList;
@@ -287,15 +291,17 @@ public class set {
                             .showError();
                     return;
                 }
-                for (settingModel themodelIn : theusersList) {
-                    if (themodelIn.getUsername().equals(usernamegir.getText())) {
-                        Notifications.create()
-                                .title("Hata")
-                                .text("Aynı Kullanıcı adı zaten mevcut.")
-                                .hideAfter(Duration.seconds(3))
-                                .position(Pos.BASELINE_LEFT)
-                                .showWarning();
-                        return;
+                if (!notusername.isSelected()){
+                    for (settingModel themodelIn : theusersList) {
+                        if (themodelIn.getUsername().equals(usernamegir.getText()) && !themodelIn.getUsername().equals(PrimaryController.username)) {
+                            Notifications.create()
+                                    .title("Hata")
+                                    .text("Aynı Kullanıcı adı zaten mevcut.")
+                                    .hideAfter(Duration.seconds(3))
+                                    .position(Pos.BASELINE_LEFT)
+                                    .showWarning();
+                            return;
+                        }
                     }
                 }
                 if (ad.getText().equals("")) {

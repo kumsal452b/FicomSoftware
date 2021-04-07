@@ -5,18 +5,19 @@ module org.kumsal.ficomSoft {
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.commons;
     requires mysql.connector.java;
-    requires kairos.all;
+
     requires ojdbc10;
     requires java.sql;
     requires java.naming;
-    requires  javafx.graphics;
+    requires javafx.graphics;
     requires javafx.swing;
     requires org.controlsfx.controls;
     requires javafx.controls;
+    requires kairos.all;
 
     opens org.kumsal.ficomSoft;
-    opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml,javafx.controls,javafx.base;
+    opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml, javafx.controls, javafx.base;
+
 
     exports org.kumsal.ficomSoft;
-
 }

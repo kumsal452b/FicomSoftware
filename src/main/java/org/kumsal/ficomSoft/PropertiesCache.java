@@ -1,13 +1,16 @@
 package org.kumsal.ficomSoft;
 
+
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLOutput;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -17,26 +20,29 @@ public class PropertiesCache
     public boolean isBreak=false;
     private static PropertiesCache cache=null;
     private PropertiesCache(){
-        //Private constructor to restrict new instances
-        InputStream in = this.getClass().getResourceAsStream("src/main/resources/org/kumsal/ficomSoft/config/config.properties");
-        URL url=null;
-        try {
-            File file=new File("src/main/resources/org/kumsal/ficomSoft/config/config.properties");
-            if (!file.exists()){
-                isBreak=true;
-            }
-            url = file.toURI().toURL();
 
-        } catch (MalformedURLException e) {
-            isBreak=true;
-            e.printStackTrace();
-        }
+        String args1 = System.getProperty("pathConf");
+//        if (args1.isEmpty()){
+//            System.out.println("dosya yolu parametresi gecilmedi");
+//            return;
+//        }
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        s+=System.getProperty("pathConf");
+        File file  = new File(s);
+        System.out.println("dosya adı="+file.getName());
+        InputStream is = null;
         try {
-            InputStream test = url.openStream();
-            configProp.load(test);
+//            is = new FileInputStream(file);
+            is=getClass().getResourceAsStream("config.properties");
+            configProp.load(is);
+        } catch (FileNotFoundException e) {
+            System.out.println("io error="+e.getMessage());
+
         } catch (IOException e) {
-            isBreak=true;
+            System.out.println("configProp=error="+e.getMessage());
         }
+
     }
     public static PropertiesCache isIsBreakDb(){
         if (cache==null){

@@ -3,10 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TreeTableColumn?>
@@ -17,11 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.LoadedFile">
+<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="1189.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.LoadedFile">
    <children>
-      <HBox prefHeight="600.0" prefWidth="974.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox prefHeight="600.0" prefWidth="1189.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="600.0" prefWidth="772.0">
+            <VBox prefHeight="600.0" prefWidth="977.0">
                <children>
                   <HBox prefHeight="100.0" prefWidth="833.0">
                      <children>
@@ -53,7 +53,7 @@
                         <JFXListView fx:id="charmlist" prefHeight="98.0" prefWidth="695.0" />
                      </children>
                   </HBox>
-                  <StackPane fx:id="stakcpane" prefHeight="484.0" prefWidth="762.0">
+                  <StackPane fx:id="stakcpane" prefHeight="484.0" prefWidth="780.0">
                      <children>
                         <TableView fx:id="table" prefHeight="481.0" prefWidth="762.0">
                            <columns>
@@ -68,16 +68,17 @@
                               <TableColumn fx:id="ktarihi" prefWidth="86.0" text="K. Tarihi" />
                               <TableColumn fx:id="aciklama" minWidth="0.0" prefWidth="78.0" text="Açıklama" />
                               <TableColumn fx:id="yuktarihi" minWidth="0.0" prefWidth="49.0" text="Yüklenme tarihi" />
-                              <TableColumn fx:id="sil" minWidth="0.0" prefWidth="70.0" text="#" />
-                              <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="52.0" text="#" />
-                              <TableColumn fx:id="goster" minWidth="5.0" prefWidth="52.0" text="#" />
+                              <TableColumn fx:id="sil" minWidth="0.0" prefWidth="44.0" text="#" />
+                              <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="56.0" text="#" />
+                              <TableColumn fx:id="goster" minWidth="5.0" prefWidth="66.0" text="#" />
+                              <TableColumn fx:id="detay" prefWidth="75.0" text="#" />
                            </columns>
                         </TableView>
                      </children>
                   </StackPane>
                </children>
             </VBox>
-            <VBox fx:id="vboxtree" prefHeight="600.0" prefWidth="122.0" styleClass="buttonHomeFragment" stylesheets="@style.css">
+            <VBox fx:id="vboxtree" prefHeight="600.0" prefWidth="150.0" styleClass="buttonHomeFragment" stylesheets="@style.css">
                <children>
                   <TreeTableView fx:id="table1" prefHeight="499.0" prefWidth="111.0">
                     <columns>
@@ -89,9 +90,9 @@
                   </TreeTableView>
                </children>
             </VBox>
-            <VBox fx:id="slidder" prefHeight="600.0" prefWidth="111.0">
+            <VBox fx:id="slidder" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="0.0">
                <children>
-                   <JFXComboBox fx:id="upload_destıs_no" labelFloat="true" layoutX="39.0" layoutY="129.0" prefHeight="25.0" prefWidth="139.0" promptText="Destis No Seçiniz">
+                   <JFXComboBox fx:id="upload_destıs_no" labelFloat="true" layoutX="39.0" layoutY="129.0" minHeight="0.0" minWidth="0.0" prefHeight="25.0" prefWidth="139.0" promptText="Destis No Seçiniz">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin></JFXComboBox>
@@ -137,14 +138,14 @@
                      <font>
                         <Font size="14.0" />
                      </font></JFXTextField>
-                   <JFXDatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz.">
+                   <DatePicker fx:id="upload_tarih" layoutX="39.0" layoutY="240.0" minWidth="0.0" prefHeight="25.0" prefWidth="139.0" promptText="Tarih giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXDatePicker>
-                   <JFXDatePicker fx:id="upload_imha" layoutX="201.0" layoutY="240.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz.">
+                     </VBox.margin></DatePicker>
+                   <DatePicker fx:id="upload_imha" layoutX="201.0" layoutY="240.0" minHeight="0.0" minWidth="0.0" prefHeight="25.0" prefWidth="139.0" promptText="İmha tarihi giriniz.">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></JFXDatePicker>
+                     </VBox.margin></DatePicker>
                    <JFXTextField fx:id="upload_aciklama" labelFloat="true" layoutX="540.0" layoutY="180.0" prefHeight="25.0" prefWidth="139.0" promptText="Açıklama giriniz.">
                      <padding>
                         <Insets top="20.0" />
@@ -152,12 +153,12 @@
                      <font>
                         <Font size="14.0" />
                      </font></JFXTextField>
-                  <JFXButton fx:id="guncelle" prefHeight="34.0" prefWidth="101.0" styleClass="changeButton" text="Güncelle">
+                  <JFXButton fx:id="guncelle" minWidth="0.0" prefHeight="34.0" prefWidth="101.0" styleClass="changeButton" text="Güncelle">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="iptal" prefHeight="34.0" prefWidth="100.0" styleClass="changeButton" text="İptal">
+                  <JFXButton fx:id="iptal" minWidth="0.0" prefHeight="34.0" prefWidth="100.0" styleClass="changeButton" text="İptal">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>

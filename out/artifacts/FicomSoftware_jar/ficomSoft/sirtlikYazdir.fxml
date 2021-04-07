@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import org.kairos.layouts.RecyclerView?>
+
+<AnchorPane prefHeight="731.0" prefWidth="766.0" styleClass="painMainScreen" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.sirtlikScreen">
+   <children>
+      <Pane fx:id="pane" layoutX="9.0" layoutY="27.0" prefHeight="680.0" prefWidth="766.0" styleClass="onlyForWhitePane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <RecyclerView fx:id="recycler" layoutX="1.0" layoutY="9.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="610.0" prefWidth="610.0" styleClass="buttonHomeFragment" />
+         </children>
+      </Pane>
+      <Button fx:id="yazdir" layoutX="8.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Yazdır" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/print.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="iptal" layoutX="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" styleClass="button13" text="İptal" textFill="WHITE" />
+   </children>
+</AnchorPane>

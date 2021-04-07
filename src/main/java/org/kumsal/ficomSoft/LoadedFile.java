@@ -46,18 +46,23 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class LoadedFile {
 
+    public static int fileIDFor;
     public StackPane stakcpane;
 
     @FXML
     public JFXButton iptal;
 
     public JFXListView<String> charmlist;
+
+
 
 
     @FXML
@@ -104,6 +109,8 @@ public class LoadedFile {
     @FXML
     private TableColumn<LoadedFileModel, JFXButton> desgistir;
 
+    public TableColumn<LoadedFileModel, JFXButton>  detay;
+
     @FXML
     private JFXTextField ara;
 
@@ -132,10 +139,10 @@ public class LoadedFile {
     private JFXTextField upload_klasorno;
 
     @FXML
-    private JFXDatePicker upload_tarih;
+    private DatePicker upload_tarih;
 
     @FXML
-    private JFXDatePicker upload_imha;
+    private DatePicker upload_imha;
 
     @FXML
     private JFXTextField upload_aciklama;
@@ -167,11 +174,11 @@ public class LoadedFile {
     ArrayList<Integer> typeIDsID = new ArrayList<>();
     ArrayList<JFXButton> silButtons = new ArrayList<>();
     ArrayList<JFXButton> degistirButtons = new ArrayList<>();
+    ArrayList<JFXButton> detayButton = new ArrayList<>();
     ArrayList<JFXButton> goruntuButtons = new ArrayList<>();
     ArrayList<Integer> fileIDs = new ArrayList<>();
     ArrayList<Integer> loadedFileIDs = new ArrayList<>();
     ArrayList<Date> imhaDates = new ArrayList<>();
-
     int index = 0;
 
     TreeItem<String> birimForTree = new TreeItem<>("Birim");
@@ -223,7 +230,10 @@ public class LoadedFile {
         MenuItem git=new MenuItem("Aç");
         git.setOnAction(actionEvent -> {
             if (charmlist.getSelectionModel().getSelectedIndex()!=-1){
-                File file = new File("src/main/resources/org/kumsal/ficomSoft/files/"+charmlist.getItems().get(charmlist.getSelectionModel().getSelectedIndex()));
+                Path currentRelativePath = Paths.get("");
+                String s = currentRelativePath.toAbsolutePath().toString();
+                s+=System.getProperty("files");
+                File file = new File(s+"\\"+charmlist.getItems().get(charmlist.getSelectionModel().getSelectedIndex()));
                 if(!Desktop.isDesktopSupported()){
                     Notifications.create()
                             .title("Hata")
@@ -259,7 +269,11 @@ public class LoadedFile {
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-            File file = new File ("src/main/resources/org/kumsal/ficomSoft/files");
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            s+=System.getProperty("files");
+
+            File file = new File (s);
             Desktop desktop = Desktop.getDesktop();
             try {
                 desktop.open(file);
@@ -276,6 +290,7 @@ public class LoadedFile {
         treeLoad();
         iptal.setOnAction(actionEvent -> {
             slidder.setVisible(false);
+            slidder.setPrefWidth(0);
         });
         slidder.setVisible(false);
         theFileModel = FXCollections.observableArrayList();
@@ -293,12 +308,10 @@ public class LoadedFile {
         sil.setCellValueFactory(new PropertyValueFactory<>("sil"));
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
         goster.setCellValueFactory(new PropertyValueFactory<>("goster"));
-
+        detay.setCellValueFactory(new PropertyValueFactory<>("detay"));
         scaleTransition.setByX(1.5);
         //Set how much Y should
         scaleTransition.setByY(1.5);
-
-
         dvt.setOnAction(event -> {
             vboxFile.setPrefHeight(0);
         });
@@ -311,12 +324,9 @@ public class LoadedFile {
             upload_destıs_no.getItems().add(resultSet1.getString("destisno"));
             destisNo.add(resultSet1.getInt("DID"));
         }
-
-//
         guncelle.setOnAction(event -> {
             update();
         });
-
         isWannaAll.setOnAction(test -> {
             theFileModel.clear();
             degistirButtons.clear();
@@ -332,6 +342,7 @@ public class LoadedFile {
                     JFXButton sil;
                     JFXButton degistir;
                     JFXButton goster;
+                    JFXButton detay;
                     while (true) {
                         try {
                             if (!resultSet.next()) break;
@@ -360,13 +371,20 @@ public class LoadedFile {
                                     throwables.printStackTrace();
                                 }
                             });
+
+                            detay = new JFXButton("Detay");
+                            detay.getStyleClass().add("changeButton");
+                            detay.setOnAction(actionEvent -> {
+                               detayProsses(actionEvent);
+                            });
+                            detayButton.add(detay);
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
                             goster = new JFXButton("Göster");
                             goster.getStyleClass().add("deleteButton");
                             loadedFile = new LoadedFileModel(
-                                    String.valueOf(sira),
+                                    String.valueOf(resultSet.getInt(13)),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
                                     resultSet.getString(3),
@@ -401,11 +419,19 @@ public class LoadedFile {
                                 }
                             });
 
+
+                            detay = new JFXButton("Detay");
+                            detay.getStyleClass().add("changeButton");
+                            detay.setOnAction(actionEvent -> {
+                                detayProsses(actionEvent);
+                            });
+                            detayButton.add(detay);
+
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
-                                    String.valueOf(sira),
+                                    String.valueOf(resultSet.getInt(13)),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
                                     resultSet.getString(3),
@@ -434,12 +460,18 @@ public class LoadedFile {
                                     throwables.printStackTrace();
                                 }
                             });
+                            detay = new JFXButton("Detay");
+                            detay.getStyleClass().add("changeButton");
+                            detay.setOnAction(actionEvent -> {
+                                detayProsses(actionEvent);
+                            });
+                            detayButton.add(detay);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
                             goster = new JFXButton("Göster");
                             goster.getStyleClass().add("deleteButton");
                             loadedFile = new LoadedFileModel(
-                                    String.valueOf(sira),
+                                    String.valueOf(resultSet.getInt(13)),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
                                     resultSet.getString(3),
@@ -454,10 +486,12 @@ public class LoadedFile {
                                     degistir);
                         }
                         loadedFile.setGoster(goster);
+                        loadedFile.setDetay(detay);
                         imhaDates.add(resultSet.getDate(11));
                         fileID.add(resultSet.getInt(12));
                         typeIDsID.add(resultSet.getInt(13));
                         fileIDs.add(resultSet.getInt(14));
+                        loadedFile.setFileID(resultSet.getInt(14));
                         theFileModel.add(loadedFile);
                         sira++;
                     }
@@ -476,6 +510,7 @@ public class LoadedFile {
                     JFXButton sil;
                     JFXButton degistir;
                     JFXButton goster;
+                    JFXButton detay;
                     while (resultSet.next()) {
                         if (PrimaryController.type.equals("Admin")) {
                             sil = new JFXButton("Sil");
@@ -498,11 +533,18 @@ public class LoadedFile {
                                     throwables.printStackTrace();
                                 }
                             });
+
+                            detay = new JFXButton("Detay");
+                            detay.getStyleClass().add("changeButton");
+                            detay.setOnAction(actionEvent -> {
+                                detayProsses(actionEvent);
+                            });
+                            detayButton.add(detay);
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
-                                    String.valueOf(sira),
+                                    String.valueOf(resultSet.getInt(13)),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
                                     resultSet.getString(3),
@@ -537,11 +579,18 @@ public class LoadedFile {
                                     throwables.printStackTrace();
                                 }
                             });
+
+                            detay = new JFXButton("Detay");
+                            detay.getStyleClass().add("changeButton");
+                            detay.setOnAction(actionEvent -> {
+                                detayProsses(actionEvent);
+                            });
+                            detayButton.add(detay);
                             silButtons.add(sil);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
-                                    String.valueOf(sira),
+                                    String.valueOf(resultSet.getInt(13)),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
                                     resultSet.getString(3),
@@ -570,10 +619,17 @@ public class LoadedFile {
                                     throwables.printStackTrace();
                                 }
                             });
+
+                            detay = new JFXButton("Detay");
+                            detay.getStyleClass().add("changeButton");
+                            detay.setOnAction(actionEvent -> {
+                                detayProsses(actionEvent);
+                            });
+                            detayButton.add(detay);
                             degistirButtons.add(degistir);
                             goruntuButtons.add(goster);
                             loadedFile = new LoadedFileModel(
-                                    String.valueOf(sira),
+                                    String.valueOf(resultSet.getInt(13)),
                                     resultSet.getString(1),
                                     resultSet.getString(2),
                                     resultSet.getString(3),
@@ -588,11 +644,13 @@ public class LoadedFile {
                                     degistir);
                         }
                         loadedFile.setGoster(goster);
+                        loadedFile.setDetay(detay);
                         imhaDates.add(resultSet.getDate(11));
                         fileID.add(resultSet.getInt(12));
                         typeIDsID.add(resultSet.getInt(13));
                         fileIDs.add(resultSet.getInt(14));
                         theFileModel.add(loadedFile);
+                        loadedFile.setFileID(resultSet.getInt(14));
                         sira++;
                     }
 
@@ -602,7 +660,6 @@ public class LoadedFile {
 
             }
         });
-
         PreparedStatement fileList = dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID,a.LFID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID WHERE own.ownname=? AND own.login_id=?");
         fileList.setString(1, PrimaryController.type);
         fileList.setInt(2, PrimaryController.ID);
@@ -612,6 +669,7 @@ public class LoadedFile {
         JFXButton sil;
         JFXButton degistir;
         JFXButton goster;
+        JFXButton detay;
         ArrayList<JFXButton> buttonsList = new ArrayList<>();
         while (resultSet.next()) {
             if (PrimaryController.type.equals("Admin")) {
@@ -635,12 +693,19 @@ public class LoadedFile {
                     changeStatement(event);
 
                 });
+
+                detay = new JFXButton("Detay");
+                detay.getStyleClass().add("changeButton");
+                detay.setOnAction(actionEvent -> {
+                    detayProsses(actionEvent);
+                });
+                detayButton.add(detay);
                 silButtons.add(sil);
                 degistirButtons.add(degistir);
                 goruntuButtons.add(goster);
                 buttonsList.add(degistir);
                 loadedFile = new LoadedFileModel(
-                        String.valueOf(sira),
+                        String.valueOf(resultSet.getInt(13)),
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -675,6 +740,13 @@ public class LoadedFile {
                     changeStatement(event);
                 });
 
+
+                detay = new JFXButton("Detay");
+                detay.getStyleClass().add("changeButton");
+                detay.setOnAction(actionEvent -> {
+                    detayProsses(actionEvent);
+                });
+                detayButton.add(detay);
                 silButtons.add(sil);
                 degistirButtons.add(degistir);
                 goruntuButtons.add(goster);
@@ -682,7 +754,7 @@ public class LoadedFile {
                 buttonsList.add(degistir);
                 buttonsList.add(goster);
                 loadedFile = new LoadedFileModel(
-                        String.valueOf(sira),
+                        String.valueOf(resultSet.getInt(12)),
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -702,11 +774,25 @@ public class LoadedFile {
                 degistir.setOnAction(event -> {
                     changeStatement(event);
                 });
+
+                detay = new JFXButton("Detay");
+                detay.getStyleClass().add("changeButton");
+                detay.setOnAction(actionEvent -> {
+                    detayProsses(actionEvent);
+                });
+                detayButton.add(detay);
                 degistirButtons.add(degistir);
                 goster = new JFXButton("Göster");
                 goster.getStyleClass().add("changeButton");
+                goster.setOnAction(event -> {
+                    try {
+                        previewStatement(event);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                });
                 loadedFile = new LoadedFileModel(
-                        String.valueOf(sira),
+                        String.valueOf(resultSet.getInt(12)),
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -722,17 +808,22 @@ public class LoadedFile {
             }
 
             loadedFile.setGoster(goster);
+            loadedFile.setDetay(detay);
             imhaDates.add(resultSet.getDate(11));
             fileID.add(resultSet.getInt(12));
             typeIDsID.add(resultSet.getInt(13));
             fileIDs.add(resultSet.getInt(14));
             theFileModel.add(loadedFile);
+            loadedFile.setFileID(resultSet.getInt(14));
             sira++;
         }
-
-
         FilteredList<LoadedFileModel> filteredList = new FilteredList<>(theFileModel, b -> true);
         ara.textProperty().addListener((observableValue, s, t1) -> {
+            goruntuButtons.clear();
+            silButtons.clear();
+            degistirButtons.clear();
+            detayButton.clear();
+            fileID.clear();
             filteredList.setPredicate(loadedFileModel -> {
                 if (t1 == null || t1.isEmpty()) {
                     return true;
@@ -742,16 +833,46 @@ public class LoadedFile {
                     return true; // Filter matches first name.
                 } else if (loadedFileModel.getBirimad().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true; // Filter matches last name.
-                } else if (String.valueOf(loadedFileModel.getYuktarihi()).indexOf(lowerCaseFilter) != -1)
+                } else if (String.valueOf(loadedFileModel.getYuktarihi()).indexOf(lowerCaseFilter) != -1){
+
                     return true;
+                }
                 else
                     return false; // Does not match.
-
             });
+            for (LoadedFileModel theElement: table.getItems()){
+                goruntuButtons.add(theElement.getGoster());
+                silButtons.add(theElement.getSil());
+                degistirButtons.add(theElement.getDesgistir());
+                detayButton.add(theElement.getDetay());
+                fileID.add(theElement.getFileID());
+            }
+            System.out.println(table.getItems().size());
+            System.out.println("button size "+goruntuButtons.size());
         });
         SortedList<LoadedFileModel> sortedData = new SortedList<>(filteredList);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
+    }
+
+    private void detayProsses(ActionEvent event) {
+        int scopeIndex = detayButton.indexOf(event.getSource());
+        slidder.setPrefWidth(140);
+        fileIDFor=fileID.get(scopeIndex);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("fileDetay.fxml"));
+        AnchorPane root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(PrimaryController.stage);
+        stage.show();
     }
 
     private void treeLoad() throws SQLException {
@@ -865,14 +986,16 @@ public class LoadedFile {
         layout.setHeading(new Text("Dikkat"));
         layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
         evet.setOnAction(event1 -> {
-            theFileModel.remove(currentIndex);
+            theFileModel.remove(table.getItems().get(currentIndex));
             silButtons.remove(currentIndex);
             degistirButtons.remove(currentIndex);
+            goruntuButtons.remove(currentIndex);
+            detayButton.remove(currentIndex);
             try {
                 PreparedStatement preparedStatement = dbSources.getConnection().prepareStatement(
                         "DELETE FROM `load_flle` WHERE `load_flle`.`LFID` = ?"
                 );
-                preparedStatement.setInt(1, fileID.get(index));
+                preparedStatement.setInt(1, fileID.get(currentIndex));
                 preparedStatement.execute();
                 fileID.remove(index);
                 Notifications.create()
@@ -902,6 +1025,7 @@ public class LoadedFile {
 
     private void changeStatement(javafx.event.ActionEvent event) {
         index = degistirButtons.indexOf(event.getSource());
+        slidder.setPrefWidth(140);
         LoadedFileModel model = table.getItems().get(index);
         upload_destıs_no.getSelectionModel().select(upload_destıs_no.getItems().indexOf(model.getDestisno()));
         upload_birim.setText(model.getBirimad());
@@ -962,6 +1086,7 @@ public class LoadedFile {
             updateFıle.setInt(13, fileID.get(index));
             updateFıle.execute();
             slidder.setVisible(false);
+            slidder.setPrefWidth(0);
             Notifications.create()
                     .title("Başarılı")
                     .text("Güncelleme başarılı.")

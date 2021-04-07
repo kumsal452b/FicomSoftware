@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
@@ -89,10 +90,10 @@ public class destroyList {
     private JFXButton yazdir;
 
     @FXML
-    private JFXDatePicker first;
+    private DatePicker first;
 
     @FXML
-    private JFXDatePicker seccond;
+    private DatePicker seccond;
 
     MysqlDataSource dbSource = ConnectorMysql.connect();
     ObservableList<SirtlikModel> modelObservableValue;
@@ -152,58 +153,9 @@ public class destroyList {
 
 
 
-//        ToggleGroup group = new ToggleGroup();
-//        group.getToggles().add(option2);
-//        group.getToggles().add(oprion1);
-//        oprion1.selectedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-//                if (oprion1.isSelected()) {
-//                    onlyDate.setDisable(true);
-//                    first.setDisable(false);
-//                    seccond.setDisable(false);
-//                }
-//            }
-//        });
-//        option2.selectedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-//                if (option2.isSelected()) {
-//                        onlyDate.setDisable(false);
-//                        first.setDisable(true);
-//                        seccond.setDisable(true);
-//                        table.getItems().clear();
-//                    if (onlyDate.getValue()!=null){
-//                        LocalDate date=onlyDate.getValue();
-//                        String date2=date.toString();
-//                        for (SirtlikModel models: modelObservableValue){
-//                            if (models.getKtarihi().equals(date2)){
-//                                table.getItems().add(models);
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            }
-//        });
-
-        File file = new File("src/main/resources/org/kumsal/ficomSoft/image/ficomtranslogo.png");
-        Image image = new Image(file.toURI().toString());
+        Image image = new Image(getClass().getResourceAsStream("image/ficomtranslogo.png"));
         ImageView imageView=new ImageView(image);
         table.setPlaceholder(imageView);
-//        onlyDate.valueProperty().addListener((observableValue, localDate, t1) -> {
-//            table.getItems().clear();
-//            if (onlyDate.getValue()!=null){
-//                LocalDate date=onlyDate.getValue();
-//                String date2=date.toString();
-//                for (SirtlikModel models: modelObservableValue){
-//                    if (models.getKtarihi().equals(date2)){
-//                        table.getItems().add(models);
-//                    }
-//                }
-//            }
-//
-//        });
         first.valueProperty().addListener((observableValue, localDate, t1) -> {
             table.getItems().clear();
             if (seccond.getValue()!=null && first.getValue()!=null){

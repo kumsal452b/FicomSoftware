@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
@@ -51,7 +52,9 @@ public class PrimaryController {
     public ImageView prim_imageView;
 
     public JFXButton exit;
+
     public JFXButton twitter;
+
     public JFXButton facebook;
 
 
@@ -214,10 +217,10 @@ public class PrimaryController {
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.setResizable(true);
-                    stage.setWidth(1200);
-                    stage.setHeight(630);
+                    stage.setWidth(1400);
+                    stage.setHeight(640);
                     stage.setMinHeight(630);
-                    stage.setMinWidth(1200);
+                    stage.setMinWidth(1400);
                     // Step 7
                     stage.show();
                     isEnd=false;
@@ -320,9 +323,8 @@ public class PrimaryController {
         fadeTransition.setNode(prim_imageView);
         fadeTransition2 = new FadeTransition(Duration.millis(4000));
         fadeTransition2.setNode(prim_imageView);
-        currentPath = "src/main/resources/org/kumsal/ficomsoft/image/image" + count + ".jpg";
+        currentPath = "image/image" + count + ".jpg";
         changeImage(currentPath);
-
         setFadeFromAnim();
         double newMeasure = Math.min(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
@@ -340,8 +342,7 @@ public class PrimaryController {
     }
 
     public void changeImage(String path) {
-        File file = new File(path);
-        Image image = new Image(file.toURI().toString());
+        Image image = new Image(getClass().getResourceAsStream(path));
         prim_imageView.setImage(image);
         double newMeasure = Math.min(prim_imageView.getImage().getWidth(), prim_imageView.getImage().getHeight());
         double x = (prim_imageView.getImage().getWidth() - newMeasure) / 2;
@@ -361,7 +362,7 @@ public class PrimaryController {
             if (count > 3) {
                 count = 1;
             }
-            currentPath = "src/main/resources/org/kumsal/ficomsoft/image/image" + count + ".jpg";
+            currentPath = "image/image" + count + ".jpg";
             changeImage(currentPath);
             setFadeToAnim();
         });

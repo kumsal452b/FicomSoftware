@@ -13,12 +13,12 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.1.0</version>
+            <version>11.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>12</version>
+            <version>11.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.jfoenix</groupId>
@@ -55,6 +55,13 @@
             <artifactId>javafx-graphics</artifactId>
             <version>12</version>
         </dependency>
+        <dependency>
+            <groupId>kairos.all</groupId>
+            <artifactId>kairos.all</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}\src/main/resources/lib/kairos-all-0.5.jar</systemPath>
+        </dependency>
 
     </dependencies>
     <build>
@@ -69,19 +76,9 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
                             <mainClass>org.kumsal.ficomSoft.App</mainClass>
                         </manifest>
                     </archive>

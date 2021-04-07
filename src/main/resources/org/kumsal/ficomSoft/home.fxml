@@ -6,6 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import com.jfoenix.controls.JFXDatePicker?>
 <AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.Home">
    <children>
       <Pane layoutX="14.0" layoutY="37.0" prefHeight="534.0" prefWidth="364.0" styleClass="homeFragmentPane">
@@ -15,6 +16,7 @@
                   <Font size="35.0" />
                </font>
             </Text>
+
             <JFXButton fx:id="letsgo_button" layoutX="93.0" layoutY="336.0" prefHeight="38.0" prefWidth="157.0" styleClass="buttonHomeFragment" text="Hadi başlayalım" textFill="WHITE" />
             <Pane layoutX="7.0" layoutY="91.0" prefHeight="200.0" prefWidth="350.0" styleClass="tabPain" />
          </children>

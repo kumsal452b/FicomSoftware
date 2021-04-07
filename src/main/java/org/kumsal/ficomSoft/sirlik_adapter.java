@@ -46,13 +46,7 @@ public class sirlik_adapter extends RecyclerView.Adapter<sirlik_adapter.testHold
 
     @Override
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
-        URL url=null;
-        try {
-            url = new File("src/main/resources/org/kumsal/ficomSoft/sirtlikModel.fxml").toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        fxmlLoader.setLocation(url);
+        fxmlLoader.setLocation(getClass().getResource("sirtlikModel.fxml"));
         return new testHolder(fxmlLoader);
     }
 

@@ -43,6 +43,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.text.ParseException;
@@ -57,6 +59,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Load {
 
+    public static int fileID;
     @FXML
     private ResourceBundle resources;
 
@@ -85,10 +88,10 @@ public class Load {
     private JFXTextField upload_klasorno;
 
     @FXML
-    private JFXDatePicker upload_tarih;
+    private DatePicker upload_tarih;
 
     @FXML
-    private JFXDatePicker upload_imha;
+    private DatePicker upload_imha;
 
     @FXML
     private JFXTextField upload_aciklama;
@@ -110,13 +113,13 @@ public class Load {
     private TableColumn<load_model, JFXTextField> sayfaAdedi;
 
     @FXML
-    private TableColumn<load_model, JFXDatePicker> tarih;
+    private TableColumn<load_model, DatePicker> tarih;
 
     @FXML
-    private TableColumn<load_model, JFXDatePicker> evraktarihi;
+    private TableColumn<load_model, DatePicker> evraktarihi;
 
     @FXML
-    private TableColumn<load_model, JFXDatePicker> imhatarihi;
+    private TableColumn<load_model, DatePicker> imhatarihi;
 
 
     @FXML
@@ -138,29 +141,6 @@ public class Load {
     private JFXListView<String> listview;
 
     public static ArrayList<printer_model> theModels = new ArrayList<>();
-
-    private void printImage(BufferedImage image) {
-        PrinterJob printJob = PrinterJob.createPrinterJob();
-        java.awt.print.PrinterJob printerJob = java.awt.print.PrinterJob.getPrinterJob();
-        printerJob.setPrintable(new Printable() {
-            @Override
-            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-                if (pageIndex != 0) {
-                    return NO_SUCH_PAGE;
-                }
-                Paper paper = new Paper();
-                paper.setSize(400, 600);
-                pageFormat.setPaper(paper);
-                graphics.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
-                return PAGE_EXISTS;
-            }
-        });
-        try {
-            printerJob.print();
-        } catch (PrinterException e1) {
-            e1.printStackTrace();
-        }
-    }
 
     ObservableList<load_model> models;
     File tempFile;
@@ -190,9 +170,9 @@ public class Load {
                             sayi,
                             new JFXTextField(),
                             new JFXTextField(),
-                            new JFXDatePicker(),
-                            new JFXDatePicker(),
-                            new JFXDatePicker());
+                            new DatePicker(),
+                            new DatePicker(),
+                            new DatePicker());
                     models.add(themodel);
                 }
             }
@@ -211,9 +191,9 @@ public class Load {
                         sayi,
                         new JFXTextField(),
                         new JFXTextField(),
-                        new JFXDatePicker(),
-                        new JFXDatePicker(),
-                        new JFXDatePicker());
+                        new DatePicker(),
+                        new DatePicker(),
+                        new DatePicker());
                 table.getItems().add(themodel);
                 models.add(themodel);
             }else{
@@ -226,9 +206,9 @@ public class Load {
                         sayi,
                         new JFXTextField(),
                         new JFXTextField(),
-                        new JFXDatePicker(),
-                        new JFXDatePicker(),
-                        new JFXDatePicker());
+                        new DatePicker(),
+                        new DatePicker(),
+                        new DatePicker());
                 table.getItems().add(themodel);
                 models.add(themodel);
             }
@@ -287,6 +267,24 @@ public class Load {
                     String proccessId = "";
                     while (resultSet.next()) {
                         proccessId = resultSet.getString("LFID");
+                    }
+                    for (int i=0;i<table.getItems().size(); i++){
+                        load_model theModel=table.getItems().get(i);
+                        if (!theModel.getAdet().getText().equals("") ||
+                        !theModel.getKonu().getText().equals("") || !theModel.getSayi().getText().equals("") || theModel.getTime().equals("")||
+                        theModel.getEvrakTarihi().getValue()!=null || theModel.getImhaTarihi().getValue()!=null){
+                            PreparedStatement statement=dbSource.getConnection().prepareStatement(
+                                    "INSERT INTO `file_detail` (`FDID`, `LFID`, `sayi`, `konu`, `adet`, `tarih`, `evrakTarihi`, `imhaTarihi`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)"
+                            );
+                            statement.setInt(1,Integer.valueOf(proccessId));
+                            statement.setString(2,theModel.getSayi().getText());
+                            statement.setString(3,theModel.getKonu().getText());
+                            statement.setString(4,theModel.getAdet().getText());
+                            statement.setString(5,theModel.getTime().getValue() != null ? theModel.getTime().getValue().toString() : "");
+                            statement.setString(6,theModel.getEvrakTarihi().getValue() != null ? theModel.getEvrakTarihi().getValue().toString() : "");
+                            statement.setString(7,theModel.getImhaTarihi().getValue() != null ? theModel.getImhaTarihi().getValue().toString() : "");
+                            statement.execute();
+                        }
                     }
                     try {
                         if (sourceFile.size() > 0) {
@@ -393,8 +391,13 @@ public class Load {
 //                    new FileChooser.ExtensionFilter
 //            );
             files = fileChooser.showOpenMultipleDialog(main_pane.getScene().getWindow());
+
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            s+=System.getProperty("files");
             for (File file : files) {
-                tempFile = new File("src/main/resources/org/kumsal/ficomsoft/files/" + clearSomeCharacter(file.getName()));
+                tempFile = new File(s+"\\"+ clearSomeCharacter(file.getName()));
+                System.out.println(tempFile.getName()+" "+tempFile.getPath());
                 destFile.add(tempFile);
                 listview.getItems().add(file.getName());
 

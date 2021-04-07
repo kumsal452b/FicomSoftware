@@ -7,6 +7,7 @@ import javafx.scene.control.TableColumn;
 import java.util.ArrayList;
 
 public class LoadedFileModel {
+    private int fileID;
 
     private String sira;
 
@@ -48,11 +49,14 @@ public class LoadedFileModel {
 
     private JFXButton goster;
 
+    private JFXButton detay;
+
     private String prossTime;
 
     public LoadedFileModel(String prossTime) {
         this.prossTime = prossTime;
     }
+
 
     public LoadedFileModel(String sira, String destisno, String birimad, String spdkod, String spdkarsilik, String ozelkod, String ozelkarsilik, String klasno, String ktarihi, String aciklama, String yuktarihi, JFXButton sil, JFXButton desgistir) {
         this.sira = sira;
@@ -70,12 +74,36 @@ public class LoadedFileModel {
         this.desgistir = desgistir;
     }
 
+    public LoadedFileModel(int fileID) {
+        this.fileID = fileID;
+    }
+
+    public int getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(int fileID) {
+        this.fileID = fileID;
+    }
+
     public LoadedFileModel(JFXButton goster) {
         this.goster = goster;
     }
 
+    public LoadedFileModel(JFXButton detay,String deneme) {
+        this.detay = goster;
+    }
+
     public JFXButton getGoster() {
         return goster;
+    }
+
+    public JFXButton getDetay() {
+        return detay;
+    }
+
+    public void setDetay(JFXButton detay) {
+        this.detay = detay;
     }
 
     public void setGoster(JFXButton goster) {

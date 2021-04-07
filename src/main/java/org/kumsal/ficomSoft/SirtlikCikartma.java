@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
@@ -43,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SirtlikCikartma {
 
+    public ImageView imageView;
     @FXML
     private ResourceBundle resources;
 
@@ -92,16 +94,16 @@ public class SirtlikCikartma {
     private JFXRadioButton oprion1;
 
     @FXML
-    private JFXDatePicker first;
+    private DatePicker first;
 
     @FXML
-    private JFXDatePicker seccond;
+    private DatePicker seccond;
 
     @FXML
     private JFXRadioButton option2;
 
     @FXML
-    private JFXDatePicker onlyDate;
+    private DatePicker onlyDate;
 
     MysqlDataSource dbSource = ConnectorMysql.connect();
     ObservableList<SirtlikModel> modelObservableValue;
@@ -109,6 +111,7 @@ public class SirtlikCikartma {
     public ArrayList<sirtlikModel2> allTempElement = new ArrayList<>();
     @FXML
     void initialize() throws SQLException {
+        imageView.setImage(new Image(getClass().getResourceAsStream("image/print.png")));
         modelObservableValue = FXCollections.observableArrayList();
         onlyDate.setDisable(true);
         ısCheck.setCellValueFactory(new PropertyValueFactory<>("ısCheck"));

@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.destroyList">
+<?import javafx.scene.control.DatePicker?>
+<AnchorPane prefHeight="600.0" prefWidth="974.0" styleClass="paneForHome" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumsal.ficomSoft.destroyList">
    <children>
       <TableView fx:id="table" layoutX="38.0" layoutY="142.0" prefHeight="444.0" prefWidth="885.0" tableMenuButtonVisible="true">
          <columns>
@@ -38,28 +39,28 @@
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="mainScreenPainRigth">
                <image>
-                  <Image url="@image/print.png" />
+
                </image>
             </ImageView>
          </graphic>
       </JFXButton>
       <HBox layoutX="47.0" layoutY="50.0" prefHeight="48.0" prefWidth="433.0">
          <children>
-            <JFXDatePicker fx:id="first" prefHeight="29.0" prefWidth="169.0" promptText="İlk">
+            <DatePicker fx:id="first" prefHeight="29.0" prefWidth="169.0" promptText="İlk">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
-            </JFXDatePicker>
+            </DatePicker>
             <Label text="ile">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <JFXDatePicker fx:id="seccond" prefHeight="29.0" prefWidth="154.0" promptText="Son">
+            <DatePicker fx:id="seccond" prefHeight="29.0" prefWidth="154.0" promptText="Son">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
-            </JFXDatePicker>
+            </DatePicker>
          </children>
       </HBox>
       <HBox layoutX="47.0" layoutY="97.0" prefHeight="39.0" prefWidth="407.0">

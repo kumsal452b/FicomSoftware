@@ -1,25 +1,15 @@
 package org.kumsal.ficomSoft;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.print.*;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.PrinterJob;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.kairos.layouts.RecyclerView;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.print.Book;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

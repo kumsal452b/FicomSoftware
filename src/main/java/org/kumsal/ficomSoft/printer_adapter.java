@@ -48,13 +48,7 @@ public class printer_adapter extends RecyclerView.Adapter<printer_adapter.testHo
 
     @Override
     public testHolder onCreateViewHolder(FXMLLoader fxmlLoader) {
-        URL url=null;
-        try {
-            url = new File("src/main/resources/org/kumsal/ficomSoft/printLayoutSingle.fxml").toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        fxmlLoader.setLocation(url);
+        fxmlLoader.setLocation(getClass().getResource("printLayoutSingle.fxml"));
         return new testHolder(fxmlLoader);
     }
 
