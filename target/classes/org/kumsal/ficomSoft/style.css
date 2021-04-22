@@ -96,9 +96,7 @@
     -fx-border-style: groove;
     -fx-border-width: 1px;
 }
-.textBackground{
-    -fx-background-color: #005797;
-}
+
 .textBackground2{
     -fx-background-color: #2f9906;
 }
@@ -109,7 +107,7 @@
 .single{
     -fx-background-color: rgb(115, 123, 141);
 }
-.text-field{
+.text-fieldCustom{
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
 }

@@ -997,7 +997,7 @@ public class LoadedFile {
                 );
                 preparedStatement.setInt(1, fileID.get(currentIndex));
                 preparedStatement.execute();
-                fileID.remove(index);
+                fileID.remove(currentIndex);
                 Notifications.create()
                         .title("Başarılı")
                         .text("Klasör silindi")
