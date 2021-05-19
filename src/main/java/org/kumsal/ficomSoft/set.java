@@ -6,17 +6,24 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumsal.ficomSoft.MySqlConector.ConnectorMysql;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -34,6 +41,8 @@ import java.util.ResourceBundle;
 public class set {
 
     public JFXPasswordField yenisifretekrar;
+    @FXML
+    public AnchorPane main_pane;
     @FXML
     private ResourceBundle resources;
 
@@ -120,6 +129,17 @@ public class set {
     int countForUser=0;
     int countForDaily=0;
     boolean isAdmin=false;
+    void check(ActionEvent event) throws SQLException, IOException {
+        if (CheckIsDenied.isDenied(PrimaryController.ID,PrimaryController.username,
+                PrimaryController.type == "Admin")){
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("check_denied.fxml"));
+            main_pane.getChildren().clear();
+            main_pane.getChildren().add(root);
+            return;
+        }
+    }
 
     @FXML
     void initialize() throws SQLException, ParseException {
@@ -424,6 +444,13 @@ public class set {
         gunlukdosya.setText(dailyLoged + "");
         sifredegistir.setOnAction(event -> {
             try {
+                check(event);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
                 if (!eskisıfre.getText().equals("") && !yenisifre.getText().equals("") && !yenisifretekrar.getText().equals("")) {
                     verifiyingUsers(currentPassword);
                 } else {
@@ -446,6 +473,13 @@ public class set {
             }
         });
         kullaniciAdiDegistir.setOnAction(event -> {
+            try {
+                check(event);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (!yeniKullaniciAdi.getText().equals("")){
                 if (verifiyingUsername(yeniKullaniciAdi.getText())){
                     PreparedStatement updateUers = null;

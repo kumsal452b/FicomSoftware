@@ -168,8 +168,9 @@ public class PrimaryController {
     static public String ownTypeID="";
     static public Boolean isAuth=false;
     static public int ID=0;
+    boolean isClosed=true;
     private void loggedSetings(ActionEvent event, ArrayList<LoginModel> sendLogedData, String theUsername, String thePassword, boolean isEnd) {
-        boolean isClosed=true;
+
         for (int i = 0; i < sendLogedData.size(); i++) {
             if (sendLogedData.get(i).getPassword().equals(thePassword) && sendLogedData.get(i).getUsername().equals(theUsername)) {
                 isClosed=false;
@@ -187,7 +188,6 @@ public class PrimaryController {
                     username=sendLogedData.get(i).getUsername();
                     name = sendLogedData.get(i).getName() + " " + sendLogedData.get(i).getSurname();
                     ID=Integer.valueOf(sendLogedData.get(i).getId());
-                    stage.setUserData(sendLogedData.get(i));
                     if (type.equals("User")){
                         isAuth=isAuthList.get(i);
                     }
@@ -215,29 +215,30 @@ public class PrimaryController {
 
                     // Step 6
                     Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.setResizable(true);
-                    stage.setWidth(1400);
-                    stage.setHeight(640);
-                    stage.setMinHeight(630);
-                    stage.setMinWidth(1400);
+                    Stage stageForMain=new Stage();
+                    stageForMain.setScene(scene);
+                    stageForMain.setResizable(true);
+                    stageForMain.setWidth(1400);
+                    stageForMain.setHeight(640);
+                    stageForMain.setMinHeight(630);
+                    stageForMain.setMinWidth(1400);
                     // Step 7
-                    stage.show();
+                    stageForMain.show();
                     isEnd=false;
                     break;
                 } catch (IOException | SQLException e) {
                     System.err.println(String.format("Error: %s", e.getMessage()));
                 }
             }
-            if (isClosed){
+            if (this.isClosed){
                 if (isEnd) {
                     if (i == sendLogedData.size() - 1) {
-//                        Notifications.create()
-//                                .title("Hata")
-//                                .text("Kullanıcı veya şifreniz hatalıdır..")
-//                                .hideAfter(Duration.seconds(3))
-//                                .position(Pos.CENTER_LEFT)
-//                                .showError();
+                        Notifications.create()
+                                .title("Hata")
+                                .text("Kullanıcı veya şifreniz hatalıdır..")
+                                .hideAfter(Duration.seconds(3))
+                                .position(Pos.CENTER_LEFT)
+                                .showError();
                         showError("sdfasdfsad");
                     }
                 }

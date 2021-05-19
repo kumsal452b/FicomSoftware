@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -61,9 +63,7 @@ public class LoadedFile {
     public JFXButton iptal;
 
     public JFXListView<String> charmlist;
-
-
-
+    public AnchorPane mainPane;
 
     @FXML
     private TableView<LoadedFileModel> table;
@@ -444,11 +444,29 @@ public class LoadedFile {
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
     }
+    void check(ActionEvent event) throws SQLException, IOException {
+        if (CheckIsDenied.isDenied(PrimaryController.ID,PrimaryController.username,
+                PrimaryController.type == "Admin")){
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("check_denied.fxml"));
+            mainPane.getChildren().clear();
+            mainPane.getChildren().add(root);
+            return;
+        }
+    }
     private void prepareButtonForAdmin(ResultSet resultSet,boolean isAdmin) throws SQLException {
         if (isAdmin){
             sil = new JFXButton("Sil");
             sil.getStyleClass().add("deleteButton");
             sil.setOnAction(event -> {
+                try {
+                    check(event);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 deleteElement(event);
             });
             silButtons.add(sil);
@@ -457,14 +475,22 @@ public class LoadedFile {
         goster.getStyleClass().add("changeButton");
         goster.setOnAction(event -> {
             try {
+                check(event);
                 previewStatement(event);
-            } catch (SQLException throwables) {
+            } catch (SQLException | IOException throwables) {
                 throwables.printStackTrace();
             }
         });
         degistir = new JFXButton("Degistr");
         degistir.getStyleClass().add("changeButton");
         degistir.setOnAction(event -> {
+            try {
+                check(event);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             changeStatement(event);
 
         });
@@ -472,6 +498,13 @@ public class LoadedFile {
         detay = new JFXButton("Detay");
         detay.getStyleClass().add("changeButton");
         detay.setOnAction(actionEvent -> {
+            try {
+                check(actionEvent);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             detayProsses(actionEvent);
         });
         detayButton.add(detay);
@@ -479,7 +512,7 @@ public class LoadedFile {
         goruntuButtons.add(goster);
         buttonsList.add(degistir);
         loadedFile = new LoadedFileModel(
-                String.valueOf(resultSet.getInt(13)),
+                String.valueOf(resultSet.getInt(14)),
                 resultSet.getString(1),
                 resultSet.getString(2),
                 resultSet.getString(3),

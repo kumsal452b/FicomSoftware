@@ -245,16 +245,16 @@ public class Folders{
                 layout.setHeading(new Text("Dikkat"));
                 layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
                 evet.setOnAction(event1 -> {
-                    foldersModels1.remove(index);
-                    buttonsSil.remove(index);
-                    buttonsDegistir.remove(index);
+                    foldersModels1.remove(currentIndex);
+                    buttonsSil.remove(currentIndex);
+                    buttonsDegistir.remove(currentIndex);
                     try {
                         PreparedStatement preparedStatement=dbSource.getConnection().prepareStatement(
                                 "DELETE FROM `destis` WHERE `destis`.`DID` = ?"
                         );
-                        preparedStatement.setInt(1,folderIndex.get(index));
+                        preparedStatement.setInt(1,folderIndex.get(currentIndex));
                         preparedStatement.execute();
-                        folderIndex.remove(index);
+                        folderIndex.remove(currentIndex);
                         Notifications.create()
                                 .title("Başarılı")
                                 .text("Klasör silindi")

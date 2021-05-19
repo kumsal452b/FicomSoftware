@@ -33,8 +33,8 @@ public class PropertiesCache
         InputStream is = null;
 
         try {
-//            is = new FileInputStream(file);
-            is=getClass().getResourceAsStream("config.properties");
+            is = new FileInputStream(file);
+//            is=getClass().getResourceAsStream("config.properties");
             configProp.load(is);
         } catch (FileNotFoundException e) {
             System.out.println("io error="+e.getMessage());

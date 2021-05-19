@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.print.PageLayout;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -178,9 +180,16 @@ public class Load {
             }
         });
         thread.run();
-        ekle.setOnMouseClicked(mouseEvent -> {
+        ekle.setOnAction(mouseEvent -> {
 //            theModels.clear();
 //            dowload();
+            try {
+                check(mouseEvent);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             int consept=table.getItems().size();
             int sira=0;
             if (consept==0){
@@ -216,7 +225,14 @@ public class Load {
         table.getItems().addAll(models);
         String pattern = "yyyy-MM-dd";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        upload_yazdır.setOnMouseClicked(mouseEvent -> {
+        upload_yazdır.setOnAction(mouseEvent -> {
+            try {
+                check(mouseEvent);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             theModels.clear();
             dowload();
             FXMLLoader loader = new FXMLLoader();
@@ -235,7 +251,14 @@ public class Load {
             stage.initOwner(PrimaryController.stage);
             stage.show();
         });
-        upload_arsivekaydet.setOnMouseClicked(mouseEvent -> {
+        upload_arsivekaydet.setOnAction(mouseEvent -> {
+            try {
+                check(mouseEvent);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (checkFields()){
                 try {
                     PreparedStatement preparedStatement = dbSource.getConnection().prepareStatement(
@@ -412,6 +435,17 @@ public class Load {
         });
 
     }
+    void check(ActionEvent event) throws SQLException, IOException {
+        if (CheckIsDenied.isDenied(PrimaryController.ID,PrimaryController.username,
+                PrimaryController.type == "Admin")){
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("check_denied.fxml"));
+            main_pane.getChildren().clear();
+            main_pane.getChildren().add(root);
+            return;
+        }
+    }
 
     private boolean checkFields() {
         if (upload_imha.getValue() == null) {
@@ -554,7 +588,7 @@ public class Load {
         }
     }
     public boolean betweenDate(LocalDate first, LocalDate second){
-        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.util.Date date1 = myFormat.parse(first.toString());
             java.util.Date date2 = myFormat.parse(second.toString());

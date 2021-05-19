@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -34,6 +35,7 @@ public class App extends Application {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("image/genclık.jpg")));
         stage.show();
     }
 
