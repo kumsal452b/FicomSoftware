@@ -101,6 +101,9 @@ public class set {
     @FXML
     private CheckBox notusername;
 
+    @FXML
+    private CheckBox accesdenied;
+
     MysqlDataSource dbsource = ConnectorMysql.connect();
     ObservableList<settingModel> theusersList;
     ObservableList<settingModel> adminAndList;
@@ -135,7 +138,8 @@ public class set {
                     resultSet.getString(3),
                     resultSet.getString(5),
                     resultSet.getBoolean(6),
-                    resultSet.getInt(1)
+                    resultSet.getInt(1),
+                    resultSet.getBoolean(7)
             );
             if (themodel.getUsername().equals(PrimaryController.username)) {
                 currentPassword = themodel.getPassword();
@@ -170,7 +174,8 @@ public class set {
                         resultSet2.getString(3),
                         resultSet2.getString(5),
                         resultSet2.getBoolean(6),
-                        resultSet2.getInt(1)
+                        resultSet2.getInt(1),
+                        resultSet2.getBoolean(7)
                 );
 
                 if (!themodel.getUsername().equals(PrimaryController.username)) {
@@ -217,6 +222,8 @@ public class set {
                     usernamegir.setText(t1.getUsername());
                     password.setText(t1.getPassword());
                     isAuth.setSelected(t1.getIssAuth());
+                    accesdenied.setSelected(t1.isAccess());
+                    accesdenied.setVisible(true);
                     GlobalID = t1.getId();
                     isAuth.setVisible(true);
                     isAdmin=false;
@@ -258,6 +265,7 @@ public class set {
                     usernamegir.setText(t1.getUsername());
                     password.setText(t1.getPassword());
                     isAuth.setVisible(false);
+                    accesdenied.setVisible(false);
                     GlobalID = t1.getId();
                     isAdmin=true;
                 }
@@ -340,13 +348,14 @@ public class set {
 
                }else{
                    try {
-                       updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? , `isAuth` =? WHERE `users`.`UID` = ?");
+                       updateUers = dbsource.getConnection().prepareStatement("UPDATE `users` SET `ad` = ?, `soyad` = ?, `username` = ?, `password` = ? , `isAuth` =?,`acces`=? WHERE `users`.`UID` = ?");
                        updateUers.setString(1, ad.getText());
                        updateUers.setString(2, soyad.getText());
                        updateUers.setString(3, usernamegir.getText());
                        updateUers.setString(4, password.getText());
                        updateUers.setBoolean(5, isAuth.isSelected());
-                       updateUers.setInt(6, GlobalID);
+                       updateUers.setBoolean(6,accesdenied.isSelected());
+                       updateUers.setInt(7, GlobalID);
                        updateUers.execute();
                        Notifications.create()
                                .title("Başarılı")

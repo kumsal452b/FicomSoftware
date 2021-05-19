@@ -30,8 +30,8 @@ public class PropertiesCache
         String s = currentRelativePath.toAbsolutePath().toString();
         s+=System.getProperty("pathConf");
         File file  = new File(s);
-        System.out.println("dosya adı="+file.getName());
         InputStream is = null;
+
         try {
 //            is = new FileInputStream(file);
             is=getClass().getResourceAsStream("config.properties");

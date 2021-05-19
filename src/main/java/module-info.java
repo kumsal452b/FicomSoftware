@@ -15,6 +15,7 @@ module org.kumsal.ficomSoft {
     requires javafx.controls;
     requires kairos.all;
 
+    requires commons.net;
     opens org.kumsal.ficomSoft;
     opens org.kumsal.ficomSoft.AdapterModelClass to com.jfoenix, javafx.fxml, javafx.controls, javafx.base;
 

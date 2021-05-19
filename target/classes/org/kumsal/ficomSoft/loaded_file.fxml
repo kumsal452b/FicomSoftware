@@ -68,10 +68,10 @@
                               <TableColumn fx:id="ktarihi" prefWidth="86.0" text="K. Tarihi" />
                               <TableColumn fx:id="aciklama" minWidth="0.0" prefWidth="78.0" text="Açıklama" />
                               <TableColumn fx:id="yuktarihi" minWidth="0.0" prefWidth="49.0" text="Yüklenme tarihi" />
-                              <TableColumn fx:id="sil" minWidth="0.0" prefWidth="44.0" text="#" />
+                              <TableColumn fx:id="silTableColumn" minWidth="0.0" prefWidth="44.0" text="#" />
                               <TableColumn fx:id="desgistir" minWidth="5.0" prefWidth="56.0" text="#" />
-                              <TableColumn fx:id="goster" minWidth="5.0" prefWidth="66.0" text="#" />
-                              <TableColumn fx:id="detay" prefWidth="75.0" text="#" />
+                              <TableColumn fx:id="gosterTableColumn" minWidth="5.0" prefWidth="66.0" text="#" />
+                              <TableColumn fx:id="detayTableColumn" prefWidth="75.0" text="#" />
                            </columns>
                         </TableView>
                      </children>

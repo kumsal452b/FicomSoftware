@@ -6,14 +6,17 @@ public class settingModel {
     private String surname;
     private String password;
     private boolean isAuth;
+    private boolean access;
+
     private int id;
-    public settingModel(String username, String name, String surname, String password,boolean isAuth,int id) {
+    public settingModel(String username, String name, String surname, String password,boolean isAuth,int id,boolean access) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.isAuth=isAuth;
         this.id=id;
+        this.access=access;
     }
     public settingModel(String username, String name, String surname, String password,int id) {
         this.username = username;
@@ -22,6 +25,18 @@ public class settingModel {
         this.password = password;
         this.id=id;
 
+    }
+
+    public boolean isAuth() {
+        return isAuth;
+    }
+
+    public boolean isAccess() {
+        return access;
+    }
+
+    public void setAccess(boolean access) {
+        this.access = access;
     }
 
     public int getId() {

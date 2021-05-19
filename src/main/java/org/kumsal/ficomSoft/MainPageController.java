@@ -74,7 +74,8 @@ public class MainPageController extends Activity {
     private StackPane stakpane;
 
     @FXML
-    void main_page_currentFiles(ActionEvent event) {
+    void main_page_currentFiles(ActionEvent event) throws IOException, SQLException {
+        check();
         main_page_home.getStyleClass().remove("currentButton");
         main_page_current.getStyleClass().add("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
@@ -91,7 +92,8 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void onDestroy(ActionEvent event) throws IOException {
+    void onDestroy(ActionEvent event) throws IOException, SQLException {
+        check();
         main_page_home.getStyleClass().remove("currentButton");
         main_page_destroy.getStyleClass().add("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
@@ -113,7 +115,8 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void onLoad(ActionEvent event) throws IOException {
+    void onLoad(ActionEvent event) throws IOException, SQLException {
+        check();
         main_page_home.getStyleClass().remove("currentButton");
         main_page_load.getStyleClass().add("currentButton");
         main_page_print.getStyleClass().remove("currentButton");
@@ -158,7 +161,8 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void onPrint(ActionEvent event) throws IOException {
+    void onPrint(ActionEvent event) throws IOException, SQLException {
+        check();
         main_page_home.getStyleClass().remove("currentButton");
         main_page_print.getStyleClass().add("currentButton");
         main_page_load.getStyleClass().remove("currentButton");
@@ -173,7 +177,8 @@ public class MainPageController extends Activity {
     }
 
     @FXML
-    void showFolder(ActionEvent event) throws IOException {
+    void showFolder(ActionEvent event) throws IOException, SQLException {
+        check();
         main_page_home.getStyleClass().remove("currentButton");
         main_page_folders.getStyleClass().add("currentButton");
         main_page_load.getStyleClass().remove("currentButton");
@@ -184,6 +189,15 @@ public class MainPageController extends Activity {
         close("folders.fxml");
         currentFragment = "folders.fxml";
         access = true;
+    }
+
+    void check() throws SQLException, IOException {
+        if (CheckIsDenied.isDenied(PrimaryController.ID,PrimaryController.username,
+                PrimaryController.type == "Admin")){
+            close("check_denied.fxml");
+            access = true;
+            return;
+        }
     }
 
     @FXML
@@ -222,6 +236,13 @@ public class MainPageController extends Activity {
             }
         });
         settings.setOnAction(event -> {
+            try {
+                check();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             main_page_home.getStyleClass().remove("currentButton");
             main_page_folders.getStyleClass().remove("currentButton");
             main_page_load.getStyleClass().remove("currentButton");

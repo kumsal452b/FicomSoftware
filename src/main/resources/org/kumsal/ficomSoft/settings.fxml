@@ -78,6 +78,7 @@
                                  </VBox.margin>
                               </CheckBox>
                               <CheckBox fx:id="notusername" mnemonicParsing="false" text="Kullanıcı adının güncellenmesini istemiyorum" textFill="#f8ecec" wrapText="true" />
+                              <CheckBox fx:id="accesdenied" mnemonicParsing="false" text="Engelle" textFill="#f8ecec" wrapText="true" />
                               <Label fx:id="adminDailyLoged" contentDisplay="CENTER" prefHeight="37.0" prefWidth="214.0" styleClass="textBackground" text="Günlük giriş :" textAlignment="CENTER" textFill="#d3c2c2" wrapText="true">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="14.0" />

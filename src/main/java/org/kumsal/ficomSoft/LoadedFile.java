@@ -101,15 +101,15 @@ public class LoadedFile {
     @FXML
     private TableColumn<LoadedFileModel, String> yuktarihi;
 
-    public TableColumn<LoadedFileModel, JFXButton> goster;
+    public TableColumn<LoadedFileModel, JFXButton> gosterTableColumn;
 
     @FXML
-    private TableColumn<LoadedFileModel, JFXButton> sil;
+    private TableColumn<LoadedFileModel, JFXButton> silTableColumn;
 
     @FXML
     private TableColumn<LoadedFileModel, JFXButton> desgistir;
 
-    public TableColumn<LoadedFileModel, JFXButton>  detay;
+    public TableColumn<LoadedFileModel, JFXButton>  detayTableColumn;
 
     @FXML
     private JFXTextField ara;
@@ -193,6 +193,13 @@ public class LoadedFile {
     Duration duration = Duration.millis(2500);
     //Create new scale transition
     ScaleTransition scaleTransition = new ScaleTransition(duration, slidder);
+
+    JFXButton sil;
+    JFXButton degistir;
+    JFXButton goster;
+    JFXButton detay;
+    LoadedFileModel loadedFile;
+    ArrayList<JFXButton> buttonsList = new ArrayList<>();
 
     @FXML
     void initialize() throws SQLException {
@@ -305,10 +312,10 @@ public class LoadedFile {
         ktarihi.setCellValueFactory(new PropertyValueFactory<>("ktarihi"));
         aciklama.setCellValueFactory(new PropertyValueFactory<>("aciklama"));
         yuktarihi.setCellValueFactory(new PropertyValueFactory<>("yuktarihi"));
-        sil.setCellValueFactory(new PropertyValueFactory<>("sil"));
+        silTableColumn.setCellValueFactory(new PropertyValueFactory<>("sil"));
         desgistir.setCellValueFactory(new PropertyValueFactory<>("desgistir"));
-        goster.setCellValueFactory(new PropertyValueFactory<>("goster"));
-        detay.setCellValueFactory(new PropertyValueFactory<>("detay"));
+        gosterTableColumn.setCellValueFactory(new PropertyValueFactory<>("goster"));
+        detayTableColumn.setCellValueFactory(new PropertyValueFactory<>("detay"));
         scaleTransition.setByX(1.5);
         //Set how much Y should
         scaleTransition.setByY(1.5);
@@ -336,163 +343,22 @@ public class LoadedFile {
                 PreparedStatement fileList = null;
                 try {
                     fileList = dataSource.getConnection().prepareStatement("SELECT de.destisno,a.birim,a.spd_kod,a.spdkarsilik,a.ozel_kod,a.ozelkarsilik,a.klsorno,a.tarih,a.aciklama,a.tarih,a.imhatarihi,a.LFID,a.OTID,a.LFID FROM `load_flle` a INNER JOIN destis de ON a.DID=de.DID INNER JOIN owntype own ON own.OTID=a.OTID");
-                    ResultSet resultSet = fileList.executeQuery();
+                    ResultSet resultSetInWanna = fileList.executeQuery();
                     LoadedFileModel loadedFile;
                     int sira = 1;
-                    JFXButton sil;
-                    JFXButton degistir;
-                    JFXButton goster;
-                    JFXButton detay;
                     while (true) {
                         try {
-                            if (!resultSet.next()) break;
+                            if (!resultSetInWanna.next()) break;
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
                         if (PrimaryController.type.equals("Admin")) {
-                            sil = new JFXButton("Sil");
-                            sil.getStyleClass().add("deleteButton");
-                            sil.setOnAction(event -> {
-                                deleteElement(event);
-                            });
-
-                            degistir = new JFXButton("Degistr");
-                            degistir.getStyleClass().add("changeButton");
-                            degistir.setOnAction(event -> {
-                                changeStatement(event);
-
-                            });
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("changeButton");
-                            goster.setOnAction(actionEvent -> {
-                                try {
-                                    previewStatement(actionEvent);
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                }
-                            });
-
-                            detay = new JFXButton("Detay");
-                            detay.getStyleClass().add("changeButton");
-                            detay.setOnAction(actionEvent -> {
-                               detayProsses(actionEvent);
-                            });
-                            detayButton.add(detay);
-                            silButtons.add(sil);
-                            degistirButtons.add(degistir);
-                            goruntuButtons.add(goster);
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("deleteButton");
-                            loadedFile = new LoadedFileModel(
-                                    String.valueOf(resultSet.getInt(13)),
-                                    resultSet.getString(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5),
-                                    resultSet.getString(6),
-                                    resultSet.getString(7),
-                                    resultSet.getString(8),
-                                    resultSet.getString(9),
-                                    resultSet.getString(10),
-                                    sil,
-                                    degistir
-                            );
+                            prepareButtonForAdmin(resultSetInWanna,true);
                         } else if (PrimaryController.isAuth) {
-                            sil = new JFXButton("Sil");
-                            sil.getStyleClass().add("deleteButton");
-                            sil.setOnAction(event -> {
-                                deleteElement(event);
-                            });
-                            degistir = new JFXButton("Degistr");
-                            degistir.getStyleClass().add("changeButton");
-                            degistir.setOnAction(event -> {
-                                changeStatement(event);
-                            });
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("changeButton");
-                            goster.setOnAction(event -> {
-                                try {
-                                    previewStatement(event);
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                }
-                            });
-
-
-                            detay = new JFXButton("Detay");
-                            detay.getStyleClass().add("changeButton");
-                            detay.setOnAction(actionEvent -> {
-                                detayProsses(actionEvent);
-                            });
-                            detayButton.add(detay);
-
-                            silButtons.add(sil);
-                            degistirButtons.add(degistir);
-                            goruntuButtons.add(goster);
-                            loadedFile = new LoadedFileModel(
-                                    String.valueOf(resultSet.getInt(13)),
-                                    resultSet.getString(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5),
-                                    resultSet.getString(6),
-                                    resultSet.getString(7),
-                                    resultSet.getString(8),
-                                    resultSet.getString(9),
-                                    resultSet.getString(10),
-                                    sil,
-                                    degistir
-                            );
+                            prepareButtonForAdmin(resultSetInWanna,true);
                         } else {
-                            degistir = new JFXButton("Degistr");
-                            degistir.getStyleClass().add("changeButton");
-                            degistir.setOnAction(event -> {
-                                changeStatement(event);
-                            });
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("changeButton");
-                            goster.setOnAction(event -> {
-                                try {
-                                    previewStatement(event);
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                }
-                            });
-                            detay = new JFXButton("Detay");
-                            detay.getStyleClass().add("changeButton");
-                            detay.setOnAction(actionEvent -> {
-                                detayProsses(actionEvent);
-                            });
-                            detayButton.add(detay);
-                            degistirButtons.add(degistir);
-                            goruntuButtons.add(goster);
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("deleteButton");
-                            loadedFile = new LoadedFileModel(
-                                    String.valueOf(resultSet.getInt(13)),
-                                    resultSet.getString(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5),
-                                    resultSet.getString(6),
-                                    resultSet.getString(7),
-                                    resultSet.getString(8),
-                                    resultSet.getString(9),
-                                    resultSet.getString(10),
-                                    null,
-                                    degistir);
+                            prepareButtonForAdmin(resultSetInWanna,false);
                         }
-                        loadedFile.setGoster(goster);
-                        loadedFile.setDetay(detay);
-                        imhaDates.add(resultSet.getDate(11));
-                        fileID.add(resultSet.getInt(12));
-                        typeIDsID.add(resultSet.getInt(13));
-                        fileIDs.add(resultSet.getInt(14));
-                        loadedFile.setFileID(resultSet.getInt(14));
-                        theFileModel.add(loadedFile);
                         sira++;
                     }
                 } catch (SQLException throwables) {
@@ -506,152 +372,15 @@ public class LoadedFile {
                     fileList.setInt(2, PrimaryController.ID);
                     ResultSet resultSet = fileList.executeQuery();
                     LoadedFileModel loadedFile;
-                    int sira = 1;
-                    JFXButton sil;
-                    JFXButton degistir;
-                    JFXButton goster;
-                    JFXButton detay;
+
                     while (resultSet.next()) {
                         if (PrimaryController.type.equals("Admin")) {
-                            sil = new JFXButton("Sil");
-                            sil.getStyleClass().add("deleteButton");
-                            sil.setOnAction(event -> {
-                                deleteElement(event);
-                            });
-                            degistir = new JFXButton("Degistr");
-                            degistir.getStyleClass().add("changeButton");
-                            degistir.setOnAction(event -> {
-                                changeStatement(event);
-
-                            });
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("changeButton");
-                            goster.setOnAction(actionEvent -> {
-                                try {
-                                    previewStatement(actionEvent);
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                }
-                            });
-
-                            detay = new JFXButton("Detay");
-                            detay.getStyleClass().add("changeButton");
-                            detay.setOnAction(actionEvent -> {
-                                detayProsses(actionEvent);
-                            });
-                            detayButton.add(detay);
-                            silButtons.add(sil);
-                            degistirButtons.add(degistir);
-                            goruntuButtons.add(goster);
-                            loadedFile = new LoadedFileModel(
-                                    String.valueOf(resultSet.getInt(13)),
-                                    resultSet.getString(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5),
-                                    resultSet.getString(6),
-                                    resultSet.getString(7),
-                                    resultSet.getString(8),
-                                    resultSet.getString(9),
-                                    resultSet.getString(10),
-                                    sil,
-                                    degistir
-                            );
+                            prepareButtonForAdmin(resultSet,true);
                         } else if (PrimaryController.isAuth) {
-                            sil = new JFXButton("Sil");
-                            sil.getStyleClass().add("deleteButton");
-                            sil.setOnAction(event -> {
-                                deleteElement(event);
-                            });
-                            degistir = new JFXButton("Degistr");
-                            degistir.getStyleClass().add("changeButton");
-                            degistir.setOnAction(event -> {
-                                changeStatement(event);
-                            });
-
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("changeButton");
-                            goster.setOnAction(event -> {
-                                try {
-                                    previewStatement(event);
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                }
-                            });
-
-                            detay = new JFXButton("Detay");
-                            detay.getStyleClass().add("changeButton");
-                            detay.setOnAction(actionEvent -> {
-                                detayProsses(actionEvent);
-                            });
-                            detayButton.add(detay);
-                            silButtons.add(sil);
-                            degistirButtons.add(degistir);
-                            goruntuButtons.add(goster);
-                            loadedFile = new LoadedFileModel(
-                                    String.valueOf(resultSet.getInt(13)),
-                                    resultSet.getString(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5),
-                                    resultSet.getString(6),
-                                    resultSet.getString(7),
-                                    resultSet.getString(8),
-                                    resultSet.getString(9),
-                                    resultSet.getString(10),
-                                    sil,
-                                    degistir
-                            );
+                            prepareButtonForAdmin(resultSet,true);
                         } else {
-                            degistir = new JFXButton("Degistr");
-                            degistir.getStyleClass().add("changeButton");
-                            degistir.setOnAction(event -> {
-                                changeStatement(event);
-                            });
-                            goster = new JFXButton("Göster");
-                            goster.getStyleClass().add("changeButton");
-                            goster.setOnAction(event -> {
-                                try {
-                                    previewStatement(event);
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                }
-                            });
-
-                            detay = new JFXButton("Detay");
-                            detay.getStyleClass().add("changeButton");
-                            detay.setOnAction(actionEvent -> {
-                                detayProsses(actionEvent);
-                            });
-                            detayButton.add(detay);
-                            degistirButtons.add(degistir);
-                            goruntuButtons.add(goster);
-                            loadedFile = new LoadedFileModel(
-                                    String.valueOf(resultSet.getInt(13)),
-                                    resultSet.getString(1),
-                                    resultSet.getString(2),
-                                    resultSet.getString(3),
-                                    resultSet.getString(4),
-                                    resultSet.getString(5),
-                                    resultSet.getString(6),
-                                    resultSet.getString(7),
-                                    resultSet.getString(8),
-                                    resultSet.getString(9),
-                                    resultSet.getString(10),
-                                    null,
-                                    degistir);
+                            prepareButtonForAdmin(resultSet,false);
                         }
-                        loadedFile.setGoster(goster);
-                        loadedFile.setDetay(detay);
-                        imhaDates.add(resultSet.getDate(11));
-                        fileID.add(resultSet.getInt(12));
-                        typeIDsID.add(resultSet.getInt(13));
-                        fileIDs.add(resultSet.getInt(14));
-                        theFileModel.add(loadedFile);
-                        loadedFile.setFileID(resultSet.getInt(14));
-                        sira++;
                     }
 
                 } catch (SQLException throwables) {
@@ -664,157 +393,18 @@ public class LoadedFile {
         fileList.setString(1, PrimaryController.type);
         fileList.setInt(2, PrimaryController.ID);
         ResultSet resultSet = fileList.executeQuery();
-        LoadedFileModel loadedFile;
+
         int sira = 1;
-        JFXButton sil;
-        JFXButton degistir;
-        JFXButton goster;
-        JFXButton detay;
-        ArrayList<JFXButton> buttonsList = new ArrayList<>();
+
         while (resultSet.next()) {
             if (PrimaryController.type.equals("Admin")) {
-                sil = new JFXButton("Sil");
-                goster = new JFXButton("Göster");
-                goster.getStyleClass().add("changeButton");
-                goster.setOnAction(event -> {
-                    try {
-                        previewStatement(event);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                });
-                sil.getStyleClass().add("deleteButton");
-                sil.setOnAction(event -> {
-                    deleteElement(event);
-                });
-                degistir = new JFXButton("Degistr");
-                degistir.getStyleClass().add("changeButton");
-                degistir.setOnAction(event -> {
-                    changeStatement(event);
-
-                });
-
-                detay = new JFXButton("Detay");
-                detay.getStyleClass().add("changeButton");
-                detay.setOnAction(actionEvent -> {
-                    detayProsses(actionEvent);
-                });
-                detayButton.add(detay);
-                silButtons.add(sil);
-                degistirButtons.add(degistir);
-                goruntuButtons.add(goster);
-                buttonsList.add(degistir);
-                loadedFile = new LoadedFileModel(
-                        String.valueOf(resultSet.getInt(13)),
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6),
-                        resultSet.getString(7),
-                        resultSet.getString(8),
-                        resultSet.getString(9),
-                        resultSet.getString(10),
-                        sil,
-                        degistir
-                );
+                prepareButtonForAdmin(resultSet,true);
             } else if (PrimaryController.isAuth) {
-                sil = new JFXButton("Sil");
-                goster = new JFXButton("Göster");
-                goster.getStyleClass().add("changeButton");
-                goster.setOnAction(event -> {
-                    try {
-                        previewStatement(event);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                });
-                sil.getStyleClass().add("deleteButton");
-                sil.setOnAction(event -> {
-                    deleteElement(event);
-                });
-                degistir = new JFXButton("Degistr");
-                degistir.getStyleClass().add("changeButton");
-                degistir.setOnAction(event -> {
-                    changeStatement(event);
-                });
-
-
-                detay = new JFXButton("Detay");
-                detay.getStyleClass().add("changeButton");
-                detay.setOnAction(actionEvent -> {
-                    detayProsses(actionEvent);
-                });
-                detayButton.add(detay);
-                silButtons.add(sil);
-                degistirButtons.add(degistir);
-                goruntuButtons.add(goster);
-
-                buttonsList.add(degistir);
-                buttonsList.add(goster);
-                loadedFile = new LoadedFileModel(
-                        String.valueOf(resultSet.getInt(12)),
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6),
-                        resultSet.getString(7),
-                        resultSet.getString(8),
-                        resultSet.getString(9),
-                        resultSet.getString(10),
-                        sil,
-                        degistir
-                );
+                prepareButtonForAdmin(resultSet,true);
             } else {
-                degistir = new JFXButton("Degistr");
-                degistir.getStyleClass().add("changeButton");
-                degistir.setOnAction(event -> {
-                    changeStatement(event);
-                });
-
-                detay = new JFXButton("Detay");
-                detay.getStyleClass().add("changeButton");
-                detay.setOnAction(actionEvent -> {
-                    detayProsses(actionEvent);
-                });
-                detayButton.add(detay);
-                degistirButtons.add(degistir);
-                goster = new JFXButton("Göster");
-                goster.getStyleClass().add("changeButton");
-                goster.setOnAction(event -> {
-                    try {
-                        previewStatement(event);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                });
-                loadedFile = new LoadedFileModel(
-                        String.valueOf(resultSet.getInt(12)),
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6),
-                        resultSet.getString(7),
-                        resultSet.getString(8),
-                        resultSet.getString(9),
-                        resultSet.getString(10),
-                        null,
-                        degistir);
+                prepareButtonForAdmin(resultSet,false);
             }
 
-            loadedFile.setGoster(goster);
-            loadedFile.setDetay(detay);
-            imhaDates.add(resultSet.getDate(11));
-            fileID.add(resultSet.getInt(12));
-            typeIDsID.add(resultSet.getInt(13));
-            fileIDs.add(resultSet.getInt(14));
-            theFileModel.add(loadedFile);
-            loadedFile.setFileID(resultSet.getInt(14));
             sira++;
         }
         FilteredList<LoadedFileModel> filteredList = new FilteredList<>(theFileModel, b -> true);
@@ -853,6 +443,64 @@ public class LoadedFile {
         SortedList<LoadedFileModel> sortedData = new SortedList<>(filteredList);
         sortedData.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedData);
+    }
+    private void prepareButtonForAdmin(ResultSet resultSet,boolean isAdmin) throws SQLException {
+        if (isAdmin){
+            sil = new JFXButton("Sil");
+            sil.getStyleClass().add("deleteButton");
+            sil.setOnAction(event -> {
+                deleteElement(event);
+            });
+            silButtons.add(sil);
+        }
+        goster = new JFXButton("Göster");
+        goster.getStyleClass().add("changeButton");
+        goster.setOnAction(event -> {
+            try {
+                previewStatement(event);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+        degistir = new JFXButton("Degistr");
+        degistir.getStyleClass().add("changeButton");
+        degistir.setOnAction(event -> {
+            changeStatement(event);
+
+        });
+
+        detay = new JFXButton("Detay");
+        detay.getStyleClass().add("changeButton");
+        detay.setOnAction(actionEvent -> {
+            detayProsses(actionEvent);
+        });
+        detayButton.add(detay);
+        degistirButtons.add(degistir);
+        goruntuButtons.add(goster);
+        buttonsList.add(degistir);
+        loadedFile = new LoadedFileModel(
+                String.valueOf(resultSet.getInt(13)),
+                resultSet.getString(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getString(4),
+                resultSet.getString(5),
+                resultSet.getString(6),
+                resultSet.getString(7),
+                resultSet.getString(8),
+                resultSet.getString(9),
+                resultSet.getString(10),
+                sil,
+                degistir
+        );
+        loadedFile.setGoster(goster);
+        loadedFile.setDetay(detay);
+        imhaDates.add(resultSet.getDate(11));
+        fileID.add(resultSet.getInt(12));
+        typeIDsID.add(resultSet.getInt(13));
+        fileIDs.add(resultSet.getInt(14));
+        theFileModel.add(loadedFile);
+        loadedFile.setFileID(resultSet.getInt(14));
     }
 
     private void detayProsses(ActionEvent event) {
