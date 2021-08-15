@@ -244,6 +244,7 @@ public class Folders{
                 JFXDialogLayout layout=new JFXDialogLayout();
                 layout.setHeading(new Text("Dikkat"));
                 layout.setBody(new Text("Bu satır silinecek. Devam etmek ister misiniz? Bu işlem geri alınamaz."));
+
                 evet.setOnAction(event1 -> {
                     foldersModels1.remove(currentIndex);
                     buttonsSil.remove(currentIndex);
